@@ -1,0 +1,7 @@
+# robots.txt for Ilya Saramad Capital Holding
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://ssiholding.co/sitemap.xml

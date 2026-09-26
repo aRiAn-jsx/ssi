@@ -1,0 +1,214 @@
+@import "tailwindcss";
+@import url('https://cdn.jsdelivr.net/gh/AmirAbbasVafaee/persian-fonts-cdn@main/css/peyda.min.css');
+
+@theme {
+  --font-sans: 'Peyda', 'Vazirmatn', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  :root {
+    --font-sans: 'Peyda', 'Vazirmatn', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+    /* Primary Colors */
+    --color-soft-sky: #D5ECFE;
+    --color-vibrant-blue: #027DF7;
+    --color-deep-navy: #01427C;
+    --color-pure-white: #FFFFFF;
+
+    /* Supporting Neutrals */
+    --color-off-white: #F7FAFC;
+    --color-text-primary: #0A2540;
+    --color-text-secondary: #64748B;
+    --color-border-subtle: #E2E8F0;
+    --color-success: #10B981;
+    --color-danger: #EF4444;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, #01427C 0%, #027DF7 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(213, 236, 254, 0.6), rgba(255, 255, 255, 0.3));
+    --glow-accent: radial-gradient(circle, #027DF7 0%, transparent 70%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 16px rgba(1, 66, 124, 0.06);
+    --shadow-medium: 0 8px 32px rgba(1, 66, 124, 0.10);
+    --shadow-large: 0 24px 64px rgba(1, 66, 124, 0.14);
+    --shadow-glow: 0 0 40px rgba(2, 125, 247, 0.35);
+  }
+
+  body {
+    font-family: 'Peyda', 'Vazirmatn', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body.font-english,
+  html[lang="en"] body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: -0.015em;
+  }
+
+  body.font-persian,
+  html[lang="fa"] body {
+    font-family: 'Peyda', 'Vazirmatn', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Liquid Glass Utilities */
+.liquid-glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  box-shadow: 
+    0 8px 32px rgba(1, 66, 124, 0.08),
+    0 2px 8px rgba(2, 125, 247, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+@media (min-width: 768px) {
+  .liquid-glass-card {
+    border-radius: 24px;
+  }
+}
+
+.liquid-glass-card-hover {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s ease;
+}
+
+.liquid-glass-card-hover:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 
+    0 16px 40px rgba(1, 66, 124, 0.12),
+    0 4px 16px rgba(2, 125, 247, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  border-color: rgba(2, 125, 247, 0.3);
+}
+
+.liquid-glass-navbar {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(1, 66, 124, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+@media (min-width: 768px) {
+  .liquid-glass-navbar {
+    border-radius: 999px;
+  }
+}
+
+.liquid-glass-dark {
+  background: rgba(1, 66, 124, 0.85);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(213, 236, 254, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(213, 236, 254, 0.3);
+}
+
+@media (min-width: 768px) {
+  .liquid-glass-dark {
+    border-radius: 24px;
+  }
+}
+
+/* Specific Minimal Glass Mobile Classes */
+.liquid-glass-mobile-compact,
+.glass-compact-mobile {
+  border-radius: 16px !important;
+}
+
+@media (min-width: 768px) {
+  .liquid-glass-mobile-compact,
+  .glass-compact-mobile {
+    border-radius: 24px !important;
+  }
+}
+
+/* Liquid Metal Border Effect */
+@keyframes rotateBorder {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.liquid-metal-border {
+  position: relative;
+}
+
+.liquid-metal-border::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 25.5px;
+  padding: 1.5px;
+  background: linear-gradient(90deg, #027DF7, #D5ECFE, #01427C, #027DF7);
+  background-size: 300% 300%;
+  animation: liquidShine 8s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes liquidShine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Noise overlay */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Dot grid background */
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(2, 125, 247, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Hide scrollbar for horizontal carousels while keeping scrollability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Luxury Financial Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.75);
+  backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #027DF7 0%, #01427C 100%);
+  border-radius: 9999px;
+  border: 2px solid rgba(241, 245, 249, 0.85);
+  background-clip: padding-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #38BDF8 0%, #027DF7 100%);
+  border: 1.5px solid rgba(241, 245, 249, 0.6);
+  background-clip: padding-box;
+  box-shadow: 0 0 12px rgba(2, 125, 247, 0.6);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #027DF7 rgba(241, 245, 249, 0.75);
+}
+

@@ -1,0 +1,6 @@
+{
+  "name": "هلدینگ سرآمد سرمایه ایلیا",
+  "description": "پرتال رسمی هلدینگ سرمایه‌گذاری سرآمد سرمایه ایلیا (سهامی عام) - مدیریت ثروت، سبدگردانی اختصاصی، تأمین مالی و نوآوری‌های فین‌تک",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
