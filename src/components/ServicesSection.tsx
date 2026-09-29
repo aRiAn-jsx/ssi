@@ -105,7 +105,7 @@ export const ServicesSection: React.FC = () => {
                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D5ECFE] to-white border border-[#027DF7]/20 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:bg-[#027DF7]/10 transition-all duration-300">
                       {renderIcon(srv.iconName)}
                     </div>
-                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-white/80 border border-[#E2E8F0] text-[#64748B] group-hover:text-[#01427C] group-hover:border-[#027DF7]/30 transition-colors">
+                    <span className="text-[13px] font-bold px-2.5 py-1 rounded-full bg-white/80 border border-[#E2E8F0] text-[#64748B] group-hover:text-[#01427C] group-hover:border-[#027DF7]/30 transition-colors">
                       {srv.tag}
                     </span>
                   </div>

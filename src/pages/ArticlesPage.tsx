@@ -201,10 +201,10 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
               <div className="lg:col-span-7 space-y-4">
                 <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full bg-[#027DF7] text-white text-[11px] font-extrabold tracking-wide">
+                  <span className="px-3 py-1 rounded-full bg-[#027DF7] text-white text-[13px] font-extrabold tracking-wide">
                     {t.articles.featuredBadge}
                   </span>
-                  <span className="px-3 py-1 rounded-full bg-[#D5ECFE] text-[#01427C] text-[11px] font-bold">
+                  <span className="px-3 py-1 rounded-full bg-[#D5ECFE] text-[#01427C] text-[13px] font-bold">
                     {featuredArticle.category}
                   </span>
                 </div>
@@ -220,7 +220,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
                 {/* Key takeaways bullet preview */}
                 {featuredArticle.keyTakeaways && (
                   <div className="p-3.5 rounded-2xl bg-white/60 border border-white/80 space-y-1.5">
-                    <span className="text-[11px] font-bold text-[#01427C] flex items-center gap-1">
+                    <span className="text-[13px] font-bold text-[#01427C] flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#027DF7]" />
                       {t.articles.keyTakeawaysTitle}
                     </span>
@@ -244,7 +244,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
                       <div className="text-xs font-bold text-[#01427C]">
                         {featuredArticle.author.name}
                       </div>
-                      <div className="text-[11px] text-[#64748B]">
+                      <div className="text-[13px] text-[#64748B]">
                         {featuredArticle.author.role}
                       </div>
                     </div>
@@ -338,7 +338,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
                         loading="lazy"
                       />
                       <div className={`absolute top-2.5 ${isRtl ? 'right-2.5' : 'left-2.5'}`}>
-                        <span className="px-2.5 py-1 rounded-lg bg-white/90 backdrop-blur-md text-[#01427C] text-[10px] font-extrabold shadow-sm border border-white/80">
+                        <span className="px-2.5 py-1 rounded-lg bg-white/90 backdrop-blur-md text-[#01427C] text-[12px] font-extrabold shadow-sm border border-white/80">
                           {article.category}
                         </span>
                       </div>
@@ -357,7 +357,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
                     </div>
 
                     {/* Metadata */}
-                    <div className="flex items-center justify-between text-[11px] text-[#64748B]">
+                    <div className="flex items-center justify-between text-[13px] text-[#64748B]">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         <span>{article.date}</span>
@@ -381,7 +381,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
                       {article.tags.slice(0, 3).map((tag, idx) => (
                         <span
                           key={idx}
-                          className="text-[10px] px-2 py-0.5 rounded-md bg-[#F1F5F9] text-[#64748B] font-medium"
+                          className="text-[12px] px-2 py-0.5 rounded-md bg-[#F1F5F9] text-[#64748B] font-medium"
                         >
                           #{tag}
                         </span>

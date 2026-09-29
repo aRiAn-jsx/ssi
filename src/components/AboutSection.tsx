@@ -114,7 +114,7 @@ export const AboutSection: React.FC = () => {
                       <ShieldCheck className="w-5 h-5" />
                     </div>
                     <div className={isRtl ? 'text-right' : 'text-left'}>
-                      <span className="text-[10px] text-[#64748B] block font-bold">{t.about.cardAuditLabel}</span>
+                      <span className="text-[12px] text-[#64748B] block font-bold">{t.about.cardAuditLabel}</span>
                       <span className="text-xs font-extrabold text-[#01427C]">{t.about.cardAuditValue}</span>
                     </div>
                   </div>
@@ -135,7 +135,7 @@ export const AboutSection: React.FC = () => {
                       <TrendingUp className="w-5 h-5" />
                     </div>
                     <div className={isRtl ? 'text-right' : 'text-left'}>
-                      <span className="text-[10px] text-[#64748B] block font-bold">{t.about.cardGrowthLabel}</span>
+                      <span className="text-[12px] text-[#64748B] block font-bold">{t.about.cardGrowthLabel}</span>
                       <span className="text-xs font-extrabold text-[#01427C]">{t.about.cardGrowthValue}</span>
                     </div>
                   </div>

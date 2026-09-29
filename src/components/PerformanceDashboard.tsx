@@ -152,7 +152,7 @@ export const PerformanceDashboard: React.FC = () => {
                           x={width - paddingX + 8}
                           y={y + 4}
                           fill="#64748B"
-                          fontSize="10"
+                          fontSize="12"
                           textAnchor="start"
                           className="font-sans"
                         >
@@ -202,7 +202,7 @@ export const PerformanceDashboard: React.FC = () => {
                         y={p.y - 12}
                         textAnchor="middle"
                         fill="#01427C"
-                        fontSize="10"
+                        fontSize="12"
                         fontWeight="bold"
                         className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                       >
@@ -214,7 +214,7 @@ export const PerformanceDashboard: React.FC = () => {
                         y={height - 8}
                         textAnchor="middle"
                         fill="#64748B"
-                        fontSize="11"
+                        fontSize="12"
                         fontWeight="500"
                       >
                         {p.period}
@@ -227,24 +227,24 @@ export const PerformanceDashboard: React.FC = () => {
               {/* Bottom Chart Bar Indicators */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8 pt-6 border-t border-[#E2E8F0]/80">
                 <div className={isRtl ? 'text-right' : 'text-left'}>
-                  <span className="text-[11px] text-[#64748B] block">{t.dashboard.betaLabel}</span>
+                  <span className="text-[13px] text-[#64748B] block">{t.dashboard.betaLabel}</span>
                   <span className="text-base font-extrabold text-[#01427C]">0.72</span>
-                  <span className="text-[10px] text-[#10B981] block">{t.dashboard.betaSub}</span>
+                  <span className="text-[12px] text-[#10B981] block">{t.dashboard.betaSub}</span>
                 </div>
                 <div className={isRtl ? 'text-right' : 'text-left'}>
-                  <span className="text-[11px] text-[#64748B] block">{t.dashboard.sharpeLabel}</span>
+                  <span className="text-[13px] text-[#64748B] block">{t.dashboard.sharpeLabel}</span>
                   <span className="text-base font-extrabold text-[#027DF7]">1.85</span>
-                  <span className="text-[10px] text-[#027DF7] block">{t.dashboard.sharpeSub}</span>
+                  <span className="text-[12px] text-[#027DF7] block">{t.dashboard.sharpeSub}</span>
                 </div>
                 <div className={isRtl ? 'text-right' : 'text-left'}>
-                  <span className="text-[11px] text-[#64748B] block">{t.dashboard.maxDdLabel}</span>
+                  <span className="text-[13px] text-[#64748B] block">{t.dashboard.maxDdLabel}</span>
                   <span className="text-base font-extrabold text-[#01427C]">-8.3%</span>
-                  <span className="text-[10px] text-[#64748B] block">{t.dashboard.maxDdSub}</span>
+                  <span className="text-[12px] text-[#64748B] block">{t.dashboard.maxDdSub}</span>
                 </div>
                 <div className={isRtl ? 'text-right' : 'text-left'}>
-                  <span className="text-[11px] text-[#64748B] block">{t.dashboard.cumDivLabel}</span>
+                  <span className="text-[13px] text-[#64748B] block">{t.dashboard.cumDivLabel}</span>
                   <span className="text-base font-extrabold text-[#10B981]">{language === 'fa' ? '۲۴.۵ ه.م.ر' : '24.5 T Rls'}</span>
-                  <span className="text-[10px] text-[#10B981] block">{t.dashboard.cumDivSub}</span>
+                  <span className="text-[12px] text-[#10B981] block">{t.dashboard.cumDivSub}</span>
                 </div>
               </div>
             </GlassCard>
@@ -310,7 +310,7 @@ export const PerformanceDashboard: React.FC = () => {
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
                     <span className="text-xs text-[#64748B]">{t.dashboard.totalAssetsLabel}</span>
                     <span className="text-xl font-extrabold text-[#01427C]">100%</span>
-                    <span className="text-[10px] text-[#027DF7] font-bold">{t.dashboard.balancedLabel}</span>
+                    <span className="text-[12px] text-[#027DF7] font-bold">{t.dashboard.balancedLabel}</span>
                   </div>
                 </div>
               </div>

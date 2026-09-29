@@ -91,7 +91,7 @@ export const SubsidiariesSection: React.FC = () => {
               <span className="text-xs sm:text-sm font-extrabold text-[#01427C]">
                 {language === 'fa' ? 'هلدینگ سرآمد' : 'Saramad Holding'}
               </span>
-              <span className="text-[9px] text-[#64748B]">{t.subsidiaries.coreHub}</span>
+              <span className="text-[12px] text-[#64748B]">{t.subsidiaries.coreHub}</span>
 
               {/* Pulsing ring */}
               <div className="absolute -inset-2 rounded-full border border-[#027DF7]/40 animate-ping opacity-25 pointer-events-none" />
@@ -107,14 +107,14 @@ export const SubsidiariesSection: React.FC = () => {
                 }`}
               >
                 <div
-                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-2 transition-all duration-300 ${
+                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
                     activeNodeId === 'sub-1'
                       ? 'bg-[#027DF7] text-white shadow-xl shadow-[#027DF7]/40 ring-4 ring-[#D5ECFE]'
                       : 'liquid-glass-card text-[#01427C] hover:border-[#027DF7]'
                   }`}
                 >
-                  <Building className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-                  <span className="text-[9px] sm:text-[10px] font-bold">
+                  <Building className="w-4 h-4 sm:w-6 sm:h-6 mb-0.5" />
+                  <span className="text-[12px] font-bold leading-tight">
                     {language === 'fa' ? 'سبدگردان' : 'Asset Mgt'}
                   </span>
                 </div>
@@ -134,14 +134,14 @@ export const SubsidiariesSection: React.FC = () => {
                 }`}
               >
                 <div
-                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-2 transition-all duration-300 ${
+                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
                     activeNodeId === 'sub-2'
                       ? 'bg-[#10B981] text-white shadow-xl shadow-[#10B981]/40 ring-4 ring-[#D5ECFE]'
                       : 'liquid-glass-card text-[#01427C] hover:border-[#10B981]'
                   }`}
                 >
-                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-                  <span className="text-[9px] sm:text-[10px] font-bold">
+                  <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 mb-0.5" />
+                  <span className="text-[12px] font-bold leading-tight">
                     {language === 'fa' ? 'ایلیا ونچرز' : 'Ventures'}
                   </span>
                 </div>
@@ -161,14 +161,14 @@ export const SubsidiariesSection: React.FC = () => {
                 }`}
               >
                 <div
-                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-2 transition-all duration-300 ${
+                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
                     activeNodeId === 'sub-3'
                       ? 'bg-[#01427C] text-white shadow-xl shadow-[#01427C]/40 ring-4 ring-[#D5ECFE]'
                       : 'liquid-glass-card text-[#01427C] hover:border-[#01427C]'
                   }`}
                 >
-                  <Building className="w-5 h-5 sm:w-6 sm:h-6 mb-0.5" />
-                  <span className="text-[9px] sm:text-[10px] font-bold">
+                  <Building className="w-4 h-4 sm:w-6 sm:h-6 mb-0.5" />
+                  <span className="text-[12px] font-bold leading-tight">
                     {language === 'fa' ? 'املاک' : 'Real Estate'}
                   </span>
                 </div>
@@ -212,7 +212,7 @@ export const SubsidiariesSection: React.FC = () => {
                         key={idx}
                         className="p-3.5 rounded-2xl bg-white/80 border border-[#E2E8F0] shadow-sm"
                       >
-                        <span className="text-[11px] text-[#64748B] block mb-1">{m.label}</span>
+                        <span className="text-[13px] text-[#64748B] block mb-1">{m.label}</span>
                         <span className="text-base font-extrabold text-[#01427C]">{m.value}</span>
                       </div>
                     ))}

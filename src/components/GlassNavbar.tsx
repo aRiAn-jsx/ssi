@@ -217,11 +217,11 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                 <span className="font-extrabold text-base md:text-lg text-[#01427C] tracking-tight group-hover:text-[#027DF7] transition-colors">
                   {holdingInfo.shortName}
                 </span>
-                <span className="text-[9px] md:text-[10px] font-semibold px-1.5 md:px-2 py-0.5 rounded-full bg-[#D5ECFE]/80 text-[#01427C] border border-[#027DF7]/20 whitespace-nowrap">
+                <span className="text-[12px] md:text-[12px] font-semibold px-1.5 md:px-2 py-0.5 rounded-full bg-[#D5ECFE]/80 text-[#01427C] border border-[#027DF7]/20 whitespace-nowrap">
                   {language === 'fa' ? 'سهامی عام' : 'PJSC'}
                 </span>
               </div>
-              <span className="text-[11px] font-medium text-[#64748B] hidden sm:block whitespace-nowrap">
+              <span className="text-[13px] font-medium text-[#64748B] hidden sm:block whitespace-nowrap">
                 {holdingInfo.name}
               </span>
             </div>
@@ -268,7 +268,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                   )}
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold leading-tight">
+                    <span className="text-[12px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold leading-tight">
                       {item.badge}
                     </span>
                   )}
@@ -289,7 +289,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                 type="button"
                 id="lang-btn-fa"
                 onClick={() => setLanguage('fa')}
-                className={`relative px-2.5 py-1 rounded-full text-[11px] font-extrabold transition-all duration-200 ${
+                className={`relative px-2.5 py-1 rounded-full text-[13px] font-extrabold transition-all duration-200 ${
                   language === 'fa'
                     ? 'text-[#01427C] shadow-xs'
                     : 'text-[#64748B] hover:text-[#01427C]'
@@ -309,7 +309,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                 type="button"
                 id="lang-btn-en"
                 onClick={() => setLanguage('en')}
-                className={`relative px-2.5 py-1 rounded-full text-[11px] font-extrabold transition-all duration-200 ${
+                className={`relative px-2.5 py-1 rounded-full text-[13px] font-extrabold transition-all duration-200 ${
                   language === 'en'
                     ? 'text-[#01427C] shadow-xs'
                     : 'text-[#64748B] hover:text-[#01427C]'
@@ -399,7 +399,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                     </div>
                     <div>
                       <h3 className="text-sm font-bold text-[#01427C]">{t.nav.menuTitle}</h3>
-                      <p className="text-[11px] text-[#64748B]">{t.nav.menuSubtitle}</p>
+                      <p className="text-[13px] text-[#64748B]">{t.nav.menuSubtitle}</p>
                     </div>
                   </div>
 
@@ -428,7 +428,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
 
                 {/* 4 Main pages pill row inside toolbar */}
                 <div className="mb-6 p-3 rounded-2xl bg-[#F0F7FF] border border-[#D5ECFE]">
-                  <div className="text-[11px] font-bold text-[#01427C] mb-2">{t.drawer.holdingGroupTitle}:</div>
+                  <div className="text-[13px] font-bold text-[#01427C] mb-2">{t.drawer.holdingGroupTitle}:</div>
                   <div className="grid grid-cols-2 gap-2">
                     {mainNavItems.map((nav) => (
                       <button
@@ -472,7 +472,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                           <div className="text-xs font-bold text-[#01427C] group-hover:text-[#027DF7] transition-colors mb-0.5">
                             {item.label}
                           </div>
-                          <div className="text-[11px] text-[#64748B] leading-relaxed line-clamp-1">
+                          <div className="text-[13px] text-[#64748B] leading-relaxed line-clamp-1">
                             {item.description}
                           </div>
                         </div>
@@ -506,7 +506,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail className="w-3.5 h-3.5 text-[#027DF7]" />
-                    <span className="font-mono text-[11px]">{holdingInfo.email}</span>
+                    <span className="font-mono text-[13px]">{holdingInfo.email}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-[#027DF7]" />
@@ -548,7 +548,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                     <span className="text-sm font-extrabold text-[#01427C] leading-tight">
                       {holdingInfo.shortName}
                     </span>
-                    <span className="text-[10px] text-[#64748B]">
+                    <span className="text-[12px] text-[#64748B]">
                       {language === 'fa' ? 'منوی دسترسی سریع' : 'Quick Navigation'}
                     </span>
                   </div>
@@ -610,7 +610,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
               <div className="pt-2">
                 <div className="text-xs font-extrabold text-[#01427C] px-1 mb-2 flex items-center justify-between">
                   <span>{t.nav.menuTitle}</span>
-                  <span className="text-[10px] text-[#027DF7] bg-[#D5ECFE]/60 px-2 py-0.5 rounded-full font-bold">
+                  <span className="text-[12px] text-[#027DF7] bg-[#D5ECFE]/60 px-2 py-0.5 rounded-full font-bold">
                     {t.nav.menuSubtitle}
                   </span>
                 </div>
@@ -638,7 +638,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                           <span>{link.label}</span>
                           {link.badge && (
                             <span
-                              className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                              className={`text-[12px] px-2 py-0.5 rounded-full font-bold ${
                                 isSelected ? 'bg-white/20 text-white' : 'bg-[#D5ECFE] text-[#01427C]'
                               }`}
                             >
@@ -703,7 +703,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                 </button>
               )}
 
-              <div className="text-center text-[11px] text-[#64748B] font-medium">
+              <div className="text-center text-[13px] text-[#64748B] font-medium">
                 {holdingInfo.name} • {holdingInfo.phoneFormatted}
               </div>
             </div>

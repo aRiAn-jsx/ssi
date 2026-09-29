@@ -309,11 +309,11 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                             <span className="text-xs md:text-sm font-bold text-[#01427C]">
                               {type.title}
                             </span>
-                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-white text-[#027DF7] border border-[#027DF7]/20 font-semibold">
+                            <span className="text-[12px] px-2 py-0.5 rounded-full bg-white text-[#027DF7] border border-[#027DF7]/20 font-semibold">
                               {type.badge}
                             </span>
                           </div>
-                          <p className="text-[11px] text-[#64748B] mt-0.5 leading-relaxed font-normal">
+                          <p className="text-[13px] text-[#64748B] mt-0.5 leading-relaxed font-normal">
                             {type.desc}
                           </p>
                         </div>
@@ -379,7 +379,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                             onClick={() =>
                               setFormData((prev) => ({ ...prev, preferredTime: slot }))
                             }
-                            className={`p-2.5 rounded-xl border text-[11px] font-bold text-center transition-all ${
+                            className={`p-2.5 rounded-xl border text-[13px] font-bold text-center transition-all ${
                               isSelected
                                 ? 'bg-[#027DF7] text-white border-[#027DF7]'
                                 : 'bg-white/80 text-[#64748B] border-[#E2E8F0] hover:border-[#027DF7]/40'
@@ -486,7 +486,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                 </div>
 
                 {/* Privacy & Guarantee Note */}
-                <div className="flex items-start gap-2 p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[11px] text-[#64748B] leading-relaxed">
+                <div className="flex items-start gap-2 p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[13px] text-[#64748B] leading-relaxed">
                   <Shield className="w-4 h-4 text-[#027DF7] shrink-0 mt-0.5" />
                   <span>{t.consultationPage.privacyNote}</span>
                 </div>
@@ -560,7 +560,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                     className="p-1 rounded bg-white text-[#64748B] hover:text-[#027DF7] shadow-xs"
                   >
                     {copiedPhone ? (
-                      <span className="text-[10px] text-emerald-600 font-bold px-1">{language === 'fa' ? 'کپی شد' : 'Copied'}</span>
+                      <span className="text-[12px] text-emerald-600 font-bold px-1">{language === 'fa' ? 'کپی شد' : 'Copied'}</span>
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
@@ -604,7 +604,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
               <div className="p-3 rounded-xl bg-white/70 border border-[#E2E8F0] flex items-center justify-between">
                 <div>
                   <div className="font-bold text-[#01427C]">{language === 'fa' ? 'شرکت سبدگردان سرآمد' : 'Saramad Asset Management'}</div>
-                  <div className="text-[11px] text-[#64748B]">{language === 'fa' ? 'پورتفوی اختصاصی و صندوق‌ها' : 'Managed Accounts & Funds'}</div>
+                  <div className="text-[13px] text-[#64748B]">{language === 'fa' ? 'پورتفوی اختصاصی و صندوق‌ها' : 'Managed Accounts & Funds'}</div>
                 </div>
                 <span className="font-mono font-bold text-[#027DF7]">{language === 'fa' ? 'داخلی ۱۰۴' : 'Ext. 104'}</span>
               </div>
@@ -612,7 +612,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
               <div className="p-3 rounded-xl bg-white/70 border border-[#E2E8F0] flex items-center justify-between">
                 <div>
                   <div className="font-bold text-[#01427C]">{language === 'fa' ? 'ایلیا ونچرز (سرمایه‌گذاری خطرپذیر)' : 'Ilya Ventures (VC)'}</div>
-                  <div className="text-[11px] text-[#64748B]">{language === 'fa' ? 'ارزیابی طرح‌ها و جذب سرمایه' : 'Deal Flow & Startup Pitch'}</div>
+                  <div className="text-[13px] text-[#64748B]">{language === 'fa' ? 'ارزیابی طرح‌ها و جذب سرمایه' : 'Deal Flow & Startup Pitch'}</div>
                 </div>
                 <span className="font-mono font-bold text-[#027DF7]">{language === 'fa' ? 'داخلی ۱۰۸' : 'Ext. 108'}</span>
               </div>
@@ -620,7 +620,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
               <div className="p-3 rounded-xl bg-white/70 border border-[#E2E8F0] flex items-center justify-between">
                 <div>
                   <div className="font-bold text-[#01427C]">{language === 'fa' ? 'توسعه املاک و مستغلات سرآمد' : 'Saramad Real Estate Development'}</div>
-                  <div className="text-[11px] text-[#64748B]">{language === 'fa' ? 'مشارکت در ساخت و پروژه‌های تجاری' : 'Commercial Development'}</div>
+                  <div className="text-[13px] text-[#64748B]">{language === 'fa' ? 'مشارکت در ساخت و پروژه‌های تجاری' : 'Commercial Development'}</div>
                 </div>
                 <span className="font-mono font-bold text-[#027DF7]">{language === 'fa' ? 'داخلی ۱۱۲' : 'Ext. 112'}</span>
               </div>

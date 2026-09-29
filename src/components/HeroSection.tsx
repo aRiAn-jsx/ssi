@@ -209,7 +209,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {t.hero.eyebrow}
             </span>
             <div
-              className={`flex items-center gap-1 text-[11px] font-semibold text-[#027DF7] ${
+              className={`flex items-center gap-1 text-[13px] font-semibold text-[#027DF7] ${
                 isRtl ? 'border-r pr-2' : 'border-l pl-2'
               } border-[#E2E8F0]`}
             >
@@ -296,15 +296,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           >
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 backdrop-blur-xs border border-[#E2E8F0]/80 shadow-2xs text-[#01427C] hover:border-[#027DF7]/30 transition-colors">
               <ShieldCheck className="w-4 h-4 text-[#027DF7] shrink-0" />
-              <span className="font-bold text-[11px]">{language === 'fa' ? 'نظارت سازمان بورس (SEO)' : 'SEO Regulated'}</span>
+              <span className="font-bold text-[13px]">{language === 'fa' ? 'نظارت سازمان بورس (SEO)' : 'SEO Regulated'}</span>
             </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 backdrop-blur-xs border border-[#E2E8F0]/80 shadow-2xs text-[#01427C] hover:border-[#10B981]/30 transition-colors">
               <TrendingUp className="w-4 h-4 text-[#10B981] shrink-0" />
-              <span className="font-bold text-[11px]">{language === 'fa' ? 'آلفای پایدار (+۳۴٪)' : 'Sustained Alpha (+34%)'}</span>
+              <span className="font-bold text-[13px]">{language === 'fa' ? 'آلفای پایدار (+۳۴٪)' : 'Sustained Alpha (+34%)'}</span>
             </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 backdrop-blur-xs border border-[#E2E8F0]/80 shadow-2xs text-[#01427C] hover:border-[#027DF7]/30 transition-colors">
               <Globe2 className="w-4 h-4 text-[#027DF7] shrink-0" />
-              <span className="font-bold text-[11px]">{language === 'fa' ? 'هاب‌های منطقه‌ای' : 'Global Hubs'}</span>
+              <span className="font-bold text-[13px]">{language === 'fa' ? 'هاب‌های منطقه‌ای' : 'Global Hubs'}</span>
             </div>
           </motion.div>
         </div>
@@ -373,7 +373,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       <AnimatedCounter end={165} prefix="+" language={language} />
                     </div>
                   </div>
-                  <span className="text-[10px] sm:text-[11px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
                     {language === 'fa' ? 'پروژه‌ها' : 'Projects'}
                   </span>
                 </div>
@@ -390,7 +390,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       />
                     </div>
                   </div>
-                  <span className="text-[10px] sm:text-[11px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
                     {language === 'fa' ? 'شروع کار' : 'Founded'}
                   </span>
                 </div>
@@ -403,7 +403,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       <AnimatedCounter end={280} prefix="+" language={language} />
                     </div>
                   </div>
-                  <span className="text-[10px] sm:text-[11px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
                     {language === 'fa' ? 'کارکنان' : 'Team'}
                   </span>
                 </div>
@@ -421,7 +421,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                       />
                     </div>
                   </div>
-                  <span className="text-[10px] sm:text-[11px] font-semibold text-[#64748B] group-hover/item:text-[#10B981] transition-colors whitespace-nowrap">
+                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#10B981] transition-colors whitespace-nowrap">
                     {language === 'fa' ? 'موفقیت' : 'Success'}
                   </span>
                 </div>

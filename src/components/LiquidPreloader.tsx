@@ -215,7 +215,7 @@ export const LiquidPreloader: React.FC<LiquidPreloaderProps> = ({
                 <span className="text-2xl md:text-3xl font-black text-[#01427C] tracking-tight">
                   {holdingInfo.shortName}
                 </span>
-                <span className="text-[10px] md:text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#D5ECFE] text-[#01427C] border border-[#027DF7]/25 shadow-2xs">
+                <span className="text-[12px] md:text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#D5ECFE] text-[#01427C] border border-[#027DF7]/25 shadow-2xs">
                   {language === 'fa' ? 'سهامی عام' : 'PJSC'}
                 </span>
               </div>
@@ -238,7 +238,7 @@ export const LiquidPreloader: React.FC<LiquidPreloaderProps> = ({
 
               {/* Counter Display & Status */}
               <div className="w-full flex items-center justify-between text-xs font-bold px-0.5">
-                <span className="text-[11px] font-medium text-[#64748B] flex items-center gap-1.5">
+                <span className="text-[13px] font-medium text-[#64748B] flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#027DF7] animate-ping" />
                   {language === 'fa' ? 'آماده‌سازی پورتال...' : 'Initializing portal...'}
                 </span>

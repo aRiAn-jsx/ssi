@@ -43,7 +43,8 @@
   inset-inline: 20px;
   bottom: 20px;
   display: grid;
-  grid-template-rows: 2.9em 3em;
+  grid-template-rows: auto auto;
+  row-gap: 4px;
   align-items: end;
   width: calc(100% - 40px);
   color: #fff;
@@ -56,9 +57,9 @@
   align-self: start;
   margin-top: 2px;
   color: #d5ecfe;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .team-photo-card__name {

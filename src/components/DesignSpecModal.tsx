@@ -194,8 +194,8 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
                     <div className="h-8 rounded-lg w-full border border-black/5" style={{ backgroundColor: c.hex }} />
                     <div>
                       <span className="text-xs font-bold text-[#01427C] block">{c.name}</span>
-                      <span className="text-[10px] text-[#64748B] font-mono block">{c.hex}</span>
-                      <span className="text-[10px] text-[#64748B] block mt-0.5">{c.role}</span>
+                      <span className="text-[12px] text-[#64748B] font-mono block">{c.hex}</span>
+                      <span className="text-[12px] text-[#64748B] block mt-0.5">{c.role}</span>
                     </div>
                   </div>
                 ))}
@@ -246,7 +246,7 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
                   <div key={idx} className="p-4 rounded-2xl bg-[#F7FAFC] border border-[#E2E8F0]">
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-bold text-[#01427C]">{lottie.title}</span>
-                      <span className="text-[10px] text-[#027DF7] font-semibold">توصیه‌شده</span>
+                      <span className="text-[12px] text-[#027DF7] font-semibold">توصیه‌شده</span>
                     </div>
                     <p className="text-xs text-[#64748B] mb-1">منبع: {lottie.source}</p>
                     <p className="text-xs text-[#0A2540]">کاربرد در سایت: {lottie.usage}</p>

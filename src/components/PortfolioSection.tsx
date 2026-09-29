@@ -100,7 +100,7 @@ export const PortfolioSection: React.FC = () => {
                   <p className="text-xs font-bold text-white/95 leading-snug">
                     {t.portfolio.metricBadgeLabel}
                   </p>
-                  <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-1.5 text-[11px] font-extrabold text-[#D5ECFE]">
+                  <div className="mt-2 pt-2 border-t border-white/20 flex items-center gap-1.5 text-[13px] font-extrabold text-[#D5ECFE]">
                     <TrendingUp className="w-3.5 h-3.5 text-[#D5ECFE]" />
                     <span>{t.portfolio.metricBadgeGrowth}</span>
                   </div>

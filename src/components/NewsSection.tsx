@@ -124,7 +124,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ onGoToArticles, onSele
                     </div>
 
                     {/* Read time pill */}
-                    <div className={`absolute bottom-3 ${isRtl ? 'right-3' : 'left-3'} flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#01427C]/70 backdrop-blur-md text-white text-[11px]`}>
+                    <div className={`absolute bottom-3 ${isRtl ? 'right-3' : 'left-3'} flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#01427C]/70 backdrop-blur-md text-white text-[13px]`}>
                       <Clock className="w-3 h-3 text-[#D5ECFE]" />
                       <span>{item.readTime}</span>
                     </div>

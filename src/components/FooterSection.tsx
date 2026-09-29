@@ -97,7 +97,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
                   className={`hover:text-[#027DF7] transition-colors flex items-center gap-1 font-semibold text-white ${isRtl ? 'text-right' : 'text-left'}`}
                 >
                   <span>{t.nav.articles}</span>
-                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white">
+                  <span className="text-[12px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white">
                     {language === 'fa' ? 'ویژه' : 'Featured'}
                   </span>
                 </button>

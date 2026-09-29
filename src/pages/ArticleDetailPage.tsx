@@ -232,10 +232,10 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
   // Text size class mapping for mobile & desktop comfortable reading
   const bodyTextClass =
     textSize === 'xlarge'
-      ? 'text-lg sm:text-xl leading-[2.2] tracking-wide'
+      ? 'text-xl sm:text-2xl leading-[2.1] tracking-wide'
       : textSize === 'large'
-      ? 'text-base sm:text-lg leading-[2.1] tracking-normal'
-      : 'text-sm sm:text-base leading-[2.0] tracking-normal';
+      ? 'text-lg sm:text-xl leading-[2] tracking-normal'
+      : 'text-base sm:text-lg leading-[1.95] tracking-normal';
 
   return (
     <div className={`w-full min-h-screen pt-24 md:pt-28 pb-28 md:pb-24 ${isRtl ? 'text-right' : 'text-left'}`}>
@@ -264,12 +264,12 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
           </button>
 
           {/* Center Reading status & Time */}
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-[#64748B]">
+          <div className="flex items-center gap-2 text-[13px] font-semibold text-[#64748B]">
             <span className="hidden sm:inline-block max-w-[260px] truncate text-[#01427C] font-bold">
               {article.title}
             </span>
             <span className="hidden sm:inline-block">•</span>
-            <span className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#D5ECFE]/50 text-[#01427C] font-bold text-[10px]">
+            <span className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#D5ECFE]/50 text-[#01427C] font-bold text-[12px]">
               <Clock className="w-3 h-3 text-[#027DF7]" />
               {article.readTime}
             </span>
@@ -286,7 +286,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                 type="button"
                 onClick={() => setTextSize('normal')}
                 title="Normal Font Size"
-                className={`px-2 py-1 rounded-full text-[10px] font-bold transition-all ${
+                className={`px-2 py-1 rounded-full text-[12px] font-bold transition-all ${
                   textSize === 'normal'
                     ? 'bg-white text-[#01427C] shadow-xs'
                     : 'text-[#64748B] hover:text-[#01427C]'
@@ -382,7 +382,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
               {article.category}
             </span>
             {article.featured && (
-              <span className="px-3 py-1 rounded-full bg-[#027DF7] text-white text-[11px] font-extrabold flex items-center gap-1 shadow-xs">
+              <span className="px-3 py-1 rounded-full bg-[#027DF7] text-white text-[13px] font-extrabold flex items-center gap-1 shadow-xs">
                 <Sparkles className="w-3 h-3" />
                 {t.articles.featuredBadge}
               </span>
@@ -555,7 +555,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
             <div className="my-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-tr from-[#D5ECFE]/50 to-white border border-[#027DF7]/25 relative overflow-hidden shadow-xs">
               <Quote className={`absolute -bottom-4 ${isRtl ? '-left-4' : '-right-4'} w-24 h-24 text-[#027DF7]/10 pointer-events-none`} />
               <div className="relative z-10 space-y-3">
-                <div className="text-[11px] font-black uppercase tracking-wider text-[#027DF7] flex items-center gap-1.5">
+                <div className="text-[13px] font-black uppercase tracking-wider text-[#027DF7] flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>{t.articleDetail.expertQuote}</span>
                 </div>
@@ -646,7 +646,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
             >
               <ThumbsUp className="w-4 h-4" />
               <span>{t.articleDetail.helpfulBtn}</span>
-              <span className="px-2 py-0.5 rounded-full bg-black/10 text-[10px] font-extrabold tabular-nums">
+              <span className="px-2 py-0.5 rounded-full bg-black/10 text-[12px] font-extrabold tabular-nums">
                 {reactions.helpful}
               </span>
             </button>
@@ -663,7 +663,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
             >
               <Sparkles className="w-4 h-4 text-[#00D4B2]" />
               <span>{t.articleDetail.insightfulBtn}</span>
-              <span className="px-2 py-0.5 rounded-full bg-black/10 text-[10px] font-extrabold tabular-nums">
+              <span className="px-2 py-0.5 rounded-full bg-black/10 text-[12px] font-extrabold tabular-nums">
                 {reactions.insightful}
               </span>
             </button>
@@ -680,7 +680,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
             >
               <Award className="w-4 h-4" />
               <span>{t.articleDetail.recommendBtn}</span>
-              <span className="px-2 py-0.5 rounded-full bg-black/10 text-[10px] font-extrabold tabular-nums">
+              <span className="px-2 py-0.5 rounded-full bg-black/10 text-[12px] font-extrabold tabular-nums">
                 {reactions.recommend}
               </span>
             </button>
@@ -707,7 +707,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                 </h3>
                 <div className="text-xs text-[#64748B] font-semibold">{article.author.role}</div>
                 {article.author.education && (
-                  <div className="text-[11px] text-[#475569]">
+                  <div className="text-[13px] text-[#475569]">
                     <span className="font-bold text-[#01427C]">{t.articleDetail.educationLabel} </span>
                     {article.author.education}
                   </div>
@@ -860,10 +860,10 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                       </div>
                       <div>
                         <div className="font-bold text-[#01427C]">{c.name}</div>
-                        <div className="text-[11px] text-[#64748B]">{c.role}</div>
+                        <div className="text-[13px] text-[#64748B]">{c.role}</div>
                       </div>
                     </div>
-                    <span className="text-[11px] text-[#94A3B8]">{c.date}</span>
+                    <span className="text-[13px] text-[#94A3B8]">{c.date}</span>
                   </div>
                   <p className="text-xs sm:text-sm text-[#334155] leading-relaxed pt-1">
                     {c.content}
@@ -897,14 +897,14 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-[#D5ECFE] text-[#01427C]">
+                    <span className="text-[12px] font-bold px-2 py-0.5 rounded-md bg-[#D5ECFE] text-[#01427C]">
                       {rel.category}
                     </span>
                     <h4 className="text-xs sm:text-sm font-bold text-[#01427C] group-hover:text-[#027DF7] transition-colors line-clamp-2 leading-snug">
                       {rel.title}
                     </h4>
                   </div>
-                  <div className="mt-4 pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-[11px] text-[#64748B]">
+                  <div className="mt-4 pt-3 border-t border-[#E2E8F0] flex items-center justify-between text-[13px] text-[#64748B]">
                     <span>{rel.readTime}</span>
                     <span className="text-[#027DF7] font-bold flex items-center gap-1">
                       {t.articles.read}
@@ -932,7 +932,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
             }`}
           >
             <ThumbsUp className="w-3.5 h-3.5" />
-            <span className="tabular-nums text-[11px]">{reactions.helpful}</span>
+            <span className="tabular-nums text-[13px]">{reactions.helpful}</span>
           </button>
 
           {/* Bookmark */}

@@ -133,7 +133,7 @@ export const ScrollProgress: React.FC = () => {
             transition={{ duration: 0.2 }}
             className={`fixed bottom-5 ${
               isRtl ? 'left-5 md:left-6' : 'right-5 md:right-6'
-            } md:bottom-auto md:top-3.5 z-30 flex items-center gap-1.5 px-3 py-1.5 md:px-2.5 md:py-1 rounded-full bg-white/90 hover:bg-white backdrop-blur-xl border border-white/90 shadow-lg md:shadow-md shadow-[#01427C]/12 text-xs md:text-[11px] font-bold text-[#01427C] hover:text-[#027DF7] transition-all cursor-pointer group active:scale-95`}
+            } md:bottom-auto md:top-3.5 z-30 flex items-center gap-1.5 px-3 py-1.5 md:px-2.5 md:py-1 rounded-full bg-white/90 hover:bg-white backdrop-blur-xl border border-white/90 shadow-lg md:shadow-md shadow-[#01427C]/12 text-xs md:text-[13px] font-bold text-[#01427C] hover:text-[#027DF7] transition-all cursor-pointer group active:scale-95`}
             title={language === 'fa' ? 'بازگشت به ابتدای صفحه' : 'Back to top'}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#027DF7] animate-pulse" />
