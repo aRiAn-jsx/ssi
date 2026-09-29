@@ -4,6 +4,7 @@ import { ArrowUpLeft, ArrowUpRight, Search, Users, X } from 'lucide-react';
 import { getTeamPeople } from '../data/teamData';
 import { TeamPhotoCard } from '../components/TeamPhotoCard';
 import { useLanguage } from '../context/LanguageContext';
+import './TeamPage.css';
 
 interface TeamPageProps {
   onBackToHome: () => void;
@@ -18,12 +19,31 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onBackToHome, onGoToConsulta
   const filteredMembers = useMemo(() => {
     const query = searchQuery.trim().toLocaleLowerCase();
     return members.filter((member) =>
-      `${member.name} ${member.nameEn}`.toLocaleLowerCase().includes(query),
+      `${member.name} ${member.nameEn} ${member.role || ''} ${member.roleEn || ''}`.toLocaleLowerCase().includes(query),
     );
   }, [members, searchQuery]);
 
+  const leadAndAdvisor = filteredMembers.filter((member) => member.placement === 'lead' || member.placement === 'advisor');
+  const executives = filteredMembers.filter((member) => member.placement === 'executive');
+  const otherMembers = filteredMembers.filter((member) => member.placement === 'member');
+  const renderRow = (people: typeof filteredMembers, row: string, offset: number) => people.length > 0 && (
+    <div className={`team-page__row team-page__row--${row}`}>
+      {people.map((person, index) => (
+        <motion.div
+          className="team-page__card"
+          key={person.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, delay: Math.min(index + offset, 5) * 0.07 }}
+        >
+          <TeamPhotoCard person={person} />
+        </motion.div>
+      ))}
+    </div>
+  );
+
   return (
-    <main className={`min-h-screen pt-28 pb-20 px-4 sm:px-6 md:px-12 max-w-7xl mx-auto ${isRtl ? 'text-right' : 'text-left'}`}>
+    <main className={`min-h-screen pt-20 pb-20 px-4 sm:px-6 md:px-12 max-w-[1500px] mx-auto ${isRtl ? 'text-right' : 'text-left'}`}>
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-[#E2E8F0]/70">
         <div className="flex items-center gap-2 text-xs font-semibold text-[#64748B]">
           <button type="button" onClick={onBackToHome} className="hover:text-[#027DF7] transition-colors">
@@ -42,21 +62,21 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onBackToHome, onGoToConsulta
         </button>
       </div>
 
-      <div className="relative rounded-3xl p-8 sm:p-12 mb-10 overflow-hidden liquid-glass-card border border-white/80 shadow-lg">
+      <div className="relative rounded-3xl p-8 sm:p-12 mb-8 overflow-hidden liquid-glass-card border border-white/80 shadow-lg">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#027DF7]/10 rounded-full blur-3xl pointer-events-none -z-10" />
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/80 border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-4">
           <Users className="w-4 h-4 text-[#027DF7]" />
           <span>{t.teamPage.eyebrow}</span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#01427C] leading-tight mb-4">
-          {language === 'fa' ? 'اعضای تیم ما' : 'Our Team'}
+          {language === 'fa' ? 'مدیران ارشد، هیئت‌مدیره و مشاور' : 'Executive Leadership, Board & Advisor'}
         </h1>
         <p className="text-sm sm:text-base text-[#64748B] leading-relaxed">
           {language === 'fa' ? 'با اعضای تیم سرآمد سرمایه ایلیا آشنا شوید.' : 'Meet the Saramad Capital Ilya team.'}
         </p>
       </div>
 
-      <div className="relative w-full sm:w-80 mb-8">
+      <div className="relative w-full sm:w-80 mb-6">
         <input
           type="search"
           id="team-search-input"
@@ -80,17 +100,10 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onBackToHome, onGoToConsulta
       </div>
 
       {filteredMembers.length ? (
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-          {filteredMembers.map((person, index) => (
-            <motion.div
-              key={person.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: Math.min(index, 3) * 0.07 }}
-            >
-              <TeamPhotoCard person={person} memberLabel={language === 'fa' ? 'عضو تیم' : 'Team member'} />
-            </motion.div>
-          ))}
+        <div className="team-page__groups">
+          {renderRow(leadAndAdvisor, 'lead', 0)}
+          {renderRow(executives, 'executives', leadAndAdvisor.length)}
+          {renderRow(otherMembers, 'members', leadAndAdvisor.length + executives.length)}
         </div>
       ) : (
         <div className="text-center py-16 bg-white/60 rounded-3xl border border-[#E2E8F0]">

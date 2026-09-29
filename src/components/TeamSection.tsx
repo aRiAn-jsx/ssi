@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
-import { Users, ArrowUpLeft, ArrowUpRight } from 'lucide-react';
+import { Users, ArrowLeft, ArrowRight, ArrowUpLeft, ArrowUpRight } from 'lucide-react';
 import { getTeamPeople } from '../data/teamData';
 import { TeamPhotoCard } from './TeamPhotoCard';
 import { useLanguage } from '../context/LanguageContext';
+import './TeamSection.css';
 
 interface TeamSectionProps {
   onGoToTeamPage?: () => void;
@@ -13,6 +14,41 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage }) => {
   const { language, isRtl, t } = useLanguage();
   const team = getTeamPeople(language);
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const updateArrows = () => {
+      const first = carousel.firstElementChild?.getBoundingClientRect();
+      const last = carousel.lastElementChild?.getBoundingClientRect();
+      const viewport = carousel.getBoundingClientRect();
+      setCanScrollLeft(Boolean(first && last && Math.min(first.left, last.left) < viewport.left - 1));
+      setCanScrollRight(Boolean(first && last && Math.max(first.right, last.right) > viewport.right + 1));
+    };
+
+    updateArrows();
+    carousel.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    return () => {
+      carousel.removeEventListener('scroll', updateArrows);
+      window.removeEventListener('resize', updateArrows);
+    };
+  }, [isRtl]);
+
+  const scrollTeam = (direction: -1 | 1) => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+    const card = carousel.firstElementChild as HTMLElement | null;
+    const gap = parseFloat(getComputedStyle(carousel).columnGap) || 0;
+    carousel.scrollBy({
+      left: direction * ((card?.getBoundingClientRect().width ?? carousel.clientWidth) + gap),
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    });
+  };
 
   return (
     <section id="team" className="relative py-28 md:py-36 bg-[#F7FAFC] overflow-hidden">
@@ -31,18 +67,29 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mb-12">
+        <div ref={carouselRef} className="team-carousel" dir={isRtl ? 'rtl' : 'ltr'} role="region" aria-label={t.team.title} tabIndex={0}>
           {team.map((person, index) => (
             <motion.div
               key={person.id}
+              className="team-carousel__item"
+              dir={isRtl ? 'rtl' : 'ltr'}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: Math.min(index, 3) * 0.1 }}
             >
-              <TeamPhotoCard person={person} memberLabel={language === 'fa' ? 'عضو تیم' : 'Team member'} />
+              <TeamPhotoCard person={person} />
             </motion.div>
           ))}
+        </div>
+
+        <div className="flex justify-center gap-3 mt-8 mb-12" dir="ltr">
+          <button type="button" onClick={() => scrollTeam(-1)} disabled={!canScrollLeft} aria-label={language === 'fa' ? 'نمایش اعضای سمت چپ' : 'Show team members to the left'} className="team-carousel__arrow">
+            <ArrowLeft className="w-5 h-5" aria-hidden="true" />
+          </button>
+          <button type="button" onClick={() => scrollTeam(1)} disabled={!canScrollRight} aria-label={language === 'fa' ? 'نمایش اعضای سمت راست' : 'Show team members to the right'} className="team-carousel__arrow">
+            <ArrowRight className="w-5 h-5" aria-hidden="true" />
+          </button>
         </div>
 
         {onGoToTeamPage && (

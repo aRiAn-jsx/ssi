@@ -40,27 +40,32 @@
 
 .team-photo-card__content {
   position: absolute;
-  inset-inline: 26px;
-  bottom: 28px;
+  inset-inline: 20px;
+  bottom: 20px;
+  display: grid;
+  grid-template-rows: 2.9em 3em;
+  align-items: end;
+  width: calc(100% - 40px);
   color: #fff;
   text-shadow: 0 2px 12px rgba(1, 33, 64, .5);
   transition: transform .5s ease;
 }
 
-.team-photo-card__label {
+.team-photo-card__role {
   display: block;
-  margin-bottom: 3px;
+  align-self: start;
+  margin-top: 2px;
   color: #d5ecfe;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .02em;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .team-photo-card__name {
   margin: 0;
-  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
   font-weight: 800;
-  line-height: 1.45;
+  line-height: 1.35;
 }
 
 @media (hover: hover) {
