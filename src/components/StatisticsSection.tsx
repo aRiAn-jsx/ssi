@@ -53,7 +53,7 @@ export const StatisticsSection: React.FC = () => {
   const statsData = getStatsData(language);
 
   return (
-    <section id="stats" className="relative py-24 md:py-32 bg-[#01427C] overflow-hidden text-white">
+    <section id="stats" className="relative py-16 md:py-20 bg-[#01427C] overflow-hidden text-white">
       {/* Animated Mesh Gradient Overlay */}
       <motion.div
         animate={{
@@ -86,7 +86,7 @@ export const StatisticsSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-xs font-bold px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#D5ECFE] inline-block mb-3">
             {t.stats.eyebrow}
           </span>
@@ -96,7 +96,7 @@ export const StatisticsSection: React.FC = () => {
         </div>
 
         {/* Animated Blue Line */}
-        <div className="relative mb-12 hidden lg:block">
+        <div className="relative mb-8 hidden lg:block">
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
@@ -139,7 +139,7 @@ export const StatisticsSection: React.FC = () => {
         </div>
 
         {/* Bottom Trust Seal */}
-        <div className="mt-16 pt-8 border-t border-white/10 text-center text-xs text-white/60">
+        <div className="mt-10 pt-6 border-t border-white/10 text-center text-xs text-white/60">
           {t.stats.sourceAudit}
         </div>
       </div>

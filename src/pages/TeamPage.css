@@ -11,7 +11,7 @@
 }
 
 .team-page__card {
-  width: min(100%, 230px);
+  width: min(100%, 320px);
   flex: 0 0 auto;
 }
 
@@ -20,33 +20,40 @@
 }
 
 .team-page__row--executives .team-page__card {
-  width: min(100%, 260px);
+  width: min(100%, 350px);
 }
 
-@media (min-width: 1024px) {
-  .team-page__groups {
-    --team-card-width: min(246px, calc((100% - 96px) / 5));
-  }
-
-  .team-page__card {
-    width: var(--team-card-width);
-  }
-
-  .team-page__row--executives .team-page__card {
-    width: calc(var(--team-card-width) * 1.13);
-  }
-}
-
-@media (max-width: 479px) {
+@media (min-width: 768px) {
   .team-page__card,
   .team-page__row--executives .team-page__card {
-    width: min(100%, 300px);
+    width: min(350px, calc((100% - 48px) / 3));
+  }
+
+  .team-page__row--lead .team-page__card {
+    width: min(360px, calc((100% - 36px) / 2));
+  }
+}
+
+@media (min-width: 1200px) {
+  .team-page__row--members .team-page__card {
+    width: min(300px, calc((100% - 96px) / 5));
   }
 }
 
 @media (min-width: 480px) and (max-width: 767px) {
   .team-page__card,
   .team-page__row--executives .team-page__card {
-    width: min(calc((100% - 24px) / 2), 236px);
+    width: calc((100% - 24px) / 2);
+  }
+}
+
+@media (max-width: 479px) {
+  .team-page__row {
+    gap: 20px;
+  }
+
+  .team-page__card,
+  .team-page__row--executives .team-page__card {
+    width: 100%;
   }
 }

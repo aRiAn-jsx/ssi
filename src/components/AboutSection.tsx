@@ -9,7 +9,7 @@ export const AboutSection: React.FC = () => {
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
 
   return (
-    <section id="about" className="relative py-28 md:py-36 bg-[#F7FAFC] overflow-hidden">
+    <section id="about" className="relative py-16 md:py-24 bg-[#F7FAFC] overflow-hidden">
       {/* Background Soft Sky Accent Glow */}
       <div className={`absolute top-1/2 ${isRtl ? '-right-40' : '-left-40'} w-[500px] h-[500px] rounded-full bg-[#D5ECFE]/50 blur-3xl pointer-events-none -z-10`} />
 

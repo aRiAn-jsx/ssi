@@ -23,7 +23,7 @@ export const CtaSection: React.FC<CtaSectionProps> = ({ onGoToConsultation }) =>
   };
 
   return (
-    <section id="contact" className="relative py-28 md:py-36 bg-gradient-to-br from-[#01427C] via-[#01427C] to-[#027DF7] overflow-hidden text-white">
+    <section id="contact" className="relative py-16 md:py-24 bg-gradient-to-br from-[#01427C] via-[#01427C] to-[#027DF7] overflow-hidden text-white">
       {/* Background Image */}
       <div
         className="absolute inset-0 opacity-10 pointer-events-none bg-cover bg-center filter blur-sm"

@@ -41,7 +41,7 @@ export const PerformanceDashboard: React.FC = () => {
   const areaString = `${pathString} L ${points[points.length - 1].x} ${height - paddingY} L ${points[0].x} ${height - paddingY} Z`;
 
   return (
-    <section id="dashboard" className="relative py-28 md:py-36 bg-[#F7FAFC] overflow-hidden">
+    <section id="dashboard" className="relative py-16 md:py-24 bg-[#F7FAFC] overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 opacity-20 pointer-events-none bg-cover bg-center filter blur-lg"
@@ -56,7 +56,7 @@ export const PerformanceDashboard: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-10">
           <div className={isRtl ? 'text-right' : 'text-left'}>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-3">
               <Activity className="w-4 h-4 text-[#027DF7]" />

@@ -51,10 +51,10 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage }) => {
   };
 
   return (
-    <section id="team" className="relative py-28 md:py-36 bg-[#F7FAFC] overflow-hidden">
+    <section id="team" className="relative py-16 md:py-24 bg-[#F7FAFC] overflow-hidden">
       <div className={`absolute top-1/2 ${isRtl ? '-left-20' : '-right-20'} w-96 h-96 rounded-full bg-[#D5ECFE]/50 blur-3xl pointer-events-none -z-10`} />
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-16 md:mb-20">
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-4">
             <Users className="w-4 h-4 text-[#027DF7]" />
             <span>{t.team.eyebrow}</span>
@@ -83,7 +83,7 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage }) => {
           ))}
         </div>
 
-        <div className="flex justify-center gap-3 mt-8 mb-12" dir="ltr">
+        <div className="flex justify-center gap-3 mt-6 mb-8" dir="ltr">
           <button type="button" onClick={() => scrollTeam(-1)} disabled={!canScrollLeft} aria-label={language === 'fa' ? 'نمایش اعضای سمت چپ' : 'Show team members to the left'} className="team-carousel__arrow">
             <ArrowLeft className="w-5 h-5" aria-hidden="true" />
           </button>

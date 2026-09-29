@@ -109,7 +109,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section
       id="home"
-      className="relative min-h-screen pt-32 pb-20 md:pt-36 md:pb-28 flex flex-col justify-center overflow-hidden"
+      className="relative pt-28 pb-16 md:pt-32 md:pb-20 flex flex-col justify-center overflow-hidden"
     >
       {/* ========================================================================= */}
       {/* 3D WEBGL GLOBE BACKGROUND LAYER (Magic UI / COBE)                         */}
@@ -315,7 +315,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] xl:max-w-[450px] flex items-center justify-center select-none"
+            className="w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px] xl:max-w-[540px] flex items-center justify-center select-none"
           >
             {/* Pure Hero Image - Original 1024x1024 1:1 Aspect Ratio with zero background */}
             <motion.div
@@ -345,7 +345,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             initial={{ opacity: 0, y: 20, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="statistics-numbers-container w-full max-w-[360px] sm:max-w-[430px] -mt-5 relative z-20 px-2 sm:px-0"
+            className="statistics-numbers-container w-full max-w-[360px] sm:max-w-[430px] lg:max-w-[480px] -mt-5 relative z-20 px-2 sm:px-0"
           >
             <div className="relative rounded-2xl sm:rounded-3xl px-3 py-2.5 sm:px-4 sm:py-3 bg-white/80 backdrop-blur-2xl border border-white/90 shadow-lg shadow-[#01427C]/12 overflow-hidden group">
               {/* Shimmer Ambient Sweep */}

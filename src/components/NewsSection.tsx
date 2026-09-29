@@ -25,11 +25,11 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ onGoToArticles, onSele
   };
 
   return (
-    <section id="news" className="relative py-28 md:py-36 bg-white overflow-hidden">
+    <section id="news" className="relative py-16 md:py-24 bg-white overflow-hidden">
       {/* Background Ambience */}
       <div className={`absolute top-10 ${isRtl ? 'left-1/3' : 'right-1/3'} w-80 h-80 rounded-full bg-[#D5ECFE]/30 blur-3xl pointer-events-none -z-10`} />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full mb-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full mb-8 md:mb-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className={isRtl ? 'text-right' : 'text-left'}>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-3">
@@ -89,7 +89,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ onGoToArticles, onSele
           {newsData.map((item) => (
             <div
               key={item.id}
-              className="min-w-[300px] sm:min-w-[360px] lg:min-w-[380px] snap-center shrink-0"
+              className="w-[min(85vw,380px)] sm:w-[380px] xl:w-[420px] snap-center shrink-0"
             >
               <GlassCard
                 tilt={true}

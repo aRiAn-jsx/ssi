@@ -35,7 +35,7 @@ export const PortfolioSection: React.FC = () => {
   return (
     <section
       id="portfolio"
-      className="relative py-20 md:py-32 bg-[#F8FAFC] overflow-hidden border-t border-b border-[#E2E8F0]/70"
+      className="relative py-16 md:py-24 bg-[#F8FAFC] overflow-hidden border-t border-b border-[#E2E8F0]/70"
     >
       {/* Background Soft Atmospheric Ambient Orbs */}
       <div

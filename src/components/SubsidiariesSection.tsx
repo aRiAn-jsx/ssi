@@ -13,13 +13,13 @@ export const SubsidiariesSection: React.FC = () => {
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
 
   return (
-    <section id="subsidiaries" className="relative py-28 md:py-36 bg-white overflow-hidden">
+    <section id="subsidiaries" className="relative py-16 md:py-24 bg-white overflow-hidden">
       {/* Background Ambience */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#D5ECFE]/40 blur-[140px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-4">
             <Network className="w-4 h-4 text-[#027DF7]" />
             <span>{t.subsidiaries.eyebrow}</span>

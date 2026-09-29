@@ -32,7 +32,7 @@ export const ServicesSection: React.FC = () => {
   };
 
   return (
-    <section id="services" className="relative py-28 md:py-36 bg-white overflow-hidden bg-dot-grid">
+    <section id="services" className="relative py-16 md:py-24 bg-white overflow-hidden bg-dot-grid">
       {/* Background Image: Very subtle */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none bg-cover bg-center"
@@ -47,7 +47,7 @@ export const ServicesSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
