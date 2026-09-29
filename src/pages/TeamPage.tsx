@@ -43,7 +43,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onBackToHome, onGoToConsulta
   );
 
   return (
-    <main className={`min-h-screen pt-20 pb-20 px-4 sm:px-6 md:px-12 max-w-[1500px] mx-auto ${isRtl ? 'text-right' : 'text-left'}`}>
+    <main className={`min-h-screen pt-28 pb-20 px-4 sm:px-6 md:px-12 max-w-[1500px] mx-auto ${isRtl ? 'text-right' : 'text-left'}`}>
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-[#E2E8F0]/70">
         <div className="flex items-center gap-2 text-xs font-semibold text-[#64748B]">
           <button type="button" onClick={onBackToHome} className="hover:text-[#027DF7] transition-colors">
