@@ -1,0 +1,93 @@
+.team-photo-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 20px;
+  background: #d5ecfe;
+  box-shadow: 0 18px 35px -20px rgba(1, 66, 124, .55);
+  transition: box-shadow .5s ease, transform .5s ease;
+}
+
+.team-photo-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transform-origin: left center;
+  transition: transform .8s cubic-bezier(.2, .7, .2, 1);
+}
+
+.team-photo-card__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(1, 33, 64, .16) 55%, rgba(1, 33, 64, .85) 100%);
+  transition: background .5s ease;
+}
+
+.team-photo-card__border {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(213, 236, 254, .9);
+  border-radius: 12px;
+  opacity: 0;
+  transform: scale(.97);
+  transition: opacity .5s ease, transform .5s ease;
+  pointer-events: none;
+}
+
+.team-photo-card__content {
+  position: absolute;
+  inset-inline: 26px;
+  bottom: 28px;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(1, 33, 64, .5);
+  transition: transform .5s ease;
+}
+
+.team-photo-card__label {
+  display: block;
+  margin-bottom: 3px;
+  color: #d5ecfe;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.team-photo-card__name {
+  margin: 0;
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+@media (hover: hover) {
+  .team-photo-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 28px 45px -20px rgba(1, 66, 124, .55);
+  }
+
+  .team-photo-card:hover .team-photo-card__image {
+    transform: scale(2);
+  }
+
+  .team-photo-card:hover .team-photo-card__border {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .team-photo-card:hover .team-photo-card__content {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-photo-card,
+  .team-photo-card__image,
+  .team-photo-card__border,
+  .team-photo-card__content {
+    transition: none;
+  }
+}

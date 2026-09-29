@@ -33,9 +33,9 @@ export const SEO_PAGE_CONFIGS: Record<Language, Record<string, SeoConfig>> = {
       locale: 'fa_IR',
     },
     team: {
-      title: 'تیم ما و اعضای هیئت مدیره | هلدینگ سرآمد سرمایه ایلیا',
+      title: 'اعضای تیم ما | هلدینگ سرآمد سرمایه ایلیا',
       description:
-        'آشنایی با اعضای هیئت مدیره، کمیته سرمایه‌گذاری، مدیران ریسک، معماران فین‌تک و ارکان راهبری هلدینگ سرآمد سرمایه ایلیا.',
+        'آشنایی با اعضای تیم هلدینگ سرآمد سرمایه ایلیا.',
       url: 'https://ssiholding.co/#team',
       locale: 'fa_IR',
     },
@@ -63,9 +63,9 @@ export const SEO_PAGE_CONFIGS: Record<Language, Record<string, SeoConfig>> = {
       locale: 'en_US',
     },
     team: {
-      title: 'Leadership & Board of Directors | Ilya Saramad Capital Holding',
+      title: 'Our Team | Ilya Saramad Capital Holding',
       description:
-        'Meet the Board of Directors, Investment Committee members, risk officers, fintech architects, and executive leaders of Ilya Saramad Holding.',
+        'Meet the team of Ilya Saramad Capital Holding.',
       url: 'https://ssiholding.co/#team',
       locale: 'en_US',
     },
