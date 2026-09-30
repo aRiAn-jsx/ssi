@@ -13,7 +13,7 @@ export interface TeamPerson {
 export const teamPeople: TeamPerson[] = [
   { id: 'tahourian', name: 'حسین طهوریان', nameEn: 'Hossein Tahourian', image: '/team/حسین طهوریان.png', placement: 'lead', role: 'مدیرعامل', roleEn: 'Chief Executive Officer' },
   { id: 'rad', name: 'هادی راد', nameEn: 'Hadi Rad', image: '/team/هادی راد.png', placement: 'advisor', role: 'مشاور', roleEn: 'Advisor' },
-  { id: 'rasouli', name: 'جلال رسولی', nameEn: 'Jalal Rasouli', image: '/team/جلال رسولی.jpg', placement: 'executive', role: 'مدیر برنامه‌نویسی', roleEn: 'Programming Manager' },
+  { id: 'rasouli', name: 'جلال رسولی', nameEn: 'Jalal Rasouli', image: '/team/جلال رسولی.png', placement: 'executive', role: 'مدیر برنامه‌نویسی', roleEn: 'Programming Manager' },
   { id: 'sajjad-azad', name: 'سجاد آزاد', nameEn: 'Sajjad Azad', image: '/team/سجاد آزاد.jpg', placement: 'executive', role: 'مدیر تولید محتوا', roleEn: 'Content Production Manager' },
   { id: 'hamidi', name: 'حمید حمیدی', nameEn: 'Hamid Hamidi', image: '/team/حمید حمیدی.jpg', placement: 'executive', role: 'مدیر اداری', roleEn: 'Administrative Manager' },
   { id: 'javan', name: 'آرین جوان', nameEn: 'Arian Javan', image: '/team/آرین جوان.jpg', placement: 'member', role: 'متخصص سئو', roleEn: 'SEO Specialist' },
