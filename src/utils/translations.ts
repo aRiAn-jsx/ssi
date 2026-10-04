@@ -22,7 +22,11 @@ export interface Translations {
     bookConsultationShort: string;
     phoneLabel: string;
     hoursLabel: string;
+    themeToggle: string;
+    darkMode: string;
+    lightMode: string;
   };
+
   drawer: {
     about: { label: string; desc: string };
     services: { label: string; desc: string };
@@ -564,6 +568,9 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       bookConsultationShort: 'رزرو جلسه',
       phoneLabel: '۰۵۱-۳۷۶۲۲۲۲۲',
       hoursLabel: 'همه روزه ۹ الی ۱۸',
+      themeToggle: 'تغییر حالت شب و روز',
+      darkMode: 'حالت تاریک',
+      lightMode: 'حالت روشن',
     },
     drawer: {
       about: { label: 'درباره هلدینگ', desc: 'تاریخچه، چشم‌انداز، ساختار سهامداری و اصول راهبری' },
@@ -1135,6 +1142,9 @@ export const TRANSLATIONS: Record<Language, Translations> = {
       bookConsultationShort: 'Book Meeting',
       phoneLabel: '+98 51 3762 2222',
       hoursLabel: 'Everyday 9:00 - 18:00',
+      themeToggle: 'Toggle Dark / Light Mode',
+      darkMode: 'Dark Mode',
+      lightMode: 'Light Mode',
     },
     drawer: {
       about: { label: 'About Holding', desc: 'History, vision, shareholding structure & governance' },

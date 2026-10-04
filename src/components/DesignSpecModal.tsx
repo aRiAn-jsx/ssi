@@ -21,25 +21,25 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
   };
 
   return (
-    <div className="fixed inset-0 z-[80] bg-[#01427C]/60 backdrop-blur-lg flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-[80] bg-[#011428]/75 backdrop-blur-xl flex items-center justify-center p-4 md:p-6 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="bg-white rounded-[32px] w-full max-w-5xl max-h-[90vh] shadow-2xl border border-white/80 flex flex-col overflow-hidden text-right text-[#0A2540]"
+        className="bg-white dark:bg-[#071325] rounded-[32px] w-full max-w-5xl max-h-[90vh] shadow-2xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 flex flex-col overflow-hidden text-right text-[#0A2540] dark:text-[#F8FAFC]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-6 md:px-8 py-5 border-b border-[#E2E8F0] flex items-center justify-between bg-[#F7FAFC]/80">
+        <div className="px-6 md:px-8 py-5 border-b border-[#027DF7]/25 dark:border-[#027DF7]/35 flex items-center justify-between bg-[#F7FAFC]/90 dark:bg-[#050C18]/95">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#027DF7] to-[#01427C] flex items-center justify-center text-white shadow-md">
               <BookOpen className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-[#01427C]">
+              <h3 className="text-lg font-bold text-[#01427C] dark:text-[#F0F9FF]">
                 دفترچه مستندات طراحی و مشخصات فنی هلدینگ
               </h3>
-              <p className="text-xs text-[#64748B]">
+              <p className="text-xs text-[#64748B] dark:text-[#94A3B8]">
                 Ilya Saramad Capital Holding • سیستم طراحی Liquid Glass
               </p>
             </div>
@@ -47,7 +47,7 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
 
           <button
             onClick={onClose}
-            className="w-10 h-10 rounded-full hover:bg-[#E2E8F0] flex items-center justify-center text-[#64748B] hover:text-[#01427C] transition-colors"
+            className="w-10 h-10 rounded-full hover:bg-[#E2E8F0] dark:hover:bg-[#027DF7]/30 flex items-center justify-center text-[#64748B] dark:text-slate-300 hover:text-[#01427C] dark:hover:text-white transition-colors"
             aria-label="بستن پنجره"
           >
             <X className="w-5 h-5" />
@@ -55,7 +55,7 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
         </div>
 
         {/* Navigation Tabs */}
-        <div className="px-6 md:px-8 pt-4 pb-2 border-b border-[#E2E8F0] flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <div className="px-6 md:px-8 pt-4 pb-2 border-b border-[#027DF7]/25 dark:border-[#027DF7]/35 flex items-center gap-2 overflow-x-auto no-scrollbar bg-slate-50/50 dark:bg-[#061020]/50">
           {[
             { id: 'mockup', label: '۱. توصیف موکاپ بخش‌ها', icon: Layers },
             { id: 'tokens', label: '۲. توکن‌های طراحی و CSS', icon: Palette },
@@ -71,8 +71,8 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap ${
                   isActive
-                    ? 'bg-[#01427C] text-white shadow-sm'
-                    : 'text-[#64748B] hover:bg-[#F7FAFC] hover:text-[#01427C]'
+                    ? 'bg-[#027DF7] text-white shadow-md shadow-[#027DF7]/30'
+                    : 'text-[#64748B] dark:text-slate-300 hover:bg-[#D5ECFE]/40 dark:hover:bg-[#027DF7]/20 hover:text-[#01427C] dark:hover:text-[#38BDF8]'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -87,12 +87,12 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
           {/* Tab 1: Mockup Description */}
           {activeTab === 'mockup' && (
             <div className="space-y-6">
-              <div className="p-4 rounded-2xl bg-[#D5ECFE]/40 border border-[#027DF7]/20">
-                <h4 className="font-extrabold text-[#01427C] mb-2">
+              <div className="p-4 rounded-2xl bg-[#D5ECFE]/30 dark:bg-[#027DF7]/15 border border-[#027DF7]/25 dark:border-[#027DF7]/40">
+                <h4 className="font-extrabold text-[#01427C] dark:text-[#38BDF8] mb-2">
                   معماری بصری و هویت برند (Quiet Power & Liquid Glass 2.0)
                 </h4>
-                <p className="text-xs text-[#0A2540] leading-relaxed">
-                  طراحی بر اساس نسبت طلایی رنگ‌ها (۶۰٪ سفید خالص، ۲۵٪ آبی آسمانی ملایم، ۱۰٪ آبی پویا و ۵٪ سرمه‌ای عمیق) استوار است. هیچ‌گونه المان اضافی یا گرادیان‌های کلیشه‌ای بنفش/صورتی وجود ندارد؛ تمام تمرکز بر تایپوگرافی شفاف، فضای منفی متوازن و متریال شیشه صیقلی چندبعدی است.
+                <p className="text-xs text-[#0A2540] dark:text-slate-200 leading-relaxed">
+                  طراحی بر اساس نسبت طلایی رنگ‌ها (۶۰٪ زمینه لوکس، ۲۵٪ آبی اتمسفریک ملایم، ۱۰٪ آبی پویا و ۵٪ سرمه‌ای عمیق) استوار است. هیچ‌گونه المان اضافی یا گرادیان‌های کلیشه‌ای وجود ندارد؛ تمام تمرکز بر تایپوگرافی شفاف، فضای منفی متوازن و متریال شیشه صیقلی چندبعدی است.
                 </p>
               </div>
 
@@ -143,9 +143,9 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
                     desc: 'گرادیان زاویه‌دار با پرتوهای نوری چرخشی در پشت کارت مرکزی، همراه با فرم مشاوره تلفنی و فوتر ۴ ستونه استاندارد.',
                   },
                 ].map((item, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-[#F7FAFC] border border-[#E2E8F0]">
-                    <h5 className="font-bold text-sm text-[#01427C] mb-1.5">{item.sec}</h5>
-                    <p className="text-xs text-[#64748B] leading-relaxed">{item.desc}</p>
+                  <div key={idx} className="p-4 rounded-2xl bg-[#F7FAFC] dark:bg-[#0A1A2F] border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-sm">
+                    <h5 className="font-bold text-sm text-[#01427C] dark:text-[#E0F2FE] mb-1.5">{item.sec}</h5>
+                    <p className="text-xs text-[#64748B] dark:text-[#94A3B8] leading-relaxed">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -156,7 +156,7 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
           {activeTab === 'tokens' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#64748B]">
+                <span className="text-xs font-bold text-[#64748B] dark:text-slate-300">
                   متغیرهای رنگی و استایل‌های اصلی CSS
                 </span>
                 <button
@@ -169,10 +169,10 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
 --color-off-white: #F7FAFC;
 --color-text-primary: #0A2540;
 --color-text-secondary: #64748B;
---color-border-subtle: #E2E8F0;
+--color-border-subtle: #027DF7;
                     `)
                   }
-                  className="flex items-center gap-1.5 text-xs text-[#027DF7] font-bold hover:underline"
+                  className="flex items-center gap-1.5 text-xs text-[#027DF7] dark:text-[#38BDF8] font-bold hover:underline"
                 >
                   {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'کپی شد' : 'کپی توکن‌ها'}</span>
@@ -184,18 +184,18 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
                   { name: 'Soft Sky', hex: '#D5ECFE', role: 'پس‌زمینه‌ها و شیشه‌ها' },
                   { name: 'Vibrant Blue', hex: '#027DF7', role: 'دکمه‌های اصلی و آیکون‌ها' },
                   { name: 'Deep Navy', hex: '#01427C', role: 'عناوین و پس‌زمینه تیره' },
-                  { name: 'Pure White', hex: '#FFFFFF', role: 'کارت‌ها و پس‌زمینه اصلی' },
-                  { name: 'Off-White', hex: '#F7FAFC', role: 'سکشن‌های میانی' },
+                  { name: 'Dark Slate', hex: '#071325', role: 'پس‌زمینه دارک مود هلدینگ' },
+                  { name: 'Cyber Border', hex: '#027DF7/30', role: 'بردرهای نئونی سراسری' },
                   { name: 'Text Primary', hex: '#0A2540', role: 'متن‌های اصلی' },
                   { name: 'Text Secondary', hex: '#64748B', role: 'توضیحات و فرعی' },
                   { name: 'Success Green', hex: '#10B981', role: 'شاخص‌های مثبت' },
                 ].map((c, i) => (
-                  <div key={i} className="p-3 rounded-xl border border-[#E2E8F0] bg-white flex flex-col gap-2">
-                    <div className="h-8 rounded-lg w-full border border-black/5" style={{ backgroundColor: c.hex }} />
+                  <div key={i} className="p-3 rounded-xl border border-[#027DF7]/25 dark:border-[#027DF7]/45 bg-white dark:bg-[#0A1A2F] flex flex-col gap-2 shadow-sm">
+                    <div className="h-8 rounded-lg w-full border border-black/5 dark:border-white/10" style={{ backgroundColor: c.hex.includes('/') ? '#027DF7' : c.hex }} />
                     <div>
-                      <span className="text-xs font-bold text-[#01427C] block">{c.name}</span>
-                      <span className="text-[12px] text-[#64748B] font-mono block">{c.hex}</span>
-                      <span className="text-[12px] text-[#64748B] block mt-0.5">{c.role}</span>
+                      <span className="text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] block">{c.name}</span>
+                      <span className="text-[12px] text-[#64748B] dark:text-[#94A3B8] font-mono block">{c.hex}</span>
+                      <span className="text-[12px] text-[#64748B] dark:text-[#94A3B8] block mt-0.5">{c.role}</span>
                     </div>
                   </div>
                 ))}
@@ -206,7 +206,7 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
           {/* Tab 3: Lottie Animation Sources */}
           {activeTab === 'lottie' && (
             <div className="space-y-4">
-              <p className="text-xs text-[#64748B] leading-relaxed">
+              <p className="text-xs text-[#64748B] dark:text-slate-300 leading-relaxed">
                 فهرست انیمیشن‌های برداری سبک پیشنهادی از منبع رسمی LottieFiles برای ادغام در فاز تولیدی:
               </p>
 
@@ -243,13 +243,13 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
                     url: 'https://lottiefiles.com/featured/abstract',
                   },
                 ].map((lottie, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-[#F7FAFC] border border-[#E2E8F0]">
+                  <div key={idx} className="p-4 rounded-2xl bg-[#F7FAFC] dark:bg-[#0A1A2F] border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-sm">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold text-[#01427C]">{lottie.title}</span>
-                      <span className="text-[12px] text-[#027DF7] font-semibold">توصیه‌شده</span>
+                      <span className="text-xs font-bold text-[#01427C] dark:text-[#E0F2FE]">{lottie.title}</span>
+                      <span className="text-[12px] text-[#027DF7] dark:text-[#38BDF8] font-semibold">توصیه‌شده</span>
                     </div>
-                    <p className="text-xs text-[#64748B] mb-1">منبع: {lottie.source}</p>
-                    <p className="text-xs text-[#0A2540]">کاربرد در سایت: {lottie.usage}</p>
+                    <p className="text-xs text-[#64748B] dark:text-[#94A3B8] mb-1">منبع: {lottie.source}</p>
+                    <p className="text-xs text-[#0A2540] dark:text-slate-200">کاربرد در سایت: {lottie.usage}</p>
                   </div>
                 ))}
               </div>
@@ -259,29 +259,29 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
           {/* Tab 4: Responsive Breakpoints */}
           {activeTab === 'breakpoints' && (
             <div className="space-y-4">
-              <p className="text-xs text-[#64748B] leading-relaxed">
+              <p className="text-xs text-[#64748B] dark:text-slate-300 leading-relaxed">
                 طرح گرید ۱۲ ستونه واکنش‌گرا با در نظر گرفتن رفتارهای تاچ موبایل و افکت‌های هاور دسکتاپ:
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-2xl bg-[#F7FAFC] border border-[#E2E8F0]">
-                  <span className="text-xs font-extrabold text-[#01427C] block mb-2">
+                <div className="p-4 rounded-2xl bg-[#F7FAFC] dark:bg-[#0A1A2F] border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-sm">
+                  <span className="text-xs font-extrabold text-[#01427C] dark:text-[#38BDF8] block mb-2">
                     موبایل (تا ۶۴۰ پیکسل)
                   </span>
-                  <ul className="text-xs text-[#64748B] space-y-1.5">
+                  <ul className="text-xs text-[#64748B] dark:text-[#94A3B8] space-y-1.5">
                     <li>• منوی تمام‌صفحه شیشه‌ای با انیمیشن Stagger</li>
-                    <li>• چیدمان تک‌ستونه برای کارت‌های هیرو و درباره‌ما</li>
+                    <li>• چیدمان کنار هم برای دکمه‌های هیرو و کارت‌های تیم</li>
                     <li>• اسکرول افقی طبیعی با Touch Swipe در پرتفوی و اخبار</li>
                     <li>• تایپوگرافی سرتیتر H1: بین ۳۶ تا ۴۲ پیکسل</li>
                     <li>• غیرفعال‌سازی کرسر ماوس جهت عدم تداخل با تاچ</li>
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#F7FAFC] border border-[#E2E8F0]">
-                  <span className="text-xs font-extrabold text-[#01427C] block mb-2">
+                <div className="p-4 rounded-2xl bg-[#F7FAFC] dark:bg-[#0A1A2F] border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-sm">
+                  <span className="text-xs font-extrabold text-[#01427C] dark:text-[#38BDF8] block mb-2">
                     تبلت (۶۴۱ تا ۱۰۲۴ پیکسل)
                   </span>
-                  <ul className="text-xs text-[#64748B] space-y-1.5">
+                  <ul className="text-xs text-[#64748B] dark:text-[#94A3B8] space-y-1.5">
                     <li>• گرید ۲ ستونه در خدمات، تیم و آمار</li>
                     <li>• نمایش متوازن چارت داشبورد و نمودار دونات</li>
                     <li>• پدینگ جانبی کانتینر: ۳۲ پیکسل</li>
@@ -289,11 +289,11 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
                   </ul>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#F7FAFC] border border-[#E2E8F0]">
-                  <span className="text-xs font-extrabold text-[#01427C] block mb-2">
+                <div className="p-4 rounded-2xl bg-[#F7FAFC] dark:bg-[#0A1A2F] border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-sm">
+                  <span className="text-xs font-extrabold text-[#01427C] dark:text-[#38BDF8] block mb-2">
                     دسکتاپ و مانیتورهای عریض (+۱۰۲۴ پیکسل)
                   </span>
-                  <ul className="text-xs text-[#64748B] space-y-1.5">
+                  <ul className="text-xs text-[#64748B] dark:text-[#94A3B8] space-y-1.5">
                     <li>• نوبار کپسولی شناور کامل با بابل متحرک هاور</li>
                     <li>• گرید ۳ ستونه خدمات و ۴ ستونه آمار و تیم</li>
                     <li>• ناوبری نقطه‌ای کناری (Side Dot Navigation)</li>
@@ -309,19 +309,19 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
           {activeTab === 'gsap' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#64748B]">
+                <span className="text-xs font-bold text-[#64748B] dark:text-slate-300">
                   کد آماده ثبت انیمیشن‌های GSAP ScrollTrigger
                 </span>
                 <button
                   onClick={() => copyToClipboard(GSAP_SETUP_CODE)}
-                  className="flex items-center gap-1.5 text-xs text-[#027DF7] font-bold hover:underline"
+                  className="flex items-center gap-1.5 text-xs text-[#027DF7] dark:text-[#38BDF8] font-bold hover:underline"
                 >
                   {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'کپی شد' : 'کپی کد GSAP'}</span>
                 </button>
               </div>
 
-              <pre className="p-4 rounded-2xl bg-[#01427C] text-[#D5ECFE] text-xs font-mono overflow-x-auto text-left dir-ltr max-h-72">
+              <pre className="p-4 rounded-2xl bg-[#061120] border border-[#027DF7]/30 text-[#D5ECFE] text-xs font-mono overflow-x-auto text-left dir-ltr max-h-72">
                 {GSAP_SETUP_CODE}
               </pre>
             </div>
@@ -329,13 +329,13 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#E2E8F0] flex items-center justify-between bg-[#F7FAFC]">
-          <span className="text-xs text-[#64748B]">
+        <div className="px-6 py-4 border-t border-[#027DF7]/25 dark:border-[#027DF7]/35 flex items-center justify-between bg-[#F7FAFC]/90 dark:bg-[#050C18]/95">
+          <span className="text-xs text-[#64748B] dark:text-[#94A3B8]">
             تمامی ۱۲ بخش بر اساس بریف پروژه و هویت هلدینگ سرآمد طراحی و پیاده‌سازی شده‌اند.
           </span>
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-full bg-[#01427C] text-white text-xs font-bold hover:bg-[#027DF7] transition-colors"
+            className="px-5 py-2 rounded-full bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-xs font-bold shadow-md shadow-[#027DF7]/25 hover:shadow-lg transition-all"
           >
             متوجه شدم
           </button>

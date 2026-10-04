@@ -34,25 +34,38 @@ export const SARAMAD_GLOBE_CONFIG: COBEOptions = {
   markerColor: [0.01, 0.49, 0.97],   // Vibrant Blue #027DF7 interactive markers
   glowColor: [0.83, 0.93, 1.0],      // Soft Sky halo glow
   markers: [
-    { location: [35.6892, 51.3890], size: 0.11, color: [0.01, 0.49, 0.97] }, // Tehran — Headquarters (دفتر مرکزی تهران)
-    { location: [35.7000, 51.4000], size: 0.05, color: [0.01, 0.49, 0.97] }, // Jordan Financial District (منطقه مالی جردن)
+    { location: [36.2972, 59.6067], size: 0.12, color: [0.01, 0.49, 0.97] }, // Mashhad — Headquarters (دفتر مرکزی مشهد - بلوار سجاد)
+    { location: [35.6892, 51.3890], size: 0.08, color: [0.01, 0.49, 0.97] }, // Tehran Branch (دفتر تهران)
     { location: [25.2048, 55.2708], size: 0.065, color: [0.01, 0.49, 0.97] }, // Dubai Financial Center (دبی)
     { location: [41.0082, 28.9784], size: 0.055, color: [0.01, 0.49, 0.97] }, // Istanbul Gateway (استانبول)
     { location: [50.1109, 8.6821], size: 0.055, color: [0.01, 0.49, 0.97] },  // Frankfurt Financial Center (فرانکفورت)
     { location: [1.3521, 103.8198], size: 0.055, color: [0.01, 0.49, 0.97] }, // Singapore Asian Hub (سنگاپور)
   ],
   arcs: [
-    // Tehran HQ connected to international financial corridors
-    { from: [35.6892, 51.3890], to: [25.2048, 55.2708] },
-    { from: [35.6892, 51.3890], to: [41.0082, 28.9784] },
-    { from: [35.6892, 51.3890], to: [50.1109, 8.6821] },
-    { from: [35.6892, 51.3890], to: [1.3521, 103.8198] },
+    // Mashhad HQ connected to Tehran and international financial corridors
+    { from: [36.2972, 59.6067], to: [35.6892, 51.3890] },
+    { from: [36.2972, 59.6067], to: [25.2048, 55.2708] },
+    { from: [36.2972, 59.6067], to: [41.0082, 28.9784] },
+    { from: [36.2972, 59.6067], to: [50.1109, 8.6821] },
   ],
   arcColor: [0.01, 0.49, 0.97],
   arcWidth: 1.3,
   arcHeight: 0.22,
   opacity: 0.88,
 };
+
+export const SARAMAD_GLOBE_DARK_CONFIG: COBEOptions = {
+  ...SARAMAD_GLOBE_CONFIG,
+  dark: 1,
+  diffuse: 1.4,
+  mapBrightness: 3.5,
+  baseColor: [0.06, 0.16, 0.32],
+  markerColor: [0.22, 0.74, 0.97],
+  glowColor: [0.01, 0.49, 0.97],
+  arcColor: [0.22, 0.74, 0.97],
+  opacity: 0.95,
+};
+
 
 export const Globe: React.FC<GlobeProps> = ({
   className = '',

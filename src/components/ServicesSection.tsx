@@ -102,31 +102,31 @@ export const ServicesSection: React.FC = () => {
                 <div>
                   {/* Top */}
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D5ECFE] to-white border border-[#027DF7]/20 flex items-center justify-center shadow-sm group-hover:scale-110 group-hover:bg-[#027DF7]/10 transition-all duration-300">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#D5ECFE] to-white dark:from-[#091E3A] dark:to-[#051020] border border-[#027DF7]/20 dark:border-[#027DF7]/50 flex items-center justify-center shadow-sm dark:shadow-[0_0_15px_rgba(2,125,247,0.2)] group-hover:scale-110 group-hover:bg-[#027DF7]/10 dark:group-hover:bg-[#027DF7]/20 transition-all duration-300 text-[#027DF7] dark:text-[#38BDF8]">
                       {renderIcon(srv.iconName)}
                     </div>
-                    <span className="text-[13px] font-bold px-2.5 py-1 rounded-full bg-white/80 border border-[#E2E8F0] text-[#64748B] group-hover:text-[#01427C] group-hover:border-[#027DF7]/30 transition-colors">
+                    <span className="text-[13px] font-bold px-2.5 py-1 rounded-full bg-white/80 dark:bg-[#071325]/90 border border-[#027DF7]/25 dark:border-[#027DF7]/45 text-[#64748B] dark:text-[#CBD5E1] group-hover:text-[#01427C] dark:group-hover:text-[#38BDF8] group-hover:border-[#027DF7]/40 transition-colors">
                       {srv.tag}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className={`text-xl font-bold text-[#01427C] mb-3 group-hover:text-[#027DF7] transition-colors leading-snug ${isRtl ? 'text-right' : 'text-left'}`}>
+                  <h3 className={`text-xl font-bold text-[#01427C] dark:text-white mb-3 group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors leading-snug ${isRtl ? 'text-right' : 'text-left'}`}>
                     {srv.title}
                   </h3>
 
                   {/* Description */}
-                  <p className={`text-sm text-[#64748B] leading-relaxed line-clamp-2 ${isRtl ? 'text-right' : 'text-left'}`}>
+                  <p className={`text-sm text-[#64748B] dark:text-[#CBD5E1] leading-relaxed line-clamp-2 ${isRtl ? 'text-right' : 'text-left'}`}>
                     {srv.description}
                   </p>
                 </div>
 
                 {/* Arrow Link Bottom */}
-                <div className="pt-6 mt-6 border-t border-[#E2E8F0]/70 flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#01427C] group-hover:text-[#027DF7] transition-colors">
+                <div className="pt-6 mt-6 border-t border-[#027DF7]/20 dark:border-[#027DF7]/35 flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors">
                     {t.services.viewDetails}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-white/80 border border-[#E2E8F0] flex items-center justify-center text-[#01427C] group-hover:bg-[#027DF7] group-hover:text-white group-hover:border-[#027DF7] transition-all duration-300">
+                  <div className="w-8 h-8 rounded-full bg-white/80 dark:bg-[#071325]/90 border border-[#027DF7]/25 dark:border-[#027DF7]/45 flex items-center justify-center text-[#01427C] dark:text-[#38BDF8] group-hover:bg-[#027DF7] group-hover:text-white group-hover:border-[#027DF7] transition-all duration-300">
                     <ArrowIcon className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export const ServicesSection: React.FC = () => {
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className={`bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl border border-white/80 ${isRtl ? 'text-right' : 'text-left'}`}
+              className={`bg-white dark:bg-[#071325] rounded-3xl p-8 max-w-lg w-full shadow-2xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 ${isRtl ? 'text-right' : 'text-left'}`}
               onClick={(e) => e.stopPropagation()}
             >
               {(() => {

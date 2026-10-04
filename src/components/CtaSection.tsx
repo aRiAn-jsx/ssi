@@ -58,8 +58,8 @@ export const CtaSection: React.FC<CtaSectionProps> = ({ onGoToConsultation }) =>
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="liquid-glass-card bg-white/95 text-[#0A2540] p-8 sm:p-12 md:p-16 rounded-[32px] shadow-2xl text-center relative border border-white">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE] border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-4">
+          <div className="liquid-glass-card bg-white/95 dark:bg-[#071325]/95 text-[#0A2540] dark:text-[#F8FAFC] p-8 sm:p-12 md:p-16 rounded-[32px] shadow-2xl text-center relative border border-[#027DF7]/30 dark:border-[#027DF7]/55">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE] dark:bg-[#027DF7]/20 border border-[#027DF7]/30 dark:border-[#027DF7]/50 text-[#01427C] dark:text-[#38BDF8] text-xs font-bold mb-4">
               <Sparkles className="w-4 h-4 text-[#027DF7]" />
               <span>{t.cta.eyebrow}</span>
             </div>

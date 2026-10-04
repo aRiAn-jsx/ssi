@@ -248,16 +248,17 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
       </div>
 
       {/* 2. DEDICATED STICKY MOBILE READING SUB-HEADER */}
-      <div className="sticky top-16 md:top-20 z-30 w-full bg-white/85 backdrop-blur-xl border-b border-[#E2E8F0]/80 shadow-xs transition-all">
+      <div className="sticky top-16 md:top-20 z-30 w-full bg-white/85 dark:bg-[#07111F]/90 backdrop-blur-xl border-b border-[#E2E8F0]/80 dark:border-sky-500/20 shadow-xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-2.5 flex items-center justify-between gap-3">
           {/* Back button */}
           <button
             type="button"
             onClick={onBackToArticles}
             id="mobile-back-to-articles-btn"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#01427C] hover:text-[#027DF7] bg-[#F1F5F9]/80 hover:bg-[#D5ECFE]/60 border border-[#E2E8F0] transition-all active:scale-95"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#01427C] dark:text-[#F0F9FF] hover:text-[#027DF7] bg-[#F1F5F9]/80 dark:bg-[#0c1d38] hover:bg-[#D5ECFE]/60 border border-[#E2E8F0] dark:border-sky-500/20 transition-all active:scale-95"
             title={t.articleDetail.backToArticles}
           >
+
             <BackArrowIcon className="w-3.5 h-3.5 text-[#027DF7]" />
             <span className="hidden xs:inline">{t.articleDetail.backToArticles}</span>
             <span className="xs:hidden">{language === 'fa' ? 'مقالات' : 'Articles'}</span>
@@ -410,7 +411,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                 src={article.author.avatar}
                 alt={article.author.name}
                 referrerPolicy="no-referrer"
-                className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm ring-2 ring-[#027DF7]/20"
+                className="w-12 h-12 rounded-full object-cover border-2 border-[#027DF7]/40 shadow-sm ring-2 ring-[#027DF7]/40"
               />
               <div>
                 <div className="text-sm font-bold text-[#01427C] flex items-center gap-1.5">
@@ -433,7 +434,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
         </header>
 
         {/* FEATURED COVER IMAGE WITH GLASS CORNERS */}
-        <div className="relative aspect-[16/9] sm:aspect-[21/9] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg shadow-[#01427C]/10 mb-8 border border-white/80">
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] rounded-2xl md:rounded-3xl overflow-hidden shadow-lg shadow-[#01427C]/10 mb-8 border border-[#027DF7]/30 dark:border-[#027DF7]/50">
           <img
             src={article.image}
             alt={article.alt}
@@ -479,7 +480,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                   <div className="text-xs text-white/80">{article.statsHighlight.note}</div>
                 )}
               </div>
-              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/20">
+              <div className="flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-3 rounded-2xl border border-[#38BDF8]/40">
                 <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">
                   {article.statsHighlight.value}
                 </span>
@@ -552,7 +553,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
 
           {/* Expert Quote Highlight */}
           {article.quote && (
-            <div className="my-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-tr from-[#D5ECFE]/50 to-white border border-[#027DF7]/25 relative overflow-hidden shadow-xs">
+            <div className="my-8 p-6 sm:p-8 rounded-3xl bg-gradient-to-tr from-[#D5ECFE]/50 to-white dark:from-[#091E3A] dark:to-[#051020] border border-[#027DF7]/25 dark:border-[#027DF7]/45 relative overflow-hidden shadow-xs">
               <Quote className={`absolute -bottom-4 ${isRtl ? '-left-4' : '-right-4'} w-24 h-24 text-[#027DF7]/10 pointer-events-none`} />
               <div className="relative z-10 space-y-3">
                 <div className="text-[13px] font-black uppercase tracking-wider text-[#027DF7] flex items-center gap-1.5">
@@ -695,7 +696,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                 src={article.author.avatar}
                 alt={article.author.name}
                 referrerPolicy="no-referrer"
-                className="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow-md"
+                className="w-16 h-16 rounded-2xl object-cover border-2 border-[#027DF7]/40 shadow-md"
               />
               <div className="space-y-1">
                 <div className="text-xs uppercase font-bold text-[#027DF7] tracking-wider">
@@ -920,7 +921,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
 
       {/* 12. DEDICATED FLOATING MOBILE ACTION BAR (DOCK) */}
       <div className="fixed bottom-4 left-4 right-4 z-40 sm:hidden">
-        <div className="p-2 rounded-full bg-white/90 backdrop-blur-xl border border-white/90 shadow-xl shadow-[#01427C]/20 flex items-center justify-between gap-2">
+        <div className="p-2 rounded-full bg-white/90 dark:bg-[#071325]/90 backdrop-blur-xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xl shadow-[#01427C]/20 flex items-center justify-between gap-2">
           {/* Reaction like count */}
           <button
             type="button"
@@ -976,7 +977,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-white/80 space-y-4"
+              className="bg-white dark:bg-[#071325] rounded-3xl p-6 max-w-sm w-full shadow-2xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 space-y-4"
             >
               <div className="flex items-center justify-between pb-2 border-b border-[#E2E8F0]">
                 <h4 className="text-sm font-bold text-[#01427C]">{t.articleDetail.shareVia}</h4>
@@ -1056,7 +1057,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-20 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-[#01427C] text-white text-xs font-bold shadow-xl border border-white/20 flex items-center gap-2"
+            className="fixed bottom-20 sm:bottom-8 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-[#01427C] text-white text-xs font-bold shadow-xl border border-[#027DF7]/40 flex items-center gap-2"
           >
             <CheckCircle2 className="w-4 h-4 text-[#00D4B2]" />
             <span>{toastMessage}</span>

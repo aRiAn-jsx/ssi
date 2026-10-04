@@ -63,17 +63,17 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ onGoToArticles, onSele
                 type="button"
                 onClick={() => scroll('right')}
                 aria-label="Scroll right"
-                className="w-11 h-11 rounded-full liquid-glass-card hover:bg-white text-[#01427C] flex items-center justify-center border border-white/80 shadow-sm transition-transform hover:scale-105"
+                className="w-11 h-11 rounded-full liquid-glass-card hover:bg-white text-[#01427C] dark:text-[#E0F2FE] flex items-center justify-center border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-sm transition-transform hover:scale-105"
               >
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 text-[#027DF7] dark:text-[#38BDF8]" />
               </button>
               <button
                 type="button"
                 onClick={() => scroll('left')}
                 aria-label="Scroll left"
-                className="w-11 h-11 rounded-full liquid-glass-card hover:bg-white text-[#01427C] flex items-center justify-center border border-white/80 shadow-sm transition-transform hover:scale-105"
+                className="w-11 h-11 rounded-full liquid-glass-card hover:bg-white text-[#01427C] dark:text-[#E0F2FE] flex items-center justify-center border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-sm transition-transform hover:scale-105"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft className="w-5 h-5 text-[#027DF7] dark:text-[#38BDF8]" />
               </button>
             </div>
           </div>
@@ -171,7 +171,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ onGoToArticles, onSele
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className={`bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-white/80 ${isRtl ? 'text-right' : 'text-left'}`}
+            className={`bg-white dark:bg-[#071325] rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 ${isRtl ? 'text-right' : 'text-left'}`}
             onClick={(e) => e.stopPropagation()}
           >
             {(() => {

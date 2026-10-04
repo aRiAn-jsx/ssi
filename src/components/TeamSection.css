@@ -1,19 +1,21 @@
 .team-carousel {
   display: flex;
-  gap: 24px;
+  gap: 12px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -ms-overflow-style: none;
   overscroll-behavior-x: contain;
+  padding-bottom: 8px;
 }
 
 .team-carousel::-webkit-scrollbar {
   display: none;
 }
 
+/* Side-by-side by default on mobile */
 .team-carousel__item {
-  flex: 0 0 100%;
+  flex: 0 0 calc((100% - 12px) / 2);
   min-width: 0;
   scroll-snap-align: start;
 }
@@ -48,18 +50,34 @@
 }
 
 @media (min-width: 480px) {
-  .team-carousel__item { flex-basis: calc((100% - 24px) / 2); }
+  .team-carousel { gap: 20px; }
+  .team-carousel__item { flex-basis: calc((100% - 20px) / 2); }
 }
 
 @media (min-width: 768px) {
-  .team-carousel { gap: 32px; }
-  .team-carousel__item { flex-basis: calc((100% - 64px) / 3); }
+  .team-carousel { gap: 28px; }
+  .team-carousel__item { flex-basis: calc((100% - 56px) / 3); }
 }
 
 @media (min-width: 1024px) {
+  .team-carousel { gap: 32px; }
   .team-carousel__item { flex-basis: calc((100% - 96px) / 4); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .team-carousel { scroll-behavior: auto; }
+}
+
+/* Dark Mode Carousel Arrows */
+html.dark .team-carousel__arrow,
+.dark .team-carousel__arrow {
+  background: #0d2038;
+  border-color: rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
+}
+
+html.dark .team-carousel__arrow:hover:not(:disabled),
+.dark .team-carousel__arrow:hover:not(:disabled) {
+  background: #027df7;
+  color: #ffffff;
 }

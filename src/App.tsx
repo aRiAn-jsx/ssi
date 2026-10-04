@@ -119,7 +119,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#F7FAFC] text-[#0A2540] font-sans selection:bg-[#027DF7]/20 selection:text-[#01427C]">
+    <div className="relative min-h-screen bg-[#F7FAFC] dark:bg-[#060D17] text-[#0A2540] dark:text-[#F8FAFC] font-sans selection:bg-[#027DF7]/20 selection:text-[#01427C] dark:selection:text-[#38BDF8] transition-colors duration-300">
       {/* Liquid Glass Splash Preloader (Runs only once on initial entrance) */}
       {showPreloader && (
         <LiquidPreloader onComplete={() => setShowPreloader(false)} minDuration={1100} />
@@ -240,7 +240,10 @@ export default function App() {
             />
 
             {/* SECTION 9 — TEAM / تیم مدیریت */}
-            <TeamSection onGoToTeamPage={() => handleNavigateView('team')} />
+            <TeamSection
+              onGoToTeamPage={() => handleNavigateView('team')}
+              onGoToConsultation={() => handleNavigateView('consultation')}
+            />
 
             {/* SECTION 10 — FINAL CTA / فرم تماس و مشاوره */}
             <CtaSection onGoToConsultation={() => handleNavigateView('consultation')} />
@@ -250,19 +253,6 @@ export default function App() {
 
       {/* FOOTER */}
       <FooterSection onNavigateView={handleNavigateView} />
-
-      {/* Quick Access Floating Pill for Design Specs & Deliverables Review */}
-      <div className="fixed bottom-6 left-6 z-40 hidden sm:block">
-        <button
-          type="button"
-          onClick={() => setIsDesignSpecOpen(true)}
-          id="floating-spec-toggle-btn"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-full liquid-glass-card hover:bg-white text-[#01427C] text-xs font-bold shadow-lg shadow-[#01427C]/10 border border-white/80 transition-all duration-300 hover:scale-105"
-        >
-          <BookOpen className="w-4 h-4 text-[#027DF7]" />
-          <span>مشاهده مستندات فنی و Lottie</span>
-        </button>
-      </div>
 
       {/* Agency Deliverables & Design Spec Modal */}
       <DesignSpecModal

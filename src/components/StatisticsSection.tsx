@@ -87,7 +87,7 @@ export const StatisticsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-bold px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#D5ECFE] inline-block mb-3">
+          <span className="text-xs font-bold px-3.5 py-1.5 rounded-full bg-white/10 border border-[#027DF7]/40 text-[#D5ECFE] inline-block mb-3">
             {t.stats.eyebrow}
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
@@ -107,7 +107,7 @@ export const StatisticsSection: React.FC = () => {
         </div>
 
         {/* 4 Large Numbers */}
-        <div className={`statistics-numbers-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 divide-y sm:divide-y-0 lg:divide-x ${isRtl ? 'lg:divide-x-reverse' : ''} lg:divide-white/15`}>
+        <div className={`statistics-numbers-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 divide-y sm:divide-y-0 lg:divide-x ${isRtl ? 'lg:divide-x-reverse' : ''} lg:divide-[#027DF7]/30`}>
           {statsData.map((item, idx) => (
             <motion.div
               key={item.id}
@@ -139,7 +139,7 @@ export const StatisticsSection: React.FC = () => {
         </div>
 
         {/* Bottom Trust Seal */}
-        <div className="mt-10 pt-6 border-t border-white/10 text-center text-xs text-white/60">
+        <div className="mt-10 pt-6 border-t border-[#027DF7]/30 text-center text-xs text-white/60">
           {t.stats.sourceAudit}
         </div>
       </div>

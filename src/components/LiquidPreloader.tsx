@@ -78,7 +78,7 @@ export const LiquidPreloader: React.FC<LiquidPreloaderProps> = ({
             filter: 'blur(12px)',
             transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
           }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#F7FAFC] select-none overflow-hidden"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#F7FAFC] dark:bg-[#060D17] select-none overflow-hidden"
         >
           {/* Ambient Multi-Layer Liquid Orbs */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
@@ -93,8 +93,9 @@ export const LiquidPreloader: React.FC<LiquidPreloaderProps> = ({
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
-              className="w-[380px] h-[380px] rounded-full bg-radial from-[#027DF7]/25 via-[#D5ECFE]/20 to-transparent blur-3xl"
+              className="w-[380px] h-[380px] rounded-full bg-radial from-[#027DF7]/25 via-[#D5ECFE]/20 dark:via-[#027DF7]/15 to-transparent blur-3xl"
             />
+
             {/* Navy Deep Accent Orb */}
             <motion.div
               animate={{
@@ -180,7 +181,7 @@ export const LiquidPreloader: React.FC<LiquidPreloaderProps> = ({
                   repeat: Infinity,
                   ease: 'easeInOut',
                 }}
-                className="relative w-20 h-20 rounded-3xl bg-white/95 backdrop-blur-md p-3 flex items-center justify-center shadow-xl shadow-[#027DF7]/30 border border-white"
+                className="relative w-20 h-20 rounded-3xl bg-white/95 dark:bg-[#071325] backdrop-blur-md p-3 flex items-center justify-center shadow-xl shadow-[#027DF7]/30 border border-[#027DF7]/40"
               >
                 <img
                   src="/logo.webp"

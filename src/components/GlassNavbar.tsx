@@ -5,24 +5,28 @@ import {
   X,
   ArrowUpLeft,
   ArrowUpRight,
-  BookOpen,
-  LayoutGrid,
   Building2,
   Briefcase,
-  TrendingUp,
-  PieChart,
   Layers,
-  BarChart3,
+  PieChart,
   Newspaper,
-  MapPin,
+  Users,
   Phone,
-  Mail,
-  Clock,
   ChevronLeft,
   ChevronRight,
-  Globe,
+  Sun,
+  Moon,
+  Sparkles,
+  LayoutGrid,
+  TrendingUp,
+  BarChart3,
+  MapPin,
+  Mail,
+  Clock,
+  BookOpen,
 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 import { getHoldingInfo } from '../data/mockData';
 
 interface GlassNavbarProps {
@@ -37,7 +41,8 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
   onNavigateView,
   onOpenDesignDoc,
 }) => {
-  const { language, setLanguage, toggleLanguage, isRtl, t } = useLanguage();
+  const { language, setLanguage, isRtl, t } = useLanguage();
+  const { isDark, toggleTheme } = useTheme();
   const holdingInfo = getHoldingInfo(language);
 
   const [isVisible, setIsVisible] = useState(true);
@@ -46,16 +51,16 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
   const [sidebarToolbarOpen, setSidebarToolbarOpen] = useState(false);
   const [hoveredNavIndex, setHoveredNavIndex] = useState<number | null>(null);
 
-  // EXACTLY the 4 requested items in the visible header navigation
-  const mainNavItems = [
-    { id: 'home', label: t.nav.home, view: 'home' as const, href: '#home' },
-    { id: 'articles', label: t.nav.articles, view: 'articles' as const, badge: t.nav.researchBadge },
-    { id: 'consultation', label: t.nav.consultation, view: 'consultation' as const },
-    { id: 'team', label: t.nav.team, view: 'team' as const },
+  // EXACTLY & ONLY the routes with separate page views in the navbar
+  const routeNavItems = [
+    { id: 'home', label: t.nav.home, view: 'home' as const, icon: Building2 },
+    { id: 'articles', label: t.nav.articles, view: 'articles' as const, badge: t.nav.researchBadge, icon: Newspaper },
+    { id: 'team', label: t.nav.team, view: 'team' as const, icon: Users },
+    { id: 'consultation', label: t.nav.consultation, view: 'consultation' as const, icon: Sparkles },
   ];
 
-  // All other sections housed in the sidebar drawer toolbar
-  const sidebarToolbarItems = [
+  // The non-route on-page sections housed exclusively in the sidebar toolbar
+  const sidebarSections = [
     {
       id: 'about',
       label: t.drawer.about.label,
@@ -114,6 +119,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
     },
   ];
 
+  // Auto-hide on fast scroll down, reveal on scroll up
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -131,9 +137,20 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  const handleItemClick = (item: {
+  // Lock scroll when mobile menu or sidebar toolbar is active
+  useEffect(() => {
+    if (mobileMenuOpen || sidebarToolbarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen, sidebarToolbarOpen]);
+
+  const handleRouteClick = (item: {
     view: 'home' | 'articles' | 'consultation' | 'team';
-    href?: string;
     id: string;
   }) => {
     setMobileMenuOpen(false);
@@ -147,27 +164,19 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
       return;
     }
 
-    // Navigating to Home view or section inside Home
     if (onNavigateView) {
-      onNavigateView('home', item.href ? item.href.replace('#', '') : undefined);
+      onNavigateView('home');
     }
-
-    if (currentView === 'home' && item.href) {
-      const target = document.querySelector(item.href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSidebarItemClick = (sectionHref: string) => {
+  const handleSectionClick = (sectionHref: string) => {
     setSidebarToolbarOpen(false);
     setMobileMenuOpen(false);
 
+    const sectionId = sectionHref.replace('#', '');
     if (onNavigateView) {
-      onNavigateView('home', sectionHref.replace('#', ''));
+      onNavigateView('home', sectionId);
     }
 
     setTimeout(() => {
@@ -183,6 +192,9 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
 
   return (
     <>
+      {/* ========================================================= */}
+      {/* DESKTOP & MOBILE FLOATING CAPSULE HEADER                  */}
+      {/* ========================================================= */}
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{
@@ -190,46 +202,45 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
           opacity: isVisible ? 1 : 0,
         }}
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 md:px-8 pt-4 md:pt-6 pointer-events-none"
+        className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 md:px-8 pt-3 sm:pt-5 pointer-events-none"
       >
-        <div className="w-full max-w-7xl liquid-glass-navbar pointer-events-auto px-3.5 sm:px-4 md:px-7 py-2.5 md:py-3 rounded-2xl md:rounded-full flex items-center justify-between transition-all duration-300">
-          {/* Brand Logo */}
+        <div className="w-full max-w-7xl pointer-events-auto px-3.5 sm:px-5 py-2.5 rounded-full flex items-center justify-between border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xl shadow-[#01427C]/10 dark:shadow-black/60 backdrop-blur-xl bg-white/85 dark:bg-[#060D17]/90 transition-all duration-300">
+          
+          {/* Brand Logo & Title */}
           <button
             type="button"
             id="brand-logo-button"
-            className={`flex items-center gap-2.5 md:gap-3 group ${isRtl ? 'text-right' : 'text-left'}`}
-            onClick={() => handleItemClick({ id: 'home', view: 'home', href: '#home' })}
+            className={`flex items-center gap-2.5 sm:gap-3 group ${isRtl ? 'text-right' : 'text-left'}`}
+            onClick={() => handleRouteClick({ id: 'home', view: 'home' })}
           >
-            {/* Holding Official Logo with Liquid Glass Glow */}
-            <div className="relative w-9 h-9 md:w-11 md:h-11 rounded-xl md:rounded-2xl bg-white/90 p-1 backdrop-blur-md border border-white/90 shadow-md shadow-[#027DF7]/20 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-[#027DF7]/30 transition-all duration-300 shrink-0 flex items-center justify-center overflow-hidden">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white dark:bg-[#081325] p-1 backdrop-blur-md border border-[#027DF7]/35 dark:border-[#027DF7]/60 shadow-md shadow-[#027DF7]/15 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-[#027DF7]/35 transition-all duration-300 shrink-0 flex items-center justify-center overflow-hidden">
               <img
                 src="/logo.webp"
                 alt={holdingInfo.name}
-                className="w-full h-full object-contain filter drop-shadow-xs"
-                width={44}
-                height={44}
+                className="w-full h-full object-contain"
+                width={40}
+                height={40}
               />
-              <div className="absolute inset-0 rounded-xl md:rounded-2xl bg-[#027DF7]/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             </div>
 
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base md:text-lg text-[#01427C] tracking-tight group-hover:text-[#027DF7] transition-colors">
+                <span className="font-extrabold text-sm sm:text-base md:text-lg text-[#01427C] dark:text-white tracking-tight group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors">
                   {holdingInfo.shortName}
                 </span>
-                <span className="text-[12px] md:text-[12px] font-semibold px-1.5 md:px-2 py-0.5 rounded-full bg-[#D5ECFE]/80 text-[#01427C] border border-[#027DF7]/20 whitespace-nowrap">
+                <span className="text-[10.5px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-[#D5ECFE]/80 dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#38BDF8] border border-[#027DF7]/25 dark:border-[#027DF7]/40 whitespace-nowrap">
                   {language === 'fa' ? 'سهامی عام' : 'PJSC'}
                 </span>
               </div>
-              <span className="text-[13px] font-medium text-[#64748B] hidden sm:block whitespace-nowrap">
+              <span className="text-[11.5px] font-medium text-[#64748B] dark:text-slate-300 hidden md:block whitespace-nowrap">
                 {holdingInfo.name}
               </span>
             </div>
           </button>
 
-          {/* Center: Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 relative px-3 py-1 rounded-full bg-white/40 border border-white/60">
-            {mainNavItems.map((item, index) => {
+          {/* Center: ONLY THE ROUTES with animated liquid pill */}
+          <nav className="hidden lg:flex items-center gap-1.5 px-1 py-1">
+            {routeNavItems.map((item, index) => {
               const isActive =
                 item.view === currentView ||
                 (item.view === 'articles' && currentView === 'article');
@@ -239,36 +250,36 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                 <button
                   key={item.id}
                   type="button"
-                  id={`nav-link-${item.id}`}
+                  id={`nav-route-${item.id}`}
                   onMouseEnter={() => setHoveredNavIndex(index)}
                   onMouseLeave={() => setHoveredNavIndex(null)}
-                  onClick={() => handleItemClick(item)}
-                  className={`relative px-4 py-1.5 text-xs font-bold rounded-full transition-colors duration-200 z-10 select-none flex items-center gap-1.5 ${
+                  onClick={() => handleRouteClick(item)}
+                  className={`relative px-4 py-1.5 text-xs font-bold rounded-full transition-colors duration-200 z-10 select-none flex items-center gap-1.5 cursor-pointer ${
                     isActive
-                      ? 'text-[#01427C]'
+                      ? 'text-[#01427C] dark:text-[#38BDF8]'
                       : isHovered
-                      ? 'text-[#027DF7]'
-                      : 'text-[#0A2540]/80 hover:text-[#01427C]'
+                      ? 'text-[#027DF7] dark:text-white'
+                      : 'text-[#475569] dark:text-slate-300 hover:text-[#01427C] dark:hover:text-white'
                   }`}
                 >
-                  {/* Liquid bubble pill */}
+                  {/* Floating active indicator */}
                   {isActive && (
                     <motion.div
-                      layoutId="activeBubble"
-                      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                      className="absolute inset-0 rounded-full bg-gradient-to-r from-[#D5ECFE] to-white/90 shadow-sm border border-white/90 -z-10"
+                      layoutId="navActivePill"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                      className="absolute inset-0 rounded-full bg-white dark:bg-[#027DF7]/30 shadow-sm border border-[#027DF7]/30 dark:border-[#38BDF8]/50 -z-10"
                     />
                   )}
                   {isHovered && !isActive && (
                     <motion.div
-                      layoutId="hoverBubble"
-                      transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-                      className="absolute inset-0 rounded-full bg-[#D5ECFE]/40 -z-10"
+                      layoutId="navHoverPill"
+                      transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                      className="absolute inset-0 rounded-full bg-[#D5ECFE]/50 dark:bg-[#027DF7]/20 border border-[#027DF7]/20 dark:border-[#38BDF8]/30 -z-10"
                     />
                   )}
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="text-[12px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold leading-tight">
+                    <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold leading-tight shadow-xs">
                       {item.badge}
                     </span>
                   )}
@@ -277,99 +288,86 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
             })}
           </nav>
 
-          {/* Right/End Controls: Language Toggle, Sidebar Toolbar Trigger, CTA (Desktop only) & Hamburger (Mobile) */}
+          {/* Right Action Controls: Sidebar Toolbar Trigger, Language, Theme, & Mobile Hamburger */}
           <div className="flex items-center gap-2">
-            {/* Language Switcher Button (Desktop only) */}
-            <div
-              id="language-toggle-wrapper"
-              className="hidden lg:flex items-center p-0.5 rounded-full bg-white/80 border border-[#E2E8F0] shadow-xs backdrop-blur-md"
-              title={language === 'fa' ? 'تغییر زبان به انگلیسی (Switch to English)' : 'تغییر زبان به فارسی (Switch to Persian)'}
-            >
-              <button
-                type="button"
-                id="lang-btn-fa"
-                onClick={() => setLanguage('fa')}
-                className={`relative px-2.5 py-1 rounded-full text-[13px] font-extrabold transition-all duration-200 ${
-                  language === 'fa'
-                    ? 'text-[#01427C] shadow-xs'
-                    : 'text-[#64748B] hover:text-[#01427C]'
-                }`}
-              >
-                {language === 'fa' && (
-                  <motion.div
-                    layoutId="activeLanguagePill"
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    className="absolute inset-0 rounded-full bg-[#D5ECFE] border border-[#027DF7]/25 -z-10"
-                  />
-                )}
-                <span>فا</span>
-              </button>
-
-              <button
-                type="button"
-                id="lang-btn-en"
-                onClick={() => setLanguage('en')}
-                className={`relative px-2.5 py-1 rounded-full text-[13px] font-extrabold transition-all duration-200 ${
-                  language === 'en'
-                    ? 'text-[#01427C] shadow-xs'
-                    : 'text-[#64748B] hover:text-[#01427C]'
-                }`}
-              >
-                {language === 'en' && (
-                  <motion.div
-                    layoutId="activeLanguagePill"
-                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                    className="absolute inset-0 rounded-full bg-[#D5ECFE] border border-[#027DF7]/25 -z-10"
-                  />
-                )}
-                <span>EN</span>
-              </button>
-            </div>
-
-            {/* The Sidebar Toolbar Trigger Button (Desktop only) - Icon only */}
+            {/* The Sidebar Toolbar Trigger Button (Sections without routes) */}
             <button
               type="button"
               id="open-sidebar-toolbar-btn"
               onClick={() => setSidebarToolbarOpen(true)}
-              className="hidden lg:flex items-center justify-center p-2 rounded-full text-[#01427C] bg-white/80 hover:bg-[#D5ECFE]/80 border border-[#E2E8F0] shadow-xs transition-all duration-200 hover:scale-105 group cursor-pointer"
-              title={t.nav.otherSections}
-              aria-label={t.nav.otherSections}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] bg-[#D5ECFE]/70 hover:bg-[#D5ECFE] dark:bg-[#027DF7]/20 dark:hover:bg-[#027DF7]/35 border border-[#027DF7]/35 dark:border-[#027DF7]/55 shadow-xs transition-all duration-200 hover:scale-102 active:scale-95 cursor-pointer"
+              title={language === 'fa' ? 'مشاهده تول‌بار بخش‌های صفحه' : 'View Sections Toolbar'}
             >
-              <LayoutGrid className="w-4 h-4 text-[#027DF7] group-hover:rotate-12 transition-transform" />
+              <LayoutGrid className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
+              <span className="hidden sm:inline">
+                {language === 'fa' ? 'تول‌بار بخش‌ها' : 'Sections'}
+              </span>
             </button>
 
-            {/* Primary Action Button (Desktop only) */}
+            {/* Quick Language Toggle */}
+            <div className="flex items-center p-0.5 rounded-full bg-slate-100/80 dark:bg-[#071325]/90 border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-xs">
+              <button
+                type="button"
+                id="lang-btn-fa"
+                onClick={() => setLanguage('fa')}
+                className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all duration-200 ${
+                  language === 'fa'
+                    ? 'bg-[#01427C] dark:bg-[#027DF7] text-white shadow-xs'
+                    : 'text-[#64748B] dark:text-slate-400 hover:text-[#01427C] dark:hover:text-white'
+                }`}
+              >
+                فا
+              </button>
+              <button
+                type="button"
+                id="lang-btn-en"
+                onClick={() => setLanguage('en')}
+                className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all duration-200 ${
+                  language === 'en'
+                    ? 'bg-[#01427C] dark:bg-[#027DF7] text-white shadow-xs'
+                    : 'text-[#64748B] dark:text-slate-400 hover:text-[#01427C] dark:hover:text-white'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+
+            {/* Theme Toggle Button */}
             <button
               type="button"
-              id="cta-nav-button"
-              onClick={() => handleItemClick({ id: 'consultation', view: 'consultation' })}
-              className="hidden lg:flex relative group overflow-hidden px-5 py-2.5 rounded-full bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-xs md:text-sm font-semibold shadow-md shadow-[#027DF7]/25 hover:shadow-lg hover:shadow-[#027DF7]/40 transition-all duration-300 hover:scale-102 items-center gap-1.5 cursor-pointer"
+              id="header-theme-toggle-btn"
+              onClick={toggleTheme}
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-[#01427C] dark:text-[#38BDF8] bg-slate-100/80 dark:bg-[#071325]/90 hover:bg-[#D5ECFE] dark:hover:bg-[#027DF7]/25 border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-xs transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
+              title={isDark ? t.nav.lightMode : t.nav.darkMode}
+              aria-label="Toggle Theme"
             >
-              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <span>{t.nav.bookConsultationShort}</span>
-              <ArrowIcon className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
+              {isDark ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-[#027DF7]" />
+              )}
             </button>
 
-            {/* Mobile-Only Clean Hamburger Button */}
+            {/* Clean Mobile Hamburger Button */}
             <button
               type="button"
               id="mobile-menu-toggle-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/90 text-[#01427C] hover:bg-[#D5ECFE]/80 border border-[#E2E8F0] shadow-xs transition-all duration-200 active:scale-95 flex items-center justify-center cursor-pointer"
+              className="lg:hidden w-9 h-9 rounded-full bg-slate-100/80 dark:bg-[#071325]/90 text-[#01427C] dark:text-[#38BDF8] hover:bg-[#D5ECFE] dark:hover:bg-[#027DF7]/25 border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xs transition-all duration-200 active:scale-95 flex items-center justify-center cursor-pointer"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>
       </motion.header>
 
       {/* ========================================================= */}
-      {/* SIDEBAR TOOLBAR DRAWER */}
+      {/* SIDEBAR TOOLBAR DRAWER (Sections without routes)          */}
       {/* ========================================================= */}
       <AnimatePresence>
         {sidebarToolbarOpen && (
-          <div className="fixed inset-0 z-[70] overflow-hidden pointer-events-auto">
+          <div className="fixed inset-0 z-[80] overflow-hidden pointer-events-auto">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -377,10 +375,11 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               onClick={() => setSidebarToolbarOpen(false)}
-              className="absolute inset-0 bg-black/30 backdrop-blur-xs"
+              className="absolute inset-0 bg-[#030A14]/70 backdrop-blur-sm"
+              aria-hidden="true"
             />
 
-            {/* Slide-out Drawer Panel */}
+            {/* Slide-out Sidebar Drawer */}
             <motion.div
               initial={{ x: isRtl ? '100%' : '-100%' }}
               animate={{ x: 0 }}
@@ -388,103 +387,75 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
               className={`absolute inset-y-0 ${
                 isRtl ? 'right-0 border-l' : 'left-0 border-r'
-              } max-w-md w-full bg-white/95 backdrop-blur-xl shadow-2xl border-[#E2E8F0] flex flex-col justify-between p-6 sm:p-8 overflow-y-auto`}
+              } max-w-md w-full bg-white/95 dark:bg-[#071325]/95 backdrop-blur-2xl shadow-2xl border-[#027DF7]/30 dark:border-[#027DF7]/50 flex flex-col justify-between p-6 sm:p-7 overflow-y-auto ${
+                isRtl ? 'text-right' : 'text-left'
+              }`}
+              dir={isRtl ? 'rtl' : 'ltr'}
             >
-              {/* Drawer Top */}
               <div>
-                <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#E2E8F0]">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-xl bg-[#027DF7]/10 text-[#027DF7] flex items-center justify-center">
-                      <LayoutGrid className="w-4 h-4" />
+                {/* Header */}
+                <div className="flex items-center justify-between pb-4 mb-5 border-b border-[#027DF7]/20 dark:border-[#027DF7]/30">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#027DF7] to-[#01427C] text-white flex items-center justify-center shadow-md shadow-[#027DF7]/20">
+                      <LayoutGrid className="w-5 h-5" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-[#01427C]">{t.nav.menuTitle}</h3>
-                      <p className="text-[13px] text-[#64748B]">{t.nav.menuSubtitle}</p>
+                      <h3 className="text-sm font-extrabold text-[#01427C] dark:text-white">
+                        {language === 'fa' ? 'تول‌بار بخش‌های صفحه' : 'Sections Toolbar'}
+                      </h3>
+                      <p className="text-[11.5px] text-[#64748B] dark:text-slate-300">
+                        {language === 'fa' ? 'دسترسی سریع به بخش‌های داخلی هلدینگ' : 'Quick jump to on-page sections'}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    {/* Language Switcher inside Drawer */}
-                    <button
-                      type="button"
-                      onClick={toggleLanguage}
-                      className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#F0F7FF] text-[#01427C] border border-[#D5ECFE] hover:bg-[#D5ECFE] transition-colors flex items-center gap-1.5"
-                    >
-                      <Globe className="w-3.5 h-3.5 text-[#027DF7]" />
-                      <span>{language === 'fa' ? 'English' : 'فارسی'}</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      id="close-sidebar-toolbar-btn"
-                      onClick={() => setSidebarToolbarOpen(false)}
-                      className="p-2 rounded-full bg-[#F1F5F9] text-[#64748B] hover:text-[#01427C] transition-colors"
-                      title={t.nav.close}
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSidebarToolbarOpen(false)}
+                    className="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#D5ECFE] dark:bg-[#0D2038] dark:hover:bg-[#027DF7]/25 text-[#01427C] dark:text-[#E0F2FE] border border-[#027DF7]/20 flex items-center justify-center transition-colors cursor-pointer"
+                    aria-label="Close"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
                 </div>
 
-                {/* 4 Main pages pill row inside toolbar */}
-                <div className="mb-6 p-3 rounded-2xl bg-[#F0F7FF] border border-[#D5ECFE]">
-                  <div className="text-[13px] font-bold text-[#01427C] mb-2">{t.drawer.holdingGroupTitle}:</div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {mainNavItems.map((nav) => (
-                      <button
-                        key={nav.id}
-                        type="button"
-                        onClick={() => handleItemClick(nav)}
-                        className={`p-2 rounded-xl text-xs font-bold ${
-                          isRtl ? 'text-right' : 'text-left'
-                        } transition-colors flex items-center justify-between ${
-                          currentView === nav.view
-                            ? 'bg-[#01427C] text-white'
-                            : 'bg-white text-[#01427C] hover:bg-[#D5ECFE]/60'
-                        }`}
-                      >
-                        <span>{nav.label}</span>
-                        <ChevronIcon className="w-3.5 h-3.5 opacity-60" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Other sections list */}
+                {/* Non-route Sections Grid / List */}
                 <div className="space-y-2 mb-6">
-                  <div className="text-xs font-bold text-[#64748B] px-1 mb-2">{t.nav.otherSections}:</div>
-                  {sidebarToolbarItems.map((item) => {
+                  {sidebarSections.map((item, idx) => {
                     const IconComp = item.icon;
                     return (
-                      <button
+                      <motion.button
                         key={item.id}
                         type="button"
-                        id={`sidebar-item-${item.id}`}
-                        onClick={() => handleSidebarItemClick(item.href)}
+                        id={`sidebar-section-${item.id}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.2, delay: idx * 0.03 }}
+                        onClick={() => handleSectionClick(item.href)}
                         className={`w-full ${
                           isRtl ? 'text-right' : 'text-left'
-                        } p-3 rounded-2xl bg-white hover:bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#027DF7]/30 transition-all flex items-start gap-3 group shadow-2xs`}
+                        } p-3 rounded-2xl bg-[#F8FAFC] dark:bg-[#0B192F] hover:bg-[#D5ECFE]/40 dark:hover:bg-[#027DF7]/20 border border-[#027DF7]/20 dark:border-[#027DF7]/35 hover:border-[#027DF7]/50 transition-all flex items-start gap-3 group cursor-pointer shadow-2xs`}
                       >
-                        <div className="w-9 h-9 rounded-xl bg-[#F0F7FF] text-[#027DF7] group-hover:bg-[#027DF7] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mt-0.5">
+                        <div className="w-9 h-9 rounded-xl bg-[#027DF7]/10 dark:bg-[#027DF7]/25 text-[#027DF7] dark:text-[#38BDF8] group-hover:bg-[#027DF7] group-hover:text-white transition-colors flex items-center justify-center shrink-0 mt-0.5">
                           <IconComp className="w-4 h-4" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-xs font-bold text-[#01427C] group-hover:text-[#027DF7] transition-colors mb-0.5">
+                          <div className="text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors mb-0.5">
                             {item.label}
                           </div>
-                          <div className="text-[13px] text-[#64748B] leading-relaxed line-clamp-1">
+                          <div className="text-[12px] text-[#64748B] dark:text-slate-300 leading-relaxed line-clamp-1">
                             {item.description}
                           </div>
                         </div>
-                        <ChevronIcon className="w-4 h-4 text-[#94A3B8] group-hover:-translate-x-1 transition-transform shrink-0 mt-2.5" />
-                      </button>
+                        <ChevronIcon className="w-4 h-4 text-[#94A3B8] group-hover:-translate-x-1 transition-transform shrink-0 mt-2" />
+                      </motion.button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Drawer Bottom: Quick Info & Documentation */}
-              <div className="pt-4 border-t border-[#E2E8F0] space-y-3">
+              {/* Sidebar Toolbar Footer */}
+              <div className="pt-4 border-t border-[#027DF7]/20 dark:border-[#027DF7]/30 space-y-2.5">
                 {onOpenDesignDoc && (
                   <button
                     type="button"
@@ -492,25 +463,21 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                       setSidebarToolbarOpen(false);
                       onOpenDesignDoc();
                     }}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#F8FAFC] hover:bg-[#D5ECFE]/40 border border-[#E2E8F0] text-[#01427C] text-xs font-bold flex items-center justify-center gap-2 transition-colors"
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-[#D5ECFE]/50 dark:bg-[#0D2038] dark:hover:bg-[#027DF7]/25 border border-[#027DF7]/20 text-[#01427C] dark:text-[#E0F2FE] text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
                   >
-                    <BookOpen className="w-4 h-4 text-[#027DF7]" />
-                    <span>{t.drawer.designSystemBadge} ({t.drawer.designSystemDesc})</span>
+                    <BookOpen className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+                    <span>{t.drawer.designSystemBadge}</span>
                   </button>
                 )}
 
-                <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs text-[#64748B] space-y-2">
-                  <div className="flex items-center gap-2 text-[#01427C] font-bold">
-                    <Phone className="w-3.5 h-3.5 text-[#027DF7]" />
-                    <span>{t.drawer.headquartersTitle}: {holdingInfo.phoneFormatted}</span>
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#091527] border border-[#027DF7]/15 dark:border-[#027DF7]/30 text-xs text-[#64748B] dark:text-slate-300 space-y-1.5">
+                  <div className="flex items-center gap-2 text-[#01427C] dark:text-white font-bold">
+                    <Phone className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
+                    <span>{holdingInfo.phoneFormatted}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Mail className="w-3.5 h-3.5 text-[#027DF7]" />
-                    <span className="font-mono text-[13px]">{holdingInfo.email}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5 text-[#027DF7]" />
-                    <span>{holdingInfo.workingHours}</span>
+                    <Mail className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
+                    <span className="font-mono text-[12px]">{holdingInfo.email}</span>
                   </div>
                 </div>
               </div>
@@ -520,22 +487,37 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
       </AnimatePresence>
 
       {/* ========================================================= */}
-      {/* Mobile Full-Screen Glass Overlay Menu */}
+      {/* MOBILE FULL-SCREEN SHEET (Routes on top, Sections below)  */}
       {/* ========================================================= */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[60] bg-[#F7FAFC]/98 backdrop-blur-2xl flex flex-col justify-between px-5 pt-5 pb-8 lg:hidden overflow-y-auto"
-          >
-            <div className="flex flex-col gap-3.5">
-              {/* Mobile Menu Top Header with Brand Logo and Prominent Close Button */}
-              <div className="flex items-center justify-between pb-3.5 border-b border-[#E2E8F0]">
+          <div className="fixed inset-0 z-[100] lg:hidden">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-[#030A14]/70 backdrop-blur-md"
+              aria-hidden="true"
+            />
+
+            {/* Drawer Sheet */}
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.98 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className={`fixed inset-x-3 top-3 bottom-3 max-w-lg mx-auto rounded-[28px] bg-white/95 dark:bg-[#071325]/95 backdrop-blur-2xl border border-[#027DF7]/35 dark:border-[#027DF7]/55 shadow-2xl flex flex-col justify-between p-5 overflow-hidden ${
+                isRtl ? 'text-right' : 'text-left'
+              }`}
+              dir={isRtl ? 'rtl' : 'ltr'}
+            >
+              {/* Top Bar: Brand & Close */}
+              <div className="flex items-center justify-between pb-3.5 border-b border-[#027DF7]/20 dark:border-[#027DF7]/30">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-white p-1 shadow-xs border border-[#E2E8F0] flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-xl bg-white dark:bg-[#081325] p-1 shadow-sm border border-[#027DF7]/30 dark:border-[#027DF7]/50 flex items-center justify-center shrink-0">
                     <img
                       src="/logo.webp"
                       alt={holdingInfo.name}
@@ -544,170 +526,128 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                       height={36}
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-sm font-extrabold text-[#01427C] leading-tight">
+                  <div>
+                    <h3 className="text-sm font-extrabold text-[#01427C] dark:text-white leading-tight">
                       {holdingInfo.shortName}
-                    </span>
-                    <span className="text-[12px] text-[#64748B]">
-                      {language === 'fa' ? 'منوی دسترسی سریع' : 'Quick Navigation'}
-                    </span>
+                    </h3>
+                    <p className="text-[11px] text-[#64748B] dark:text-slate-300">
+                      {language === 'fa' ? 'منوی دسترسی و ناوبری' : 'Navigation Menu'}
+                    </p>
                   </div>
                 </div>
 
-                {/* Prominent Close Button */}
                 <button
                   type="button"
-                  id="mobile-menu-close-top-btn"
+                  id="mobile-drawer-close-btn"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200/80 transition-all duration-200 active:scale-95 cursor-pointer shadow-2xs"
-                  aria-label="Close Mobile Menu"
+                  className="w-9 h-9 rounded-full bg-slate-100 hover:bg-[#D5ECFE] dark:bg-[#0D2038] dark:hover:bg-[#027DF7]/25 text-[#01427C] dark:text-[#E0F2FE] border border-[#027DF7]/20 flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Close"
                 >
                   <X className="w-4 h-4" />
-                  <span className="text-xs font-bold">{t.nav.close}</span>
                 </button>
               </div>
 
-              {/* Primary Mobile CTA Button */}
-              <button
-                type="button"
-                id="mobile-drawer-cta-btn"
-                onClick={() => handleItemClick({ id: 'consultation', view: 'consultation' })}
-                className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-sm font-extrabold shadow-md shadow-[#027DF7]/25 flex items-center justify-center gap-2 cursor-pointer active:scale-98 transition-transform"
-              >
-                <span>{t.nav.bookConsultationShort}</span>
-                <ArrowIcon className="w-4 h-4" />
-              </button>
-
-              {/* Language Switcher in Mobile Header */}
-              <div className="flex items-center justify-between p-3 rounded-2xl bg-[#F0F7FF] border border-[#D5ECFE]">
-                <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 text-[#027DF7]" />
-                  <span className="text-xs font-bold text-[#01427C]">Language / انتخاب زبان</span>
-                </div>
-                <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-[#D5ECFE]">
-                  <button
-                    type="button"
-                    onClick={() => setLanguage('fa')}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                      language === 'fa' ? 'bg-[#01427C] text-white' : 'text-[#64748B]'
-                    }`}
-                  >
-                    فارسی
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setLanguage('en')}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer ${
-                      language === 'en' ? 'bg-[#01427C] text-white' : 'text-[#64748B]'
-                    }`}
-                  >
-                    English
-                  </button>
-                </div>
-              </div>
-
-              {/* 4 Main highlighted items */}
-              <div className="pt-2">
-                <div className="text-xs font-extrabold text-[#01427C] px-1 mb-2 flex items-center justify-between">
-                  <span>{t.nav.menuTitle}</span>
-                  <span className="text-[12px] text-[#027DF7] bg-[#D5ECFE]/60 px-2 py-0.5 rounded-full font-bold">
-                    {t.nav.menuSubtitle}
+              {/* Scrollable Navigation Body */}
+              <div className="py-3 space-y-4 overflow-y-auto max-h-[55vh]">
+                {/* 1. Routes (صفحات اصلی) */}
+                <div>
+                  <span className="text-[11px] font-extrabold text-[#027DF7] dark:text-[#38BDF8] block mb-2 px-1">
+                    {language === 'fa' ? 'صفحات اصلی (روت‌ها)' : 'Main Routes'}
                   </span>
+                  <div className="space-y-1.5">
+                    {routeNavItems.map((item, idx) => {
+                      const Icon = item.icon;
+                      const isActive =
+                        item.view === currentView ||
+                        (item.view === 'articles' && currentView === 'article');
+
+                      return (
+                        <motion.button
+                          key={item.id}
+                          type="button"
+                          initial={{ opacity: 0, x: isRtl ? 15 : -15 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.2, delay: idx * 0.03 }}
+                          onClick={() => handleRouteClick(item)}
+                          className={`w-full px-4 py-2.5 rounded-2xl flex items-center justify-between transition-all duration-200 cursor-pointer ${
+                            isActive
+                              ? 'bg-[#027DF7]/15 dark:bg-[#027DF7]/25 text-[#027DF7] dark:text-[#38BDF8] font-black border border-[#027DF7]/30'
+                              : 'text-[#01427C] dark:text-[#E0F2FE] hover:bg-slate-100/70 dark:hover:bg-[#0B1E38] font-bold border border-transparent'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${
+                              isActive
+                                ? 'bg-[#027DF7] text-white'
+                                : 'bg-[#027DF7]/10 dark:bg-[#027DF7]/15 text-[#027DF7] dark:text-[#38BDF8]'
+                            }`}>
+                              <Icon className="w-3.5 h-3.5" />
+                            </div>
+                            <span className="text-sm">{item.label}</span>
+                            {item.badge && (
+                              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold">
+                                {item.badge}
+                              </span>
+                            )}
+                          </div>
+                          <ChevronIcon className="w-4 h-4 opacity-50" />
+                        </motion.button>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  {mainNavItems.map((link) => {
-                    const isSelected =
-                      link.view === currentView ||
-                      (link.view === 'articles' && currentView === 'article');
-                    return (
+                {/* 2. On-Page Sections (بخش‌های بدون روت در تول‌بار) */}
+                <div className="pt-2 border-t border-[#027DF7]/15 dark:border-[#027DF7]/25">
+                  <span className="text-[11px] font-extrabold text-[#64748B] dark:text-slate-300 block mb-2 px-1">
+                    {language === 'fa' ? 'بخش‌های داخلی صفحه اصلی (تول‌بار)' : 'On-Page Sections (Toolbar)'}
+                  </span>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    {sidebarSections.map((sec) => (
                       <button
-                        key={link.id}
+                        key={sec.id}
                         type="button"
-                        id={`mobile-main-${link.id}`}
-                        onClick={() => handleItemClick(link)}
-                        className={`w-full ${
+                        onClick={() => handleSectionClick(sec.href)}
+                        className={`p-2.5 rounded-xl bg-slate-50 dark:bg-[#0B192F] hover:bg-[#D5ECFE]/40 dark:hover:bg-[#027DF7]/20 border border-[#027DF7]/15 dark:border-[#027DF7]/30 text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] flex items-center justify-between cursor-pointer ${
                           isRtl ? 'text-right' : 'text-left'
-                        } px-4 py-3 text-sm font-bold rounded-2xl flex items-center justify-between transition-all cursor-pointer ${
-                          isSelected
-                            ? 'bg-[#01427C] text-white shadow-sm'
-                            : 'bg-white text-[#01427C] hover:bg-[#D5ECFE]/40 border border-[#E2E8F0]'
                         }`}
                       >
-                        <div className="flex items-center gap-2">
-                          <span>{link.label}</span>
-                          {link.badge && (
-                            <span
-                              className={`text-[12px] px-2 py-0.5 rounded-full font-bold ${
-                                isSelected ? 'bg-white/20 text-white' : 'bg-[#D5ECFE] text-[#01427C]'
-                              }`}
-                            >
-                              {link.badge}
-                            </span>
-                          )}
-                        </div>
-                        <ArrowIcon className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-[#64748B]'}`} />
+                        <span className="truncate">{sec.label}</span>
+                        <ChevronIcon className="w-3 h-3 text-[#94A3B8]" />
                       </button>
-                    );
-                  })}
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              {/* Other sections collapsible list */}
-              <div className="pt-2">
-                <div className="text-xs font-extrabold text-[#64748B] px-1 mb-2">
-                  {t.nav.otherSections}:
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  {sidebarToolbarItems.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => handleSidebarItemClick(item.href)}
-                      className={`p-2.5 rounded-xl bg-white border border-[#E2E8F0] ${
-                        isRtl ? 'text-right' : 'text-left'
-                      } text-xs font-bold text-[#01427C] hover:bg-[#F0F7FF] transition-colors flex items-center justify-between cursor-pointer`}
-                    >
-                      <span className="truncate">{item.label}</span>
-                      <ChevronIcon className="w-3.5 h-3.5 text-[#94A3B8]" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="pt-5 mt-4 border-t border-[#E2E8F0] flex flex-col gap-2.5">
-              {/* Bottom Quick Close Button */}
-              <button
-                type="button"
-                id="mobile-menu-close-bottom-btn"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-2.5 px-4 rounded-xl bg-[#F1F5F9] hover:bg-[#E2E8F0] text-[#01427C] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
-              >
-                <X className="w-4 h-4 text-[#01427C]" />
-                <span>{language === 'fa' ? 'بستن منو' : 'Close Menu'}</span>
-              </button>
-
-              {onOpenDesignDoc && (
+              {/* Bottom Quick Call & Consultation */}
+              <div className="pt-3 border-t border-[#027DF7]/20 dark:border-[#027DF7]/30 space-y-2.5">
                 <button
                   type="button"
-                  id="mobile-open-design-spec"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenDesignDoc();
-                  }}
-                  className="w-full py-2.5 px-4 rounded-xl bg-white border border-[#E2E8F0] text-[#01427C] font-semibold text-xs flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
+                  id="mobile-drawer-consultation-btn"
+                  onClick={() => handleRouteClick({ id: 'consultation', view: 'consultation' })}
+                  className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-xs sm:text-sm font-extrabold shadow-md shadow-[#027DF7]/25 hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <BookOpen className="w-4 h-4 text-[#027DF7]" />
-                  <span>{t.drawer.designSystemBadge}</span>
+                  <Sparkles className="w-4 h-4" />
+                  <span>{t.nav.bookConsultationShort}</span>
+                  <ArrowIcon className="w-3.5 h-3.5" />
                 </button>
-              )}
 
-              <div className="text-center text-[13px] text-[#64748B] font-medium">
-                {holdingInfo.name} • {holdingInfo.phoneFormatted}
+                <a
+                  href={`tel:${holdingInfo.phone}`}
+                  className="w-full py-2 px-4 rounded-xl bg-slate-100 dark:bg-[#0D2038] text-[#01427C] dark:text-slate-200 border border-[#027DF7]/20 flex items-center justify-between text-xs transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-3.5 h-3.5 text-[#027DF7]" />
+                    <span className="font-semibold">{holdingInfo.phoneFormatted}</span>
+                  </div>
+                  <span className="text-[11px] text-[#64748B] dark:text-slate-400">
+                    {language === 'fa' ? 'تماس فوری' : 'Quick Call'}
+                  </span>
+                </a>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </>

@@ -35,10 +35,10 @@ export const SubsidiariesSection: React.FC = () => {
         {/* Constellation / Orbital Visual Interactive Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Orbital Interactive Canvas (7 cols on desktop) */}
-          <div className="lg:col-span-7 relative min-h-[440px] sm:min-h-[500px] flex items-center justify-center p-4">
-            {/* Ambient concentric orbital rings */}
-            <div className="absolute w-[280px] sm:w-[360px] h-[280px] sm:h-[360px] rounded-full border border-[#027DF7]/15 animate-[spin_60s_linear_infinite]" />
-            <div className="absolute w-[400px] sm:w-[480px] h-[400px] sm:h-[480px] rounded-full border border-dashed border-[#01427C]/15" />
+          <div className="lg:col-span-7 relative min-h-[360px] sm:min-h-[440px] md:min-h-[500px] flex items-center justify-center p-2 sm:p-4 select-none">
+            {/* Ambient concentric orbital rings - Mobile Optimized */}
+            <div className="absolute w-[200px] h-[200px] sm:w-[280px] sm:h-[280px] md:w-[360px] md:h-[360px] rounded-full border border-[#027DF7]/20 dark:border-[#027DF7]/35 animate-[spin_60s_linear_infinite] pointer-events-none" />
+            <div className="absolute w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] md:w-[480px] md:h-[480px] max-w-[calc(100vw-2.5rem)] max-h-[calc(100vw-2.5rem)] rounded-full border border-dashed border-[#01427C]/20 dark:border-[#027DF7]/40 pointer-events-none" />
 
             {/* SVG Connecting Animated Dashed Lines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
@@ -77,102 +77,102 @@ export const SubsidiariesSection: React.FC = () => {
               />
             </svg>
 
-            {/* Center: Main Holding Glass Orb */}
+            {/* Center: Main Holding Glass Orb - Optimized for mobile & dark mode */}
             <motion.div
               animate={{
                 scale: [1, 1.03, 1],
               }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative z-10 w-28 h-28 sm:w-36 sm:h-36 rounded-full liquid-glass-card border-2 border-white flex flex-col items-center justify-center p-3 shadow-2xl text-center cursor-pointer group"
+              className="relative z-10 w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full liquid-glass-card dark:bg-[#071325]/95 border-2 border-[#027DF7]/40 dark:border-[#027DF7]/60 flex flex-col items-center justify-center p-2 sm:p-3 shadow-xl dark:shadow-[0_0_25px_rgba(2,125,247,0.2)] text-center cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#027DF7] to-[#01427C] flex items-center justify-center text-white mb-1 shadow-md shadow-[#027DF7]/30">
-                <Sparkles className="w-5 h-5 text-white" />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#027DF7] to-[#01427C] flex items-center justify-center text-white mb-0.5 sm:mb-1 shadow-md shadow-[#027DF7]/30">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <span className="text-xs sm:text-sm font-extrabold text-[#01427C]">
+              <span className="text-[11px] sm:text-xs md:text-sm font-extrabold text-[#01427C] dark:text-[#E0F2FE] leading-tight">
                 {language === 'fa' ? 'هلدینگ سرآمد' : 'Saramad Holding'}
               </span>
-              <span className="text-[12px] text-[#64748B]">{t.subsidiaries.coreHub}</span>
+              <span className="text-[10px] sm:text-[12px] text-[#64748B] dark:text-[#94A3B8]">{t.subsidiaries.coreHub}</span>
 
               {/* Pulsing ring */}
-              <div className="absolute -inset-2 rounded-full border border-[#027DF7]/40 animate-ping opacity-25 pointer-events-none" />
+              <div className="absolute -inset-1.5 sm:-inset-2 rounded-full border border-[#027DF7]/40 animate-ping opacity-25 pointer-events-none" />
             </motion.div>
 
             {/* Node 1: Top Left */}
-            <div className={`absolute top-[8%] ${isRtl ? 'left-[8%] sm:left-[15%]' : 'right-[8%] sm:right-[15%]'} sm:top-[12%] z-20`}>
+            <div className={`absolute top-[4%] sm:top-[8%] md:top-[12%] ${isRtl ? 'left-[4%] sm:left-[10%] md:left-[15%]' : 'right-[4%] sm:right-[10%] md:right-[15%]'} z-20`}>
               <button
                 type="button"
                 onClick={() => setActiveNodeId('sub-1')}
-                className={`flex flex-col items-center group transition-all ${
-                  activeNodeId === 'sub-1' ? 'scale-110' : 'hover:scale-105'
+                className={`flex flex-col items-center group transition-all cursor-pointer ${
+                  activeNodeId === 'sub-1' ? 'scale-105 sm:scale-110' : 'hover:scale-105'
                 }`}
               >
                 <div
-                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
+                  className={`w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
                     activeNodeId === 'sub-1'
-                      ? 'bg-[#027DF7] text-white shadow-xl shadow-[#027DF7]/40 ring-4 ring-[#D5ECFE]'
-                      : 'liquid-glass-card text-[#01427C] hover:border-[#027DF7]'
+                      ? 'bg-[#027DF7] text-white shadow-xl shadow-[#027DF7]/40 ring-2 sm:ring-4 ring-[#D5ECFE] dark:ring-[#027DF7]/50'
+                      : 'liquid-glass-card dark:bg-[#071325]/90 text-[#01427C] dark:text-[#E0F2FE] border border-[#027DF7]/30 hover:border-[#027DF7]'
                   }`}
                 >
-                  <Building className="w-4 h-4 sm:w-6 sm:h-6 mb-0.5" />
-                  <span className="text-[12px] font-bold leading-tight">
+                  <Building className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mb-0.5" />
+                  <span className="text-[10px] sm:text-[11px] md:text-[12px] font-bold leading-tight">
                     {language === 'fa' ? 'سبدگردان' : 'Asset Mgt'}
                   </span>
                 </div>
-                <span className="mt-2 text-xs font-bold text-[#01427C] bg-white/90 px-2.5 py-0.5 rounded-full shadow-sm">
+                <span className="mt-1.5 sm:mt-2 text-[11px] sm:text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] bg-white/95 dark:bg-[#071325]/95 border border-[#027DF7]/25 dark:border-[#027DF7]/45 px-2 sm:px-2.5 py-0.5 rounded-full shadow-xs">
                   {subsidiariesData[0]?.name || ''}
                 </span>
               </button>
             </div>
 
             {/* Node 2: Top Right */}
-            <div className={`absolute top-[12%] ${isRtl ? 'right-[8%] sm:right-[15%]' : 'left-[8%] sm:left-[15%]'} sm:top-[15%] z-20`}>
+            <div className={`absolute top-[6%] sm:top-[10%] md:top-[15%] ${isRtl ? 'right-[4%] sm:right-[10%] md:right-[15%]' : 'left-[4%] sm:left-[10%] md:left-[15%]'} z-20`}>
               <button
                 type="button"
                 onClick={() => setActiveNodeId('sub-2')}
-                className={`flex flex-col items-center group transition-all ${
-                  activeNodeId === 'sub-2' ? 'scale-110' : 'hover:scale-105'
+                className={`flex flex-col items-center group transition-all cursor-pointer ${
+                  activeNodeId === 'sub-2' ? 'scale-105 sm:scale-110' : 'hover:scale-105'
                 }`}
               >
                 <div
-                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
+                  className={`w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
                     activeNodeId === 'sub-2'
-                      ? 'bg-[#10B981] text-white shadow-xl shadow-[#10B981]/40 ring-4 ring-[#D5ECFE]'
-                      : 'liquid-glass-card text-[#01427C] hover:border-[#10B981]'
+                      ? 'bg-[#10B981] text-white shadow-xl shadow-[#10B981]/40 ring-2 sm:ring-4 ring-[#D5ECFE] dark:ring-[#10B981]/50'
+                      : 'liquid-glass-card dark:bg-[#071325]/90 text-[#01427C] dark:text-[#E0F2FE] border border-[#027DF7]/30 hover:border-[#10B981]'
                   }`}
                 >
-                  <Sparkles className="w-4 h-4 sm:w-6 sm:h-6 mb-0.5" />
-                  <span className="text-[12px] font-bold leading-tight">
+                  <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mb-0.5" />
+                  <span className="text-[10px] sm:text-[11px] md:text-[12px] font-bold leading-tight">
                     {language === 'fa' ? 'ایلیا ونچرز' : 'Ventures'}
                   </span>
                 </div>
-                <span className="mt-2 text-xs font-bold text-[#01427C] bg-white/90 px-2.5 py-0.5 rounded-full shadow-sm">
+                <span className="mt-1.5 sm:mt-2 text-[11px] sm:text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] bg-white/95 dark:bg-[#071325]/95 border border-[#027DF7]/25 dark:border-[#027DF7]/45 px-2 sm:px-2.5 py-0.5 rounded-full shadow-xs">
                   {subsidiariesData[1]?.name || ''}
                 </span>
               </button>
             </div>
 
             {/* Node 3: Bottom Center */}
-            <div className="absolute bottom-[4%] left-1/2 -translate-x-1/2 z-20">
+            <div className="absolute bottom-[2%] sm:bottom-[3%] md:bottom-[4%] left-1/2 -translate-x-1/2 z-20">
               <button
                 type="button"
                 onClick={() => setActiveNodeId('sub-3')}
-                className={`flex flex-col items-center group transition-all ${
-                  activeNodeId === 'sub-3' ? 'scale-110' : 'hover:scale-105'
+                className={`flex flex-col items-center group transition-all cursor-pointer ${
+                  activeNodeId === 'sub-3' ? 'scale-105 sm:scale-110' : 'hover:scale-105'
                 }`}
               >
                 <div
-                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
+                  className={`w-14 h-14 sm:w-18 sm:h-18 md:w-20 md:h-20 rounded-full flex flex-col items-center justify-center p-1 transition-all duration-300 ${
                     activeNodeId === 'sub-3'
-                      ? 'bg-[#01427C] text-white shadow-xl shadow-[#01427C]/40 ring-4 ring-[#D5ECFE]'
-                      : 'liquid-glass-card text-[#01427C] hover:border-[#01427C]'
+                      ? 'bg-[#01427C] text-white shadow-xl shadow-[#01427C]/40 ring-2 sm:ring-4 ring-[#D5ECFE] dark:ring-[#01427C]/50'
+                      : 'liquid-glass-card dark:bg-[#071325]/90 text-[#01427C] dark:text-[#E0F2FE] border border-[#027DF7]/30 hover:border-[#01427C]'
                   }`}
                 >
-                  <Building className="w-4 h-4 sm:w-6 sm:h-6 mb-0.5" />
-                  <span className="text-[12px] font-bold leading-tight">
+                  <Building className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 mb-0.5" />
+                  <span className="text-[10px] sm:text-[11px] md:text-[12px] font-bold leading-tight">
                     {language === 'fa' ? 'املاک' : 'Real Estate'}
                   </span>
                 </div>
-                <span className="mt-2 text-xs font-bold text-[#01427C] bg-white/90 px-2.5 py-0.5 rounded-full shadow-sm">
+                <span className="mt-1.5 sm:mt-2 text-[11px] sm:text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] bg-white/95 dark:bg-[#071325]/95 border border-[#027DF7]/25 dark:border-[#027DF7]/45 px-2 sm:px-2.5 py-0.5 rounded-full shadow-xs">
                   {subsidiariesData[2]?.name || ''}
                 </span>
               </button>

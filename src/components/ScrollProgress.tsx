@@ -133,18 +133,18 @@ export const ScrollProgress: React.FC = () => {
             transition={{ duration: 0.2 }}
             className={`fixed bottom-5 ${
               isRtl ? 'left-5 md:left-6' : 'right-5 md:right-6'
-            } md:bottom-auto md:top-3.5 z-30 flex items-center gap-1.5 px-3 py-1.5 md:px-2.5 md:py-1 rounded-full bg-white/90 hover:bg-white backdrop-blur-xl border border-white/90 shadow-lg md:shadow-md shadow-[#01427C]/12 text-xs md:text-[13px] font-bold text-[#01427C] hover:text-[#027DF7] transition-all cursor-pointer group active:scale-95`}
+            } md:bottom-auto md:top-3.5 z-30 flex items-center gap-1.5 px-3 py-1.5 md:px-2.5 md:py-1 rounded-full bg-white/90 dark:bg-[#071325]/90 hover:bg-white dark:hover:bg-[#0B1E38] backdrop-blur-xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-lg md:shadow-md shadow-[#01427C]/12 text-xs md:text-[13px] font-bold text-[#01427C] dark:text-[#E0F2FE] hover:text-[#027DF7] dark:hover:text-[#38BDF8] transition-all cursor-pointer group active:scale-95`}
             title={language === 'fa' ? 'بازگشت به ابتدای صفحه' : 'Back to top'}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#027DF7] animate-pulse" />
             <span className="tabular-nums">{formatPercent(scrollPercent)}</span>
-            <ArrowUp className="w-3.5 h-3.5 md:w-3 md:h-3 text-[#64748B] group-hover:text-[#027DF7] group-hover:-translate-y-0.5 transition-transform" />
+            <ArrowUp className="w-3.5 h-3.5 md:w-3 md:h-3 text-[#64748B] dark:text-[#94A3B8] group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] group-hover:-translate-y-0.5 transition-transform" />
           </motion.button>
         )}
       </AnimatePresence>
 
       {/* Side dot navigation with liquid glass styling (large screens) */}
-      <div className={`fixed ${isRtl ? 'right-5' : 'left-5'} top-1/2 -translate-y-1/2 z-40 hidden 2xl:flex flex-col gap-3 py-3.5 px-2 rounded-full bg-white/40 backdrop-blur-xl border border-white/70 shadow-xl shadow-[#01427C]/8`}>
+      <div className={`fixed ${isRtl ? 'right-5' : 'left-5'} top-1/2 -translate-y-1/2 z-40 hidden 2xl:flex flex-col gap-3 py-3.5 px-2 rounded-full bg-white/40 dark:bg-[#071325]/70 backdrop-blur-xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xl shadow-[#01427C]/8`}>
         {sections.map((sec) => {
           const isActive = activeSection === sec.id;
           return (

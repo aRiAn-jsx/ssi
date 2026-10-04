@@ -170,14 +170,15 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
                 type="button"
                 id={`filter-cat-${cat}`}
                 onClick={() => setSelectedCategory(cat)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 border ${
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 border cursor-pointer ${
                   isSelected
-                    ? 'bg-[#01427C] text-white border-[#01427C] shadow-md shadow-[#01427C]/15'
-                    : 'bg-white/80 text-[#64748B] border-[#E2E8F0] hover:border-[#027DF7]/40 hover:text-[#01427C]'
+                    ? 'bg-[#01427C] dark:bg-[#027DF7] text-white border-[#01427C] dark:border-[#027DF7] shadow-md shadow-[#027DF7]/25'
+                    : 'bg-white/80 dark:bg-[#0B192F]/80 text-[#64748B] dark:text-[#CBD5E1] border-[#E2E8F0] dark:border-sky-500/20 hover:border-[#027DF7]/40 hover:text-[#01427C] dark:hover:text-white'
                 }`}
               >
                 {cat}
               </button>
+
             );
           })}
         </div>
@@ -219,7 +220,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
 
                 {/* Key takeaways bullet preview */}
                 {featuredArticle.keyTakeaways && (
-                  <div className="p-3.5 rounded-2xl bg-white/60 border border-white/80 space-y-1.5">
+                  <div className="p-3.5 rounded-2xl bg-white/60 dark:bg-[#071325]/70 border border-[#027DF7]/30 dark:border-[#027DF7]/50 space-y-1.5">
                     <span className="text-[13px] font-bold text-[#01427C] flex items-center gap-1">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#027DF7]" />
                       {t.articles.keyTakeawaysTitle}
@@ -338,7 +339,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
                         loading="lazy"
                       />
                       <div className={`absolute top-2.5 ${isRtl ? 'right-2.5' : 'left-2.5'}`}>
-                        <span className="px-2.5 py-1 rounded-lg bg-white/90 backdrop-blur-md text-[#01427C] text-[12px] font-extrabold shadow-sm border border-white/80">
+                        <span className="px-2.5 py-1 rounded-lg bg-white/90 dark:bg-[#071325]/90 backdrop-blur-md text-[#01427C] dark:text-[#38BDF8] text-[12px] font-extrabold shadow-sm border border-[#027DF7]/30 dark:border-[#027DF7]/50">
                           {article.category}
                         </span>
                       </div>
@@ -470,7 +471,7 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 20 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
-              className={`relative w-full max-w-3xl max-h-[90vh] bg-white rounded-3xl shadow-2xl border border-white/80 overflow-y-auto z-10 p-6 sm:p-8 md:p-10 ${isRtl ? 'text-right' : 'text-left'}`}
+              className={`relative w-full max-w-3xl max-h-[90vh] bg-white dark:bg-[#071325] rounded-3xl shadow-2xl border border-[#027DF7]/30 dark:border-[#027DF7]/50 overflow-y-auto z-10 p-6 sm:p-8 md:p-10 ${isRtl ? 'text-right' : 'text-left'}`}
             >
               <button
                 type="button"

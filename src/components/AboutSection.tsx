@@ -9,9 +9,9 @@ export const AboutSection: React.FC = () => {
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
 
   return (
-    <section id="about" className="relative py-16 md:py-24 bg-[#F7FAFC] overflow-hidden">
+    <section id="about" className="relative py-16 md:py-24 bg-[#F7FAFC] dark:bg-[#060D17] border-t border-b border-[#027DF7]/20 dark:border-[#027DF7]/35 overflow-hidden transition-colors duration-300">
       {/* Background Soft Sky Accent Glow */}
-      <div className={`absolute top-1/2 ${isRtl ? '-right-40' : '-left-40'} w-[500px] h-[500px] rounded-full bg-[#D5ECFE]/50 blur-3xl pointer-events-none -z-10`} />
+      <div className={`absolute top-1/2 ${isRtl ? '-right-40' : '-left-40'} w-[500px] h-[500px] rounded-full bg-[#D5ECFE]/50 dark:bg-[#027DF7]/10 blur-3xl pointer-events-none -z-10`} />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -24,19 +24,19 @@ export const AboutSection: React.FC = () => {
             className={`lg:col-span-7 flex flex-col items-start ${isRtl ? 'text-right' : 'text-left'}`}
           >
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 dark:bg-[#027DF7]/20 border border-[#027DF7]/20 text-[#01427C] dark:text-[#38BDF8] text-xs font-bold mb-4">
               <span>{t.about.eyebrow}</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#01427C] leading-tight mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#01427C] dark:text-white leading-tight mb-6">
               {t.about.title}
             </h2>
 
-            <p className="text-base sm:text-lg text-[#64748B] leading-relaxed mb-6 font-normal">
+            <p className="text-base sm:text-lg text-[#64748B] dark:text-slate-300 leading-relaxed mb-6 font-normal">
               {t.about.desc1}
             </p>
 
-            <p className="text-base sm:text-lg text-[#64748B] leading-relaxed mb-8 font-normal">
+            <p className="text-base sm:text-lg text-[#64748B] dark:text-slate-300 leading-relaxed mb-8 font-normal">
               {t.about.desc2}
             </p>
 
@@ -45,14 +45,14 @@ export const AboutSection: React.FC = () => {
               {t.about.values.map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-2xl bg-white/70 border border-[#E2E8F0] shadow-sm flex items-start gap-3"
+                  className="p-4 rounded-2xl bg-white/70 dark:bg-[#071325]/80 border border-[#E2E8F0] dark:border-[#027DF7]/30 shadow-sm flex items-start gap-3"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-[#027DF7]/10 flex items-center justify-center text-[#027DF7] shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-xl bg-[#027DF7]/10 dark:bg-[#027DF7]/25 flex items-center justify-center text-[#027DF7] dark:text-[#38BDF8] shrink-0 mt-0.5">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#01427C] mb-1">{item.title}</h4>
-                    <p className="text-xs text-[#64748B] leading-relaxed">{item.desc}</p>
+                    <h4 className="text-sm font-bold text-[#01427C] dark:text-[#E0F2FE] mb-1">{item.title}</h4>
+                    <p className="text-xs text-[#64748B] dark:text-slate-300 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -61,10 +61,10 @@ export const AboutSection: React.FC = () => {
             <a
               href="#subsidiaries"
               id="about-learn-more-btn"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full liquid-glass-card hover:bg-[#D5ECFE]/40 text-[#01427C] font-semibold text-sm transition-all duration-300 hover:scale-102 border border-white/80"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full liquid-glass-card hover:bg-[#D5ECFE]/40 text-[#01427C] dark:text-[#E0F2FE] font-semibold text-sm transition-all duration-300 hover:scale-102 border border-[#027DF7]/30 dark:border-[#027DF7]/50"
             >
               <span>{t.about.ctaNetwork}</span>
-              <ArrowIcon className="w-4 h-4 text-[#027DF7]" />
+              <ArrowIcon className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
             </a>
           </motion.div>
 

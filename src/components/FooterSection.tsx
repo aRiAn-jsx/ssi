@@ -56,11 +56,11 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         {/* Main 4-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-16 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-16 border-b border-[#027DF7]/30">
           {/* Column 1: About Holding (4 cols) */}
           <div className={`lg:col-span-4 ${isRtl ? 'text-right' : 'text-left'}`}>
             <div className={`flex items-center gap-3 mb-5 ${isRtl ? '' : 'flex-row'}`}>
-              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-1.5 flex items-center justify-center text-white shadow-md shadow-[#01427C]/30 shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-[#027DF7]/40 p-1.5 flex items-center justify-center text-white shadow-md shadow-[#01427C]/30 shrink-0">
                 <img
                   src="/logo.webp"
                   alt={language === 'fa' ? holdingInfo.nameFa : holdingInfo.nameEn}
@@ -78,7 +78,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
               {holdingInfo.subTagline}
             </p>
 
-            <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-white/10 text-xs text-[#D5ECFE]">
+            <div className="flex items-center gap-2 p-3 rounded-2xl bg-white/5 border border-[#027DF7]/30 text-xs text-[#D5ECFE]">
               <ShieldCheck className="w-4 h-4 text-[#027DF7] shrink-0" />
               <span>{holdingInfo.license}</span>
             </div>
@@ -86,7 +86,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
 
           {/* Column 2: Quick Links (2 cols) */}
           <div className={`lg:col-span-2 ${isRtl ? 'text-right' : 'text-left'}`}>
-            <h4 className="text-sm font-bold text-white mb-5 pb-2 border-b border-white/10">
+            <h4 className="text-sm font-bold text-white mb-5 pb-2 border-b border-[#027DF7]/30">
               {t.footer.quickLinks}
             </h4>
             <ul className="space-y-3 text-xs text-[#D5ECFE]/80">
@@ -161,7 +161,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
 
           {/* Column 3: Subsidiaries & Contact (3 cols) */}
           <div className={`lg:col-span-3 ${isRtl ? 'text-right' : 'text-left'}`}>
-            <h4 className="text-sm font-bold text-white mb-5 pb-2 border-b border-white/10">
+            <h4 className="text-sm font-bold text-white mb-5 pb-2 border-b border-[#027DF7]/30">
               {t.footer.contactInfo}
             </h4>
             <ul className="space-y-3.5 text-xs text-[#D5ECFE]/80">
@@ -197,7 +197,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
 
           {/* Column 4: Newsletter & Social (3 cols) */}
           <div className={`lg:col-span-3 ${isRtl ? 'text-right' : 'text-left'}`}>
-            <h4 className="text-sm font-bold text-white mb-5 pb-2 border-b border-white/10">
+            <h4 className="text-sm font-bold text-white mb-5 pb-2 border-b border-[#027DF7]/30">
               {t.footer.newsletterTitle}
             </h4>
             <p className="text-xs text-[#D5ECFE]/70 mb-4 leading-relaxed">
@@ -206,7 +206,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
 
             {!newsletterSubscribed ? (
               <form onSubmit={handleSubscribe} className="mb-6">
-                <div className="flex items-center p-1 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md">
+                <div className="flex items-center p-1 rounded-2xl bg-white/10 border border-[#027DF7]/40 backdrop-blur-md">
                   <input
                     type="email"
                     id="footer-newsletter-email"
@@ -253,7 +253,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
             onClick={scrollToTop}
             id="back-to-top-btn"
             aria-label="Back to top"
-            className="flex items-center gap-2 px-4 py-2 rounded-full liquid-glass-card bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all hover:scale-105"
+            className="flex items-center gap-2 px-4 py-2 rounded-full liquid-glass-card bg-white/10 hover:bg-white/20 text-white border border-[#027DF7]/40 transition-all hover:scale-105"
           >
             <span>{t.footer.backToTop}</span>
             <ArrowUp className="w-4 h-4 text-[#027DF7]" />

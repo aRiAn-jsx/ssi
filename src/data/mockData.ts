@@ -30,13 +30,13 @@ export const HOLDING_INFO_FA: HoldingInfo = {
   license: 'تحت نظارت سازمان بورس و اوراق بهادار تهران',
   tagline: 'آینده را با اطمینان می‌سازیم',
   subTagline: 'مدیریت دارایی‌های پیشرو، سرمایه‌گذاری جسورانه و هم‌افزایی ارزش‌آفرین در بستر شفافیت و فناوری مالی',
-  address: 'تهران، خیابان ملاصدرا، خیابان شیخ بهایی، بن‌بست چهارم، پلاک ۵',
-  city: 'تهران',
+  address: 'مشهد، بلوار سجاد، بزرگمهر شمالی ۲، پلاک ۴۴، طبقه ۳',
+  city: 'مشهد',
   email: 'info@ssiholding.co',
-  phone: '02188626674',
-  phoneFormatted: '۰۲۱-۸۸۶۲۶۶۷۴',
-  phoneIntl: '+98 21 8862 6674',
-  workingHours: 'شنبه تا چهارشنبه : ۸:۰۰ الی ۱۷:۰۰',
+  phone: '05137622222',
+  phoneFormatted: '۰۵۱-۳۷۶۲۲۲۲۲',
+  phoneIntl: '+98 51 3762 2222',
+  workingHours: 'شنبه تا پنج‌شنبه: ۸:۰۰ الی ۲۰:۰۰ (۸ صبح تا ۸ شب)',
 };
 
 export const HOLDING_INFO_EN: HoldingInfo = {
@@ -49,13 +49,13 @@ export const HOLDING_INFO_EN: HoldingInfo = {
   license: 'Regulated by Securities and Exchange Organization of Iran (SEO)',
   tagline: 'Building The Future With Certainty',
   subTagline: 'Leading asset management, high-conviction ventures, and value synergy built upon transparency and financial technology',
-  address: 'No. 5, 4th Alley, Sheikh Bahaei St, Mollasadra Ave, Tehran, Iran',
-  city: 'Tehran',
+  address: 'Floor 3, No. 44, Bozorgmehr Shomali 2, Sajjad Blvd, Mashhad, Iran',
+  city: 'Mashhad',
   email: 'info@ssiholding.co',
-  phone: '02188626674',
-  phoneFormatted: '+98 21 8862 6674',
-  phoneIntl: '+98 21 8862 6674',
-  workingHours: 'Saturday to Wednesday: 8:00 AM to 5:00 PM',
+  phone: '05137622222',
+  phoneFormatted: '+98 51 3762 2222',
+  phoneIntl: '+98 51 3762 2222',
+  workingHours: 'Saturday to Thursday: 8:00 AM to 8:00 PM (20:00)',
 };
 
 export const HOLDING_INFO = HOLDING_INFO_FA;

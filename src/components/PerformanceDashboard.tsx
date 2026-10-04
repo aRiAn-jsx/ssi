@@ -41,10 +41,10 @@ export const PerformanceDashboard: React.FC = () => {
   const areaString = `${pathString} L ${points[points.length - 1].x} ${height - paddingY} L ${points[0].x} ${height - paddingY} Z`;
 
   return (
-    <section id="dashboard" className="relative py-16 md:py-24 bg-[#F7FAFC] overflow-hidden">
+    <section id="dashboard" className="relative py-16 md:py-24 bg-[#F7FAFC] dark:bg-[#060D17] border-t border-b border-[#027DF7]/20 dark:border-[#027DF7]/35 overflow-hidden transition-colors duration-300">
       {/* Background Image */}
       <div
-        className="absolute inset-0 opacity-20 pointer-events-none bg-cover bg-center filter blur-lg"
+        className="absolute inset-0 opacity-20 dark:opacity-10 pointer-events-none bg-cover bg-center filter blur-lg"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80')`,
         }}
@@ -52,26 +52,26 @@ export const PerformanceDashboard: React.FC = () => {
       />
 
       {/* Ambient Radial Blue Glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#027DF7]/15 blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#027DF7]/15 dark:bg-[#027DF7]/25 blur-[120px] pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 md:mb-10">
           <div className={isRtl ? 'text-right' : 'text-left'}>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 border border-[#027DF7]/20 text-[#01427C] text-xs font-bold mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 dark:bg-[#027DF7]/20 border border-[#027DF7]/20 text-[#01427C] dark:text-[#38BDF8] text-xs font-bold mb-3">
               <Activity className="w-4 h-4 text-[#027DF7]" />
               <span>{t.dashboard.eyebrow}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#01427C] leading-tight mb-3">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#01427C] dark:text-white leading-tight mb-3">
               {t.dashboard.title}
             </h2>
-            <p className="text-base text-[#64748B] font-normal max-w-xl">
+            <p className="text-base text-[#64748B] dark:text-slate-300 font-normal max-w-xl">
               {t.dashboard.subtitle}
             </p>
           </div>
 
           {/* Timeframe Filter Pills */}
-          <div className="flex items-center gap-2 p-1.5 rounded-full liquid-glass-card self-start md:self-end border border-white/80">
+          <div className="flex items-center gap-2 p-1.5 rounded-full liquid-glass-card self-start md:self-end border border-[#027DF7]/30 dark:border-[#027DF7]/50">
             {[
               { id: 'monthly', label: t.dashboard.monthly },
               { id: 'quarterly', label: t.dashboard.quarterly },
@@ -114,11 +114,11 @@ export const PerformanceDashboard: React.FC = () => {
 
                 <div className="flex items-center gap-4 text-xs font-semibold text-[#64748B]">
                   <div className="flex items-center gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-[#027DF7]" />
+                    <span className="w-3 h-3 rounded-full bg-[#027DF7] dark:bg-[#38BDF8]" />
                     <span>{t.dashboard.saramadPortfolio}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-[#E2E8F0]" />
+                    <span className="w-3 h-3 rounded-full bg-[#E2E8F0] dark:bg-slate-600" />
                     <span>{t.dashboard.tseBenchmark}</span>
                   </div>
                 </div>
@@ -147,6 +147,7 @@ export const PerformanceDashboard: React.FC = () => {
                           stroke="#E2E8F0"
                           strokeDasharray="4 4"
                           strokeWidth="1"
+                          className="dark:stroke-slate-700/60"
                         />
                         <text
                           x={width - paddingX + 8}
@@ -154,13 +155,14 @@ export const PerformanceDashboard: React.FC = () => {
                           fill="#64748B"
                           fontSize="12"
                           textAnchor="start"
-                          className="font-sans"
+                          className="font-sans dark:fill-slate-400"
                         >
                           {val}
                         </text>
                       </g>
                     );
                   })}
+
 
                   {/* Area fill */}
                   <motion.path

@@ -15,8 +15,9 @@ import {
   Award,
   Sparkles,
 } from 'lucide-react';
-import { Globe, SARAMAD_GLOBE_CONFIG } from './ui/globe';
+import { Globe, SARAMAD_GLOBE_CONFIG, SARAMAD_GLOBE_DARK_CONFIG } from './ui/globe';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 import { getHoldingInfo } from '../data/mockData';
 
 interface AnimatedCounterProps {
@@ -98,6 +99,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onGoToArticles,
 }) => {
   const { language, isRtl, t } = useLanguage();
+  const { isDark } = useTheme();
   const holdingInfo = getHoldingInfo(language);
   const headingWords = t.hero.titleWords;
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
@@ -135,18 +137,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute inset-0 rounded-full bg-radial from-[#027DF7]/25 via-[#D5ECFE]/35 to-transparent blur-2xl md:blur-3xl pointer-events-none -z-10"
+          className="absolute inset-0 rounded-full bg-radial from-[#027DF7]/25 via-[#D5ECFE]/35 dark:from-[#38BDF8]/20 dark:via-[#027DF7]/15 to-transparent blur-2xl md:blur-3xl pointer-events-none -z-10"
         />
 
         {/* The 3D WebGL Globe canvas */}
         <Globe
           className="w-full h-full"
-          config={SARAMAD_GLOBE_CONFIG}
+          config={isDark ? SARAMAD_GLOBE_DARK_CONFIG : SARAMAD_GLOBE_CONFIG}
           speed={0.013}
         />
 
         {/* Soft Light Overlay over Globe for 100% Crisp Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-[#F7FAFC]/35 to-[#F7FAFC]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-[#F7FAFC]/35 to-[#F7FAFC]/80 dark:via-[#060D17]/40 dark:to-[#060D17]/85 pointer-events-none" />
       </motion.div>
 
       {/* Floating Ambient Glow Orbs in Background */}
@@ -190,36 +192,36 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10 pointer-events-none">
         {/* Text Column (Right side in RTL) */}
         <div
-          className={`lg:col-span-7 flex flex-col items-start ${
-            isRtl ? 'text-right' : 'text-left'
+          className={`lg:col-span-7 flex flex-col items-center lg:items-start ${
+            isRtl ? 'text-center lg:text-right' : 'text-center lg:text-left'
           } pointer-events-auto`}
         >
-          {/* Eyebrow Tag - Minimalist Iconographic Brand Badge */}
+          {/* Eyebrow Tag - Minimalist Iconographic Brand Badge (Hidden on mobile per user request) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/85 border border-[#E2E8F0] shadow-2xs backdrop-blur-md mb-6"
+            className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/85 dark:bg-[#071325]/90 border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-2xs backdrop-blur-md mb-6"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#027DF7] opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#027DF7]" />
             </span>
-            <span className="text-xs font-bold text-[#01427C]">
+            <span className="text-xs font-bold text-[#01427C] dark:text-[#E0F2FE]">
               {t.hero.eyebrow}
             </span>
             <div
-              className={`flex items-center gap-1 text-[13px] font-semibold text-[#027DF7] ${
+              className={`flex items-center gap-1 text-[13px] font-semibold text-[#027DF7] dark:text-[#38BDF8] ${
                 isRtl ? 'border-r pr-2' : 'border-l pl-2'
-              } border-[#E2E8F0]`}
+              } border-[#027DF7]/25 dark:border-[#027DF7]/40`}
             >
-              <BadgeCheck className="w-3.5 h-3.5 text-[#027DF7]" />
+              <BadgeCheck className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
               <span>{language === 'fa' ? 'سهامی عام' : 'PJSC'}</span>
             </div>
           </motion.div>
 
-          {/* H1 Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-extrabold text-[#01427C] leading-[1.22] tracking-tight mb-6 flex flex-wrap gap-x-3 gap-y-1 drop-shadow-2xs">
+          {/* H1 Heading - Centered on mobile */}
+          <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-extrabold text-[#01427C] dark:text-white leading-[1.22] tracking-tight mb-6 flex flex-wrap justify-center lg:justify-start gap-x-3 gap-y-1 drop-shadow-2xs ${isRtl ? 'text-center lg:text-right' : 'text-center lg:text-left'}`}>
             <span className="sr-only">{holdingInfo.name}: </span>
             {headingWords.map((word, index) => (
               <motion.span
@@ -238,31 +240,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             ))}
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle - Centered on mobile */}
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55, ease: 'easeOut' }}
-            className="text-lg md:text-xl text-[#64748B] font-normal leading-relaxed max-w-2xl mb-8"
+            className={`text-lg md:text-xl text-[#64748B] dark:text-[#CBD5E1] font-normal leading-relaxed max-w-2xl mb-8 ${isRtl ? 'text-center lg:text-right' : 'text-center lg:text-left'} mx-auto lg:mx-0`}
           >
             {t.hero.subtitle}
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons - Side by Side on Mobile */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.75, ease: 'easeOut' }}
-            className="flex flex-wrap items-center gap-4 w-full sm:w-auto"
+            className="flex flex-row items-center justify-center lg:justify-start gap-2 sm:gap-4 w-full sm:w-auto"
           >
             <button
               type="button"
               id="hero-primary-cta"
               onClick={onGoToConsultation}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white font-semibold text-base shadow-lg shadow-[#027DF7]/25 hover:shadow-xl hover:shadow-[#027DF7]/40 transition-all duration-300 hover:scale-102 flex items-center justify-center gap-2 group cursor-pointer"
+              className="flex-1 sm:flex-initial px-2.5 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white font-bold text-[11px] sm:text-base shadow-lg shadow-[#027DF7]/25 hover:shadow-xl hover:shadow-[#027DF7]/40 transition-all duration-300 hover:scale-102 flex items-center justify-center gap-1 sm:gap-2 group cursor-pointer whitespace-nowrap"
             >
-              <span>{t.hero.ctaPrimary}</span>
-              <ArrowIcon className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
+              <span className="hidden sm:inline">{t.hero.ctaPrimary}</span>
+              <span className="sm:hidden">{language === 'fa' ? 'درخواست مشاوره' : 'Consultation'}</span>
+              <ArrowIcon className="w-3.5 h-3.5 sm:w-5 sm:h-5 group-hover:-translate-y-1 transition-transform shrink-0" />
             </button>
 
             {onGoToArticles ? (
@@ -270,19 +273,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 type="button"
                 id="hero-secondary-cta"
                 onClick={onGoToArticles}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-full liquid-glass-card hover:bg-white text-[#01427C] font-semibold text-base transition-all duration-300 hover:scale-102 flex items-center justify-center gap-2 border border-white/80 shadow-xs cursor-pointer group"
+                className="flex-1 sm:flex-initial px-2.5 sm:px-6 py-2.5 sm:py-3.5 rounded-full liquid-glass-card hover:bg-white text-[#01427C] dark:text-[#E0F2FE] font-bold text-[11px] sm:text-base transition-all duration-300 hover:scale-102 flex items-center justify-center gap-1 sm:gap-2 border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xs cursor-pointer group whitespace-nowrap"
               >
-                <Layers className="w-4 h-4 text-[#027DF7] group-hover:rotate-6 transition-transform" />
-                <span>{t.hero.ctaSecondary}</span>
+                <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#027DF7] group-hover:rotate-6 transition-transform shrink-0" />
+                <span className="hidden sm:inline">{t.hero.ctaSecondary}</span>
+                <span className="sm:hidden">{language === 'fa' ? 'خدمات سرمایه‌گذاری' : 'Services'}</span>
               </button>
             ) : (
               <a
                 href="#services"
                 id="hero-secondary-cta"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-full liquid-glass-card hover:bg-white text-[#01427C] font-semibold text-base transition-all duration-300 hover:scale-102 flex items-center justify-center gap-2 border border-white/80 shadow-xs group"
+                className="flex-1 sm:flex-initial px-2.5 sm:px-6 py-2.5 sm:py-3.5 rounded-full liquid-glass-card hover:bg-white text-[#01427C] dark:text-[#E0F2FE] font-bold text-[11px] sm:text-base transition-all duration-300 hover:scale-102 flex items-center justify-center gap-1 sm:gap-2 border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xs group whitespace-nowrap"
               >
-                <Layers className="w-4 h-4 text-[#027DF7] group-hover:rotate-6 transition-transform" />
-                <span>{t.hero.ctaSecondary}</span>
+                <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#027DF7] group-hover:rotate-6 transition-transform shrink-0" />
+                <span className="hidden sm:inline">{t.hero.ctaSecondary}</span>
+                <span className="sm:hidden">{language === 'fa' ? 'خدمات سرمایه‌گذاری' : 'Services'}</span>
               </a>
             )}
           </motion.div>
@@ -292,17 +297,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.95 }}
-            className="mt-8 pt-5 border-t border-[#E2E8F0]/70 flex flex-wrap items-center gap-2.5 sm:gap-3.5"
+            className="mt-8 pt-5 border-t border-[#027DF7]/20 dark:border-[#027DF7]/40 flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3.5"
           >
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 backdrop-blur-xs border border-[#E2E8F0]/80 shadow-2xs text-[#01427C] hover:border-[#027DF7]/30 transition-colors">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 dark:bg-[#071325]/80 backdrop-blur-xs border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-2xs text-[#01427C] dark:text-[#E0F2FE] hover:border-[#027DF7]/50 transition-colors">
               <ShieldCheck className="w-4 h-4 text-[#027DF7] shrink-0" />
               <span className="font-bold text-[13px]">{language === 'fa' ? 'نظارت سازمان بورس (SEO)' : 'SEO Regulated'}</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 backdrop-blur-xs border border-[#E2E8F0]/80 shadow-2xs text-[#01427C] hover:border-[#10B981]/30 transition-colors">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 dark:bg-[#071325]/80 backdrop-blur-xs border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-2xs text-[#01427C] dark:text-[#E0F2FE] hover:border-[#10B981]/50 transition-colors">
               <TrendingUp className="w-4 h-4 text-[#10B981] shrink-0" />
               <span className="font-bold text-[13px]">{language === 'fa' ? 'آلفای پایدار (+۳۴٪)' : 'Sustained Alpha (+34%)'}</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 backdrop-blur-xs border border-[#E2E8F0]/80 shadow-2xs text-[#01427C] hover:border-[#027DF7]/30 transition-colors">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 dark:bg-[#071325]/80 backdrop-blur-xs border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-2xs text-[#01427C] dark:text-[#E0F2FE] hover:border-[#027DF7]/50 transition-colors">
               <Globe2 className="w-4 h-4 text-[#027DF7] shrink-0" />
               <span className="font-bold text-[13px]">{language === 'fa' ? 'هاب‌های منطقه‌ای' : 'Global Hubs'}</span>
             </div>
@@ -347,7 +352,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="statistics-numbers-container w-full max-w-[360px] sm:max-w-[430px] lg:max-w-[480px] -mt-5 relative z-20 px-2 sm:px-0"
           >
-            <div className="relative rounded-2xl sm:rounded-3xl px-3 py-2.5 sm:px-4 sm:py-3 bg-white/80 backdrop-blur-2xl border border-white/90 shadow-lg shadow-[#01427C]/12 overflow-hidden group">
+            <div className="relative rounded-2xl sm:rounded-3xl px-3 py-2.5 sm:px-4 sm:py-3 bg-white/80 dark:bg-[#071325]/90 backdrop-blur-2xl border border-[#027DF7]/30 dark:border-[#027DF7]/55 shadow-lg shadow-[#01427C]/12 dark:shadow-2xl overflow-hidden group">
               {/* Shimmer Ambient Sweep */}
               <motion.div
                 animate={{ x: ['-200%', '300%'] }}

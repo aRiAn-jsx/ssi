@@ -499,7 +499,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                   className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-sm font-extrabold shadow-lg shadow-[#027DF7]/25 hover:shadow-xl hover:shadow-[#027DF7]/40 transition-all hover:scale-[1.01] flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-[#38BDF8] border-t-transparent rounded-full animate-spin" />
                   ) : (
                     <>
                       <span>{t.consultationPage.submitBtn}</span>
@@ -601,42 +601,42 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
             </h4>
 
             <div className="space-y-2.5 text-xs">
-              <div className="p-3 rounded-xl bg-white/70 border border-[#E2E8F0] flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#071325]/80 border border-[#E2E8F0] dark:border-[#027DF7]/30 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-[#01427C]">{language === 'fa' ? 'شرکت سبدگردان سرآمد' : 'Saramad Asset Management'}</div>
-                  <div className="text-[13px] text-[#64748B]">{language === 'fa' ? 'پورتفوی اختصاصی و صندوق‌ها' : 'Managed Accounts & Funds'}</div>
+                  <div className="font-bold text-[#01427C] dark:text-[#E0F2FE]">{language === 'fa' ? 'شرکت سبدگردان سرآمد' : 'Saramad Asset Management'}</div>
+                  <div className="text-[13px] text-[#64748B] dark:text-slate-300">{language === 'fa' ? 'پورتفوی اختصاصی و صندوق‌ها' : 'Managed Accounts & Funds'}</div>
                 </div>
-                <span className="font-mono font-bold text-[#027DF7]">{language === 'fa' ? 'داخلی ۱۰۴' : 'Ext. 104'}</span>
+                <span className="font-mono font-bold text-[#027DF7] dark:text-[#38BDF8]">{language === 'fa' ? 'داخلی ۱۰۴' : 'Ext. 104'}</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-white/70 border border-[#E2E8F0] flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#071325]/80 border border-[#E2E8F0] dark:border-[#027DF7]/30 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-[#01427C]">{language === 'fa' ? 'ایلیا ونچرز (سرمایه‌گذاری خطرپذیر)' : 'Ilya Ventures (VC)'}</div>
-                  <div className="text-[13px] text-[#64748B]">{language === 'fa' ? 'ارزیابی طرح‌ها و جذب سرمایه' : 'Deal Flow & Startup Pitch'}</div>
+                  <div className="font-bold text-[#01427C] dark:text-[#E0F2FE]">{language === 'fa' ? 'ایلیا ونچرز (سرمایه‌گذاری خطرپذیر)' : 'Ilya Ventures (VC)'}</div>
+                  <div className="text-[13px] text-[#64748B] dark:text-slate-300">{language === 'fa' ? 'ارزیابی طرح‌ها و جذب سرمایه' : 'Deal Flow & Startup Pitch'}</div>
                 </div>
-                <span className="font-mono font-bold text-[#027DF7]">{language === 'fa' ? 'داخلی ۱۰۸' : 'Ext. 108'}</span>
+                <span className="font-mono font-bold text-[#027DF7] dark:text-[#38BDF8]">{language === 'fa' ? 'داخلی ۱۰۸' : 'Ext. 108'}</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-white/70 border border-[#E2E8F0] flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#071325]/80 border border-[#E2E8F0] dark:border-[#027DF7]/30 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-[#01427C]">{language === 'fa' ? 'توسعه املاک و مستغلات سرآمد' : 'Saramad Real Estate Development'}</div>
-                  <div className="text-[13px] text-[#64748B]">{language === 'fa' ? 'مشارکت در ساخت و پروژه‌های تجاری' : 'Commercial Development'}</div>
+                  <div className="font-bold text-[#01427C] dark:text-[#E0F2FE]">{language === 'fa' ? 'توسعه املاک و مستغلات سرآمد' : 'Saramad Real Estate Development'}</div>
+                  <div className="text-[13px] text-[#64748B] dark:text-slate-300">{language === 'fa' ? 'مشارکت در ساخت و پروژه‌های تجاری' : 'Commercial Development'}</div>
                 </div>
-                <span className="font-mono font-bold text-[#027DF7]">{language === 'fa' ? 'داخلی ۱۱۲' : 'Ext. 112'}</span>
+                <span className="font-mono font-bold text-[#027DF7] dark:text-[#38BDF8]">{language === 'fa' ? 'داخلی ۱۱۲' : 'Ext. 112'}</span>
               </div>
             </div>
           </GlassCard>
 
           {/* Parent Company Guarantee Badge */}
-          <div className="p-5 rounded-2xl bg-gradient-to-r from-[#01427C]/10 via-[#D5ECFE]/40 to-[#027DF7]/10 border border-[#D5ECFE] flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#01427C] text-white flex items-center justify-center shrink-0 font-black text-sm shadow-sm">
+          <div className="p-5 rounded-2xl bg-gradient-to-r from-[#01427C]/10 via-[#D5ECFE]/40 to-[#027DF7]/10 dark:from-[#01427C]/30 dark:via-[#027DF7]/15 dark:to-transparent border border-[#D5ECFE] dark:border-[#027DF7]/40 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-[#01427C] dark:bg-[#027DF7] text-white flex items-center justify-center shrink-0 font-black text-sm shadow-sm">
               {language === 'fa' ? 'سامان' : 'SAMAN'}
             </div>
             <div className="text-xs">
-              <span className="font-bold text-[#01427C] block">
+              <span className="font-bold text-[#01427C] dark:text-white block">
                 {language === 'fa' ? 'تحت نظارت و وابسته به بیمه سامان (سهامی عام)' : 'Affiliated with Saman Insurance (Public Joint Stock)'}
               </span>
-              <span className="text-[#64748B]">
+              <span className="text-[#64748B] dark:text-slate-300">
                 {language === 'fa' ? 'دارای مجوز رسمی سبدگردانی از سازمان بورس و اوراق بهادار تهران' : 'Licensed and regulated by the Securities and Exchange Organization'}
               </span>
             </div>
@@ -647,11 +647,11 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
       {/* FAQ Section */}
       <div className="max-w-4xl mx-auto mb-16">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#027DF7] mb-2">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#027DF7] dark:text-[#38BDF8] mb-2">
             <HelpCircle className="w-4 h-4" />
             <span>{t.consultationPage.faqEyebrow}</span>
           </div>
-          <h3 className="text-2xl font-black text-[#01427C]">
+          <h3 className="text-2xl font-black text-[#01427C] dark:text-white">
             {t.consultationPage.faqTitle}
           </h3>
         </div>
@@ -667,16 +667,16 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
               >
                 <div className="p-4 sm:p-5 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-[#D5ECFE] text-[#01427C] text-xs font-bold flex items-center justify-center shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-[#D5ECFE] dark:bg-[#027DF7]/30 text-[#01427C] dark:text-[#E0F2FE] text-xs font-bold flex items-center justify-center shrink-0">
                       {idx + 1}
                     </span>
-                    <span className="text-xs sm:text-sm font-bold text-[#01427C]">
+                    <span className="text-xs sm:text-sm font-bold text-[#01427C] dark:text-[#E0F2FE]">
                       {faq.question}
                     </span>
                   </div>
                   <ChevronDown
-                    className={`w-4 h-4 text-[#64748B] transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-[#027DF7]' : ''
+                    className={`w-4 h-4 text-[#64748B] dark:text-slate-400 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 text-[#027DF7] dark:text-[#38BDF8]' : ''
                     }`}
                   />
                 </div>
@@ -688,7 +688,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.2 }}
-                      className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#475569] leading-relaxed border-t border-[#E2E8F0]/60 font-normal"
+                      className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#475569] dark:text-slate-300 leading-relaxed border-t border-[#E2E8F0]/60 dark:border-[#027DF7]/25 font-normal"
                     >
                       {faq.answer}
                     </motion.div>
@@ -702,12 +702,12 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
 
       {/* Articles Cross-Link */}
       {onGoToArticles && (
-        <div className="p-6 md:p-8 rounded-3xl bg-white border border-[#E2E8F0] shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right">
+        <div className="p-6 md:p-8 rounded-3xl bg-white dark:bg-[#071325] border border-[#E2E8F0] dark:border-[#027DF7]/40 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right">
           <div className="space-y-1">
-            <h4 className="text-base font-bold text-[#01427C]">
+            <h4 className="text-base font-bold text-[#01427C] dark:text-white">
               {language === 'fa' ? 'آشنایی با دیدگاه‌های تحلیلی مدیران هلدینگ' : 'Explore Strategic Insights from Executives'}
             </h4>
-            <p className="text-xs text-[#64748B]">
+            <p className="text-xs text-[#64748B] dark:text-slate-300">
               {language === 'fa'
                 ? 'پیش از جلسه می‌توانید آخرین گزارش‌های راهبردی و یادداشت‌های پژوهشی را در صفحه مقالات مطالعه فرمایید.'
                 : 'Review our latest economic bulletins and research publications before your session.'}
@@ -717,7 +717,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
             type="button"
             onClick={onGoToArticles}
             id="go-to-articles-btn"
-            className="px-5 py-2.5 rounded-full bg-[#D5ECFE] text-[#01427C] hover:bg-[#027DF7] hover:text-white text-xs font-extrabold transition-all shrink-0 flex items-center gap-1.5"
+            className="px-5 py-2.5 rounded-full bg-[#D5ECFE] dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#E0F2FE] hover:bg-[#027DF7] hover:text-white text-xs font-extrabold transition-all shrink-0 flex items-center gap-1.5 border border-[#027DF7]/20"
           >
             <span>{language === 'fa' ? 'مشاهده صفحه مقالات' : 'View Articles & Research'}</span>
             <ArrowIcon className="w-4 h-4" />
