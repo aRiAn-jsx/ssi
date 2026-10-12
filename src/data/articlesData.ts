@@ -248,7 +248,7 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     title: 'هم‌افزایی بیمه و سرمایه‌گذاری: معماری مدیریت ریسک زنجیره‌ای در گروه سامان',
     summary: 'چگونگی ایجاد پوشش‌های چندلایه اعتباری و بیمه‌ای برای تضمین امنیت سود تقسیمی و پایداری عملیاتی شرکت‌های زیرمجموعه.',
     content: [
-      'وابستگی هلدینگ سرآمد سرمایه ایلیا به شرکت بیمه سامان (سهامی عام)، فرصتی کم‌نظیر در طراحی ابزارهای مالی بیمه‌محور (InsurTech & Guaranteed Yield) ایجاد نموده است.',
+      'وابستگی هلدینگ سرآمد سرمایه ایلیا به شرکت بیمه سامان (سهامی خاص)، فرصتی کم‌نظیر در طراحی ابزارهای مالی بیمه‌محور (InsurTech & Guaranteed Yield) ایجاد نموده است.',
       'با ادغام ارزیابی‌های ریسک اکچوئری بیمه در غربالگری فرصت‌های سرمایه‌گذاری، هلدینگ توانسته ضریب ورشکستگی یا نکول شرکت‌های هدف در زنجیره تامین را به حداقل ممکن برساند و در عین حال پوشش‌های اعتباری لازم برای قراردادهای بزرگ را مستقیماً تضمین کند.',
     ],
     category: 'صنعت بیمه و مدیریت ریسک',
@@ -471,7 +471,7 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     title: 'Insurance and Capital Synergy: Structuring Chain Risk Architecture in Saman Group',
     summary: 'Developing multi-tier credit protections and actuarial risk frameworks to secure dividend reliability across subsidiaries.',
     content: [
-      'The strategic alignment of Ilya Saramad Capital Holding with Saman Insurance (Public Joint Stock) presents rare competitive advantages in structuring InsurTech solutions and capital-guaranteed instruments.',
+      'The strategic alignment of Ilya Saramad Capital Holding with Saman Insurance (Private Joint Stock) presents rare competitive advantages in structuring InsurTech solutions and capital-guaranteed instruments.',
       'By embedding actuarial risk modeling directly into holding due-diligence protocols, default probabilities across supplier and counterparty networks are substantially compressed while credit guarantees facilitate landmark infrastructure contracts.',
     ],
     category: 'Insurance Industry & Risk Governance',

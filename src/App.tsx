@@ -1,7 +1,7 @@
 /**
  * Ilya Saramad Capital Holding (هلدینگ سرآمد سرمایه ایلیا)
  * Domain: ssiholding.co
- * Parent Company: Saman Insurance (Public Joint Stock)
+ * Parent Company: Saman Insurance (Private Joint Stock)
  * Design System: Liquid Glass (Glassmorphism 2.0) & Quiet Luxury
  */
 
@@ -77,7 +77,16 @@ export default function App() {
 
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+
+    const handleReplayPreloader = () => {
+      setShowPreloader(true);
+    };
+    window.addEventListener('open-preloader', handleReplayPreloader);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('open-preloader', handleReplayPreloader);
+    };
   }, []);
 
   const handleNavigateView = (
@@ -120,16 +129,16 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen bg-[#F7FAFC] dark:bg-[#060D17] text-[#0A2540] dark:text-[#F8FAFC] font-sans selection:bg-[#027DF7]/20 selection:text-[#01427C] dark:selection:text-[#38BDF8] transition-colors duration-300">
-      {/* Liquid Glass Splash Preloader (Runs only once on initial entrance) */}
+      {/* Liquid Glass Splash Preloader (Runs on initial entrance and selectable designs) */}
       {showPreloader && (
-        <LiquidPreloader onComplete={() => setShowPreloader(false)} minDuration={1100} />
+        <LiquidPreloader onComplete={() => setShowPreloader(false)} minDuration={1600} />
       )}
 
       {/* Micro-interaction: Custom Cursor (Optimized for desktop fine pointers) */}
       <CustomCursor />
 
-      {/* Top Scroll Progress Bar */}
-      <ScrollProgress />
+      {/* Top Scroll Progress Bar & Side Section Navigation (Only on Home / Root page) */}
+      {currentView === 'home' && <ScrollProgress />}
 
       {/* FLOATING GLASS HEADER */}
       <GlassNavbar

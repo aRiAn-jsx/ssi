@@ -204,16 +204,15 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
         transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
         className="fixed top-0 left-0 right-0 z-50 flex justify-center px-3 sm:px-6 md:px-8 pt-3 sm:pt-5 pointer-events-none"
       >
-        <div className="w-full max-w-7xl pointer-events-auto px-3.5 sm:px-5 py-2.5 rounded-full flex items-center justify-between border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xl shadow-[#01427C]/10 dark:shadow-black/60 backdrop-blur-xl bg-white/85 dark:bg-[#060D17]/90 transition-all duration-300">
-          
-          {/* Brand Logo & Title */}
+        <div className="w-full max-w-7xl pointer-events-auto px-4 sm:px-5 py-2.5 rounded-2xl sm:rounded-full flex items-center justify-between border border-slate-200/80 dark:border-slate-800/80 sm:border-none shadow-sm sm:shadow-xl sm:shadow-[#01427C]/10 dark:shadow-black/70 bg-white dark:bg-[#071325] sm:bg-white/85 sm:dark:bg-[#060D17]/90 sm:backdrop-blur-xl transition-all duration-300">
+          {/* Brand Logo & Title (Clean and uncluttered on mobile) */}
           <button
             type="button"
             id="brand-logo-button"
             className={`flex items-center gap-2.5 sm:gap-3 group ${isRtl ? 'text-right' : 'text-left'}`}
             onClick={() => handleRouteClick({ id: 'home', view: 'home' })}
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white dark:bg-[#081325] p-1 backdrop-blur-md border border-[#027DF7]/35 dark:border-[#027DF7]/60 shadow-md shadow-[#027DF7]/15 group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-[#027DF7]/35 transition-all duration-300 shrink-0 flex items-center justify-center overflow-hidden">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white dark:bg-[#081325] p-1 border border-slate-100 dark:border-slate-800 shadow-xs group-hover:scale-105 transition-all duration-300 shrink-0 flex items-center justify-center overflow-hidden">
               <img
                 src="/logo.webp"
                 alt={holdingInfo.name}
@@ -225,11 +224,12 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
 
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-sm sm:text-base md:text-lg text-[#01427C] dark:text-white tracking-tight group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors">
+                <span className="font-extrabold text-base sm:text-lg text-[#01427C] dark:text-white tracking-tight group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors">
                   {holdingInfo.shortName}
                 </span>
-                <span className="text-[10.5px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-[#D5ECFE]/80 dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#38BDF8] border border-[#027DF7]/25 dark:border-[#027DF7]/40 whitespace-nowrap">
-                  {language === 'fa' ? 'سهامی عام' : 'PJSC'}
+                {/* Decluttered on mobile: badge shown only on tablet/desktop */}
+                <span className="hidden sm:inline-block text-[10.5px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-[#D5ECFE]/80 dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#38BDF8] border-none whitespace-nowrap">
+                  {language === 'fa' ? 'سهامی خاص' : 'PJS Co'}
                 </span>
               </div>
               <span className="text-[11.5px] font-medium text-[#64748B] dark:text-slate-300 hidden md:block whitespace-nowrap">
@@ -238,7 +238,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
             </div>
           </button>
 
-          {/* Center: ONLY THE ROUTES with animated liquid pill */}
+          {/* Center: ONLY THE ROUTES with animated liquid pill (Desktop only) */}
           <nav className="hidden lg:flex items-center gap-1.5 px-1 py-1">
             {routeNavItems.map((item, index) => {
               const isActive =
@@ -267,14 +267,14 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                     <motion.div
                       layoutId="navActivePill"
                       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                      className="absolute inset-0 rounded-full bg-white dark:bg-[#027DF7]/30 shadow-sm border border-[#027DF7]/30 dark:border-[#38BDF8]/50 -z-10"
+                      className="absolute inset-0 rounded-full bg-white dark:bg-[#027DF7]/30 shadow-sm border-none -z-10"
                     />
                   )}
                   {isHovered && !isActive && (
                     <motion.div
                       layoutId="navHoverPill"
                       transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                      className="absolute inset-0 rounded-full bg-[#D5ECFE]/50 dark:bg-[#027DF7]/20 border border-[#027DF7]/20 dark:border-[#38BDF8]/30 -z-10"
+                      className="absolute inset-0 rounded-full bg-[#D5ECFE]/50 dark:bg-[#027DF7]/20 border-none -z-10"
                     />
                   )}
                   <span>{item.label}</span>
@@ -288,14 +288,14 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
             })}
           </nav>
 
-          {/* Right Action Controls: Sidebar Toolbar Trigger, Language, Theme, & Mobile Hamburger */}
+          {/* Right Action Controls: On mobile, ONLY the clean hamburger button is displayed */}
           <div className="flex items-center gap-2">
-            {/* The Sidebar Toolbar Trigger Button (Sections without routes) */}
+            {/* The Sidebar Toolbar Trigger Button (Sections without routes) - hidden on mobile */}
             <button
               type="button"
               id="open-sidebar-toolbar-btn"
               onClick={() => setSidebarToolbarOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] bg-[#D5ECFE]/70 hover:bg-[#D5ECFE] dark:bg-[#027DF7]/20 dark:hover:bg-[#027DF7]/35 border border-[#027DF7]/35 dark:border-[#027DF7]/55 shadow-xs transition-all duration-200 hover:scale-102 active:scale-95 cursor-pointer"
+              className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] bg-[#D5ECFE]/70 hover:bg-[#D5ECFE] dark:bg-[#027DF7]/20 dark:hover:bg-[#027DF7]/35 border-none shadow-xs transition-all duration-200 hover:scale-102 active:scale-95 cursor-pointer"
               title={language === 'fa' ? 'مشاهده تول‌بار بخش‌های صفحه' : 'View Sections Toolbar'}
             >
               <LayoutGrid className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
@@ -304,8 +304,8 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
               </span>
             </button>
 
-            {/* Quick Language Toggle */}
-            <div className="flex items-center p-0.5 rounded-full bg-slate-100/80 dark:bg-[#071325]/90 border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-xs">
+            {/* Quick Language Toggle - hidden on mobile, placed inside drawer */}
+            <div className="hidden md:flex items-center p-0.5 rounded-full bg-slate-100/80 dark:bg-[#071325]/90 border-none shadow-xs">
               <button
                 type="button"
                 id="lang-btn-fa"
@@ -332,12 +332,12 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
               </button>
             </div>
 
-            {/* Theme Toggle Button */}
+            {/* Theme Toggle Button - hidden on mobile, placed inside drawer */}
             <button
               type="button"
               id="header-theme-toggle-btn"
               onClick={toggleTheme}
-              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full text-[#01427C] dark:text-[#38BDF8] bg-slate-100/80 dark:bg-[#071325]/90 hover:bg-[#D5ECFE] dark:hover:bg-[#027DF7]/25 border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-xs transition-all duration-200 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
+              className="hidden md:flex w-8 h-8 sm:w-9 sm:h-9 rounded-full text-[#01427C] dark:text-[#38BDF8] bg-slate-100/80 dark:bg-[#071325]/90 hover:bg-[#D5ECFE] dark:hover:bg-[#027DF7]/25 border-none shadow-xs transition-all duration-200 hover:scale-105 active:scale-95 items-center justify-center cursor-pointer"
               title={isDark ? t.nav.lightMode : t.nav.darkMode}
               aria-label="Toggle Theme"
             >
@@ -348,15 +348,35 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
               )}
             </button>
 
-            {/* Clean Mobile Hamburger Button */}
+            {/* Clean Mobile Hamburger Button: Pure white background matching header, modern morphing bars */}
             <button
               type="button"
               id="mobile-menu-toggle-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden w-9 h-9 rounded-full bg-slate-100/80 dark:bg-[#071325]/90 text-[#01427C] dark:text-[#38BDF8] hover:bg-[#D5ECFE] dark:hover:bg-[#027DF7]/25 border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xs transition-all duration-200 active:scale-95 flex items-center justify-center cursor-pointer"
+              className="lg:hidden relative w-10 h-10 rounded-xl bg-white dark:bg-[#071325] hover:bg-slate-50 dark:hover:bg-[#0c1c33] border border-slate-100 dark:border-slate-800/80 shadow-xs transition-all duration-200 active:scale-95 flex flex-col items-center justify-center gap-1.5 p-2 cursor-pointer group select-none"
               aria-label="Toggle Menu"
             >
-              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              <span
+                className={`h-0.5 rounded-full transition-all duration-300 ease-out origin-center ${
+                  mobileMenuOpen
+                    ? 'w-5 translate-y-2 rotate-45 bg-[#027DF7] dark:bg-[#38BDF8]'
+                    : 'w-5 bg-[#01427C] dark:bg-white group-hover:bg-[#027DF7] dark:group-hover:bg-[#38BDF8]'
+                }`}
+              />
+              <span
+                className={`h-0.5 rounded-full transition-all duration-200 ease-out ${
+                  mobileMenuOpen
+                    ? 'w-0 opacity-0 -translate-x-2'
+                    : 'w-3.5 group-hover:w-5 bg-[#027DF7] dark:bg-[#38BDF8]'
+                }`}
+              />
+              <span
+                className={`h-0.5 rounded-full transition-all duration-300 ease-out origin-center ${
+                  mobileMenuOpen
+                    ? 'w-5 -translate-y-2 -rotate-45 bg-[#027DF7] dark:bg-[#38BDF8]'
+                    : 'w-5 bg-[#01427C] dark:bg-white group-hover:bg-[#027DF7] dark:group-hover:bg-[#38BDF8]'
+                }`}
+              />
             </button>
           </div>
         </div>
@@ -470,6 +490,18 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                   </button>
                 )}
 
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSidebarToolbarOpen(false);
+                    window.dispatchEvent(new CustomEvent('open-preloader'));
+                  }}
+                  className="w-full py-2.5 px-4 rounded-xl bg-[#027DF7]/15 hover:bg-[#027DF7]/25 border border-[#027DF7]/30 text-[#01427C] dark:text-[#E0F2FE] text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+                  <span>{language === 'fa' ? 'پیش‌نمایش طرح‌های لودینگ سایت' : 'Preview Preloader Styles'}</span>
+                </button>
+
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#091527] border border-[#027DF7]/15 dark:border-[#027DF7]/30 text-xs text-[#64748B] dark:text-slate-300 space-y-1.5">
                   <div className="flex items-center gap-2 text-[#01427C] dark:text-white font-bold">
                     <Phone className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
@@ -545,6 +577,47 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                 >
                   <X className="w-4 h-4" />
                 </button>
+              </div>
+
+              {/* Mobile Quick Preferences Bar (Language & Theme) */}
+              <div className="my-2.5 px-3 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1D33] border border-slate-200/80 dark:border-slate-800 flex items-center justify-between">
+                <span className="text-xs font-bold text-[#64748B] dark:text-slate-300">
+                  {language === 'fa' ? 'زبان و تم ظاهری' : 'Language & Theme'}
+                </span>
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center p-0.5 rounded-full bg-white dark:bg-[#071325] border border-slate-200 dark:border-slate-700 shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={() => setLanguage('fa')}
+                      className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all ${
+                        language === 'fa'
+                          ? 'bg-[#01427C] dark:bg-[#027DF7] text-white shadow-xs'
+                          : 'text-[#64748B] dark:text-slate-400'
+                      }`}
+                    >
+                      فا
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setLanguage('en')}
+                      className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all ${
+                        language === 'en'
+                          ? 'bg-[#01427C] dark:bg-[#027DF7] text-white shadow-xs'
+                          : 'text-[#64748B] dark:text-slate-400'
+                      }`}
+                    >
+                      EN
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={toggleTheme}
+                    className="w-8 h-8 rounded-full bg-white dark:bg-[#071325] border border-slate-200 dark:border-slate-700 text-[#01427C] dark:text-[#38BDF8] flex items-center justify-center shadow-2xs cursor-pointer"
+                    aria-label="Toggle Theme"
+                  >
+                    {isDark ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-[#027DF7]" />}
+                  </button>
+                </div>
               </div>
 
               {/* Scrollable Navigation Body */}

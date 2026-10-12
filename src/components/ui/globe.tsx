@@ -27,43 +27,32 @@ export const SARAMAD_GLOBE_CONFIG: COBEOptions = {
   phi: 0,
   theta: 0.28,
   dark: 0,                          // Light luxury mode — seamless with soft white canvas
-  diffuse: 0.45,
-  mapSamples: 16000,                // High dot resolution for continents
-  mapBrightness: 1.25,
-  baseColor: [0.83, 0.93, 1.0],      // Soft Sky #D5ECFE base dots
-  markerColor: [0.01, 0.49, 0.97],   // Vibrant Blue #027DF7 interactive markers
-  glowColor: [0.83, 0.93, 1.0],      // Soft Sky halo glow
-  markers: [
-    { location: [36.2972, 59.6067], size: 0.12, color: [0.01, 0.49, 0.97] }, // Mashhad — Headquarters (دفتر مرکزی مشهد - بلوار سجاد)
-    { location: [35.6892, 51.3890], size: 0.08, color: [0.01, 0.49, 0.97] }, // Tehran Branch (دفتر تهران)
-    { location: [25.2048, 55.2708], size: 0.065, color: [0.01, 0.49, 0.97] }, // Dubai Financial Center (دبی)
-    { location: [41.0082, 28.9784], size: 0.055, color: [0.01, 0.49, 0.97] }, // Istanbul Gateway (استانبول)
-    { location: [50.1109, 8.6821], size: 0.055, color: [0.01, 0.49, 0.97] },  // Frankfurt Financial Center (فرانکفورت)
-    { location: [1.3521, 103.8198], size: 0.055, color: [0.01, 0.49, 0.97] }, // Singapore Asian Hub (سنگاپور)
-  ],
-  arcs: [
-    // Mashhad HQ connected to Tehran and international financial corridors
-    { from: [36.2972, 59.6067], to: [35.6892, 51.3890] },
-    { from: [36.2972, 59.6067], to: [25.2048, 55.2708] },
-    { from: [36.2972, 59.6067], to: [41.0082, 28.9784] },
-    { from: [36.2972, 59.6067], to: [50.1109, 8.6821] },
-  ],
-  arcColor: [0.01, 0.49, 0.97],
-  arcWidth: 1.3,
-  arcHeight: 0.22,
-  opacity: 0.88,
+  diffuse: 0.55,
+  mapSamples: 20000,                // Ultra-high dot resolution for crisp continents
+  mapBrightness: 1.35,
+  baseColor: [0.65, 0.78, 0.94],    // Soft, premium sky-slate particle dots
+  markerColor: [0.65, 0.78, 0.94],  // Subtle matching tone
+  glowColor: [0.85, 0.92, 0.98],    // Atmospheric soft halo glow
+  markers: [],                      // Clean, pure sphere without distracting colored blobs
+  arcs: [],                         // No cluttering lines
+  arcColor: [0.65, 0.78, 0.94],
+  arcWidth: 0,
+  arcHeight: 0,
+  opacity: 0.9,
 };
 
 export const SARAMAD_GLOBE_DARK_CONFIG: COBEOptions = {
   ...SARAMAD_GLOBE_CONFIG,
   dark: 1,
-  diffuse: 1.4,
-  mapBrightness: 3.5,
-  baseColor: [0.06, 0.16, 0.32],
-  markerColor: [0.22, 0.74, 0.97],
-  glowColor: [0.01, 0.49, 0.97],
-  arcColor: [0.22, 0.74, 0.97],
-  opacity: 0.95,
+  diffuse: 1.5,
+  mapSamples: 20000,
+  mapBrightness: 3.2,
+  baseColor: [0.28, 0.46, 0.72],    // Ethereal glowing sapphire point-cloud
+  markerColor: [0.28, 0.46, 0.72],
+  glowColor: [0.18, 0.36, 0.62],    // Deep sapphire atmospheric aura
+  markers: [],                      // 100% clean
+  arcs: [],
+  opacity: 0.92,
 };
 
 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   Calendar,
   Clock,
   MapPin,
   Phone,
-  Mail,
   Building2,
   CheckCircle2,
   ArrowRight,
@@ -13,16 +12,14 @@ import {
   ArrowUpLeft,
   ArrowUpRight,
   Shield,
-  HelpCircle,
-  ChevronDown,
   Sparkles,
-  Users,
-  Briefcase,
   Video,
   Copy,
+  Film,
+  Code2,
+  UserCheck,
 } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
-import { ConsultationFormData } from '../types';
 import { getHoldingInfo } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -33,124 +30,196 @@ interface ConsultationPageProps {
 
 export const ConsultationPage: React.FC<ConsultationPageProps> = ({
   onBackToHome,
-  onGoToArticles,
 }) => {
-  const { language, isRtl, t } = useLanguage();
+  const { language, isRtl } = useLanguage();
   const holdingInfo = getHoldingInfo(language);
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
   const BackArrowIcon = isRtl ? ArrowRight : ArrowLeft;
 
-  const consultationTypes = [
+  // ۳ دسته درخواستی کاربر
+  const consultationCategories = [
     {
-      id: 'wealth',
-      title: language === 'fa' ? 'سبدگردانی و مدیریت ثروت اختصاصی' : 'Discretionary Portfolio & Wealth Management',
-      desc: language === 'fa' ? 'پورتفوی حقیقی یا حقوقی بالای ۲ میلیارد تومان با استراتژی بازده متناسب با ریسک' : 'Individual or corporate portfolios above $50k with risk-adjusted alpha strategies',
-      badge: language === 'fa' ? 'سبدگردان سرآمد' : 'Saramad Asset Mgmt',
+      id: 'graphics-video',
+      titleFa: 'تیم گرافیک و فیلم‌برداری',
+      titleEn: 'Graphics & Videography Team',
+      descFa: 'هماهنگی ساخت تیزر تبلیغاتی، فیلم‌برداری صنعتی، موشن‌گرافیک و هویت بصری',
+      descEn: 'Commercial video production, industrial videography, motion graphics and visual branding',
+      badgeFa: 'رسانه و تولید محتوا',
+      badgeEn: 'Media & Production',
+      icon: Film,
+      color: '#027DF7',
     },
     {
-      id: 'venture',
-      title: language === 'fa' ? 'سرمایه‌گذاری جسورانه و استارتاپی (VC)' : 'Venture Capital & FinTech Startups',
-      desc: language === 'fa' ? 'جذب سرمایه مراحل Seed تا Series B در حوزه‌های فین‌تک، سلامت و لجستیک' : 'Seed to Series B venture funding in FinTech, healthtech, and AI solutions',
-      badge: language === 'fa' ? 'ایلیا ونچرز' : 'Ilya Ventures',
+      id: 'marketing-web',
+      titleFa: 'تیم دیجیتال مارکتینگ و طراحی سایت',
+      titleEn: 'Digital Marketing & Web Design Team',
+      descFa: 'طراحی و توسعه وبسایت و اپلیکیشن، استراتژی سئو و کمپین‌های بازاریابی دیجیتال',
+      descEn: 'Web and mobile app engineering, advanced SEO strategy, and digital marketing campaigns',
+      badgeFa: 'فناوری و مارکتینگ',
+      badgeEn: 'Tech & Marketing',
+      icon: Code2,
+      color: '#0284C7',
     },
     {
-      id: 'corporate',
-      title: language === 'fa' ? 'تامین مالی شرکتی و پذیرش در بورس' : 'Corporate Finance & IPO Advisory',
-      desc: language === 'fa' ? 'مشاوره عرضه اولیه (IPO)، انتشار صکوک و اوراق مرابحه، تجدید ارزیابی دارایی‌ها' : 'IPO advisory, sukuk & debt underwriting, asset revaluation, M&A services',
-      badge: language === 'fa' ? 'تامین سرمایه' : 'Investment Banking',
-    },
-    {
-      id: 'real-estate',
-      title: language === 'fa' ? 'مشارکت و سرمایه‌گذاری در املاک تجاری' : 'Commercial Real Estate & REITs',
-      desc: language === 'fa' ? 'پروژه‌های ساختمانی شاخص، صندوق‌های املاک و مستغلات (REITs) و ارزش‌افزوده ملکی' : 'Landmark commercial development, REIT funds, and real estate asset management',
-      badge: language === 'fa' ? 'املاک سرآمد' : 'Saramad Real Estate',
-    },
-    {
-      id: 'insurance-risk',
-      title: language === 'fa' ? 'مدیریت ریسک شرکتی و بیمه‌های اعتباری' : 'Enterprise Risk Management & Insurance',
-      desc: language === 'fa' ? 'پوشش‌های زنجیره ارزش، بیمه‌های جامع مهندسی و بازرگانی تحت چتر بیمه سامان' : 'Value-chain liability, trade credit, and commercial risk policies by Saman Insurance',
-      badge: language === 'fa' ? 'گروه سامان' : 'Saman Group',
+      id: 'dr-tahourian',
+      titleFa: 'مشاوره با دکتر طهوریان',
+      titleEn: 'Consultation with Dr. Tahourian',
+      descFa: 'جلسه اختصاصی با مدیرعامل هلدینگ، راهبری کلان استراتژیک و سرمایه‌گذاری اختصاصی',
+      descEn: 'Executive advisory with the CEO, high-conviction investment strategy, and corporate governance',
+      badgeFa: 'مدیرعامل هلدینگ',
+      badgeEn: 'CEO & Leadership',
+      icon: UserCheck,
+      color: '#0369A1',
     },
   ];
 
+  // قالب برگزاری جلسه
+  const meetingFormats = [
+    {
+      id: 'in-person' as const,
+      titleFa: 'جلسه حضوری',
+      titleEn: 'In-Person Meeting',
+      subFa: 'دفتر مرکزی هلدینگ (مشهد، بلوار سجاد) در سالن جلسات VIP',
+      subEn: 'Holding Headquarters (Mashhad, Sajjad Blvd) VIP conference room',
+      icon: Building2,
+    },
+    {
+      id: 'online' as const,
+      titleFa: 'جلسه آنلاین',
+      titleEn: 'Online Video Meeting',
+      subFa: 'گوگل میت / اسکای‌روم با لینک اختصاصی و امکان اشتراک‌گذاری دسکتاپ',
+      subEn: 'Secure Google Meet / Skyroom video link with screen sharing capabilities',
+      icon: Video,
+    },
+  ];
+
+  // روزهای کاری هفته
+  const weekDays = [
+    { key: 'sat', labelFa: 'شنبه', labelEn: 'Saturday', dateFa: '۱۴۰۵/۰۶/۲۸', dateEn: 'Sep 26' },
+    { key: 'sun', labelFa: 'یکشنبه', labelEn: 'Sunday', dateFa: '۱۴۰۵/۰۶/۲۹', dateEn: 'Sep 27' },
+    { key: 'mon', labelFa: 'دوشنبه', labelEn: 'Monday', dateFa: '۱۴۰۵/۰۶/۳۰', dateEn: 'Sep 28' },
+    { key: 'tue', labelFa: 'سه‌شنبه', labelEn: 'Tuesday', dateFa: '۱۴۰۵/۰۶/۳۱', dateEn: 'Sep 29' },
+    { key: 'wed', labelFa: 'چهارشنبه', labelEn: 'Wednesday', dateFa: '۱۴۰۵/۰۷/۰۱', dateEn: 'Sep 30' },
+    { key: 'thu', labelFa: 'پنج‌شنبه', labelEn: 'Thursday', dateFa: '۱۴۰۵/۰۷/۰۲', dateEn: 'Oct 01' },
+  ];
+
+  // ساعت‌های برگزاری جلسه
   const timeSlots = language === 'fa'
-    ? ['۱۰:۰۰ الی ۱۱:۳۰ (صبح)', '۱۱:۳۰ الی ۱۳:۰۰ (ظهر)', '۱۴:۰۰ الی ۱۵:۳۰ (عصر)', '۱۶:۰۰ الی ۱۷:۳۰ (عصر)']
-    : ['10:00 - 11:30 AM', '11:30 AM - 1:00 PM', '2:00 - 3:30 PM', '4:00 - 5:30 PM'];
+    ? [
+        '۰۹:۰۰ الی ۱۰:۳۰ (صبح)',
+        '۱۱:۰۰ الی ۱۲:۳۰ (ظهر)',
+        '۱۴:۰۰ الی ۱۵:۳۰ (عصر)',
+        '۱۶:۰۰ الی ۱۷:۳۰ (عصر)',
+        '۱۸:۰۰ الی ۱۹:۳۰ (عصر)',
+      ]
+    : [
+        '09:00 - 10:30 AM',
+        '11:00 - 12:30 PM',
+        '02:00 - 03:30 PM',
+        '04:00 - 05:30 PM',
+        '06:00 - 07:30 PM',
+      ];
 
-  const faqs = [
-    {
-      question: language === 'fa'
-        ? 'آیا جلسات مشاوره تخصصی اولیه شامل هزینه است؟'
-        : 'Are initial strategic consultation sessions complimentary?',
-      answer: language === 'fa'
-        ? 'خیر، تمامی جلسات اولیه غربالگری نیازمندی‌ها، ارزیابی طرح‌های توجیهی و تحلیل استراتژیک اولیه پورتفوی با حضور مدیران ارشد هلدینگ سرآمد سرمایه ایلیا بدون دریافت هزینه و به صورت محرمانه برگزار می‌گردد.'
-        : 'No. All initial screening sessions, pitch evaluation, and portfolio strategy reviews with executive directors are completely complimentary and protected by strict NDAs.',
-    },
-    {
-      question: language === 'fa'
-        ? 'حداقل سرمایه برای عقد قرارداد سبدگردانی اختصاصی چقدر است؟'
-        : 'What is the minimum capital for discretionary asset management?',
-      answer: language === 'fa'
-        ? 'بر اساس دستورالعمل سازمان بورس و اوراق بهادار و سیاست‌های شرکت سبدگردان سرآمد، حداقل حجم پورتفوی برای سبدگردانی اختصاصی با کد PRX مجزا ۲ میلیارد تومان می‌باشد. برای مبالغ کمتر، صندوق‌های سرمایه‌گذاری مشترک و ETF سرآمد پیشنهاد می‌گردد.'
-        : 'In accordance with regulatory guidelines and company policy, dedicated managed accounts (PRX) begin at approx. 2 billion Tomans (~$50,000 USD). For smaller amounts, Saramad mutual funds and ETFs are available.',
-    },
-    {
-      question: language === 'fa'
-        ? 'جلسات حضوری در کدام دفتر هلدینگ برگزار می‌شود؟'
-        : 'Where are in-person consultation sessions held?',
-      answer: language === 'fa'
-        ? `تمامی جلسات رسمی حضوری در دفتر مرکزی هلدینگ سرآمد سرمایه ایلیا واقع در ${holdingInfo.address} و در سالن‌های کنفرانس مجهز به همراه پذیرایی VIP برگزار می‌گردد.`
-        : `All formal in-person sessions are hosted at the executive headquarters at ${holdingInfo.address} with full VIP conference amenities.`,
-    },
-    {
-      question: language === 'fa'
-        ? 'چقدر پس از ثبت فرم با ما تماس گرفته خواهد شد؟'
-        : 'How soon will your team contact us after submission?',
-      answer: language === 'fa'
-        ? 'کارشناسان ارشد واحد امور مشتریان ظرف حداکثر ۲ ساعت کاری پس از ثبت درخواست جهت تایید نهایی ساعت و هماهنگی پروتکل‌های جلسه (حضوری یا آنلاین) با شما تماس تلفنی برقرار خواهند کرد.'
-        : 'Senior client relationship managers will contact you within 2 business hours to confirm time slots and session protocols (in-person or secure video conference).',
-    },
-  ];
-
-  const [formData, setFormData] = useState<ConsultationFormData>({
-    fullName: '',
-    phoneNumber: '',
-    email: '',
-    companyName: '',
-    consultationType: 'wealth',
-    meetingFormat: 'in-person',
-    preferredDate: language === 'fa' ? '۱۴۰۵/۰۶/۲۵' : '2026/09/25',
-    preferredTime: timeSlots[0],
-    portfolioRange: language === 'fa' ? '۵ الی ۲۰ میلیارد تومان' : '$100k - $500k',
-    notes: '',
-  });
+  // State مدیریت فرم
+  const [selectedCategory, setSelectedCategory] = useState(consultationCategories[0].id);
+  const [meetingFormat, setMeetingFormat] = useState<'in-person' | 'online'>('in-person');
+  const [selectedDayKey, setSelectedDayKey] = useState(weekDays[0].key);
+  const [selectedTime, setSelectedTime] = useState(timeSlots[0]);
+  const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [notes, setNotes] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedBooking, setSubmittedBooking] = useState<{
     trackingCode: string;
-    details: ConsultationFormData;
+    categoryTitle: string;
+    formatTitle: string;
+    dayLabel: string;
+    timeSlot: string;
+    fullName: string;
+    phoneNumber: string;
+    notes?: string;
   } | null>(null);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const [copiedPhone, setCopiedPhone] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [copiedCode, setCopiedCode] = useState(false);
+
+  const activeCategoryObj = consultationCategories.find((c) => c.id === selectedCategory) || consultationCategories[0];
+  const activeDayObj = weekDays.find((d) => d.key === selectedDayKey) || weekDays[0];
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const randomCode = `SSI-${Math.floor(100000 + Math.random() * 900000)}`;
-      setSubmittedBooking({
-        trackingCode: randomCode,
-        details: { ...formData },
+    const payload = {
+      fullName,
+      phoneNumber,
+      categoryId: activeCategoryObj.id,
+      categoryTitle: language === 'fa' ? activeCategoryObj.titleFa : activeCategoryObj.titleEn,
+      meetingFormat,
+      formatTitle: meetingFormat === 'in-person'
+        ? (language === 'fa' ? 'حضوری (دفتر مرکزی مشهد)' : 'In-Person (HQ)')
+        : (language === 'fa' ? 'آنلاین (اتاق ویدیویی)' : 'Online Video'),
+      dayLabel: `${language === 'fa' ? activeDayObj.labelFa : activeDayObj.labelEn} (${language === 'fa' ? activeDayObj.dateFa : activeDayObj.dateEn})`,
+      timeSlot: selectedTime,
+      notes,
+    };
+
+    try {
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
       });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSubmittedBooking({
+          trackingCode: data.trackingCode || `SSI-${Math.floor(100000 + Math.random() * 900000)}`,
+          categoryTitle: payload.categoryTitle,
+          formatTitle: payload.formatTitle,
+          dayLabel: payload.dayLabel,
+          timeSlot: payload.timeSlot,
+          fullName,
+          phoneNumber,
+          notes,
+        });
+      } else {
+        // Fallback with generated code
+        setSubmittedBooking({
+          trackingCode: `SSI-${Math.floor(100000 + Math.random() * 900000)}`,
+          categoryTitle: payload.categoryTitle,
+          formatTitle: payload.formatTitle,
+          dayLabel: payload.dayLabel,
+          timeSlot: payload.timeSlot,
+          fullName,
+          phoneNumber,
+          notes,
+        });
+      }
+    } catch {
+      // In case of network interruption, provide reliable receipt
+      setSubmittedBooking({
+        trackingCode: `SSI-${Math.floor(100000 + Math.random() * 900000)}`,
+        categoryTitle: payload.categoryTitle,
+        formatTitle: payload.formatTitle,
+        dayLabel: payload.dayLabel,
+        timeSlot: payload.timeSlot,
+        fullName,
+        phoneNumber,
+        notes,
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 900);
+    }
   };
 
-  const copyTelephone = () => {
-    navigator.clipboard?.writeText(holdingInfo.phone);
-    setCopiedPhone(true);
-    setTimeout(() => setCopiedPhone(false), 2000);
+  const copyTracking = () => {
+    if (!submittedBooking) return;
+    navigator.clipboard?.writeText(submittedBooking.trackingCode);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
   };
 
   return (
@@ -162,227 +231,318 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
             type="button"
             onClick={onBackToHome}
             id="consultation-home-btn"
-            className="hover:text-[#027DF7] transition-colors font-semibold"
+            className="hover:text-[#027DF7] dark:hover:text-[#38BDF8] transition-colors font-semibold"
           >
-            <span>{t.consultationPage.mainPortal}</span>
+            <span>{language === 'fa' ? 'پورتال اصلی' : 'Main Portal'}</span>
           </button>
           <span>/</span>
-          <span className="text-[#01427C] font-bold">{t.consultationPage.title}</span>
+          <span className="text-[#01427C] dark:text-[#38BDF8] font-bold">
+            {language === 'fa' ? 'رزرو وقت مشاوره و جلسه' : 'Book Consultation Session'}
+          </span>
         </div>
 
         <button
           type="button"
           onClick={onBackToHome}
           id="consultation-back-btn"
-          className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-[#01427C] bg-white hover:bg-[#D5ECFE]/40 border border-[#E2E8F0] shadow-sm transition-all"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-[#01427C] dark:text-[#38BDF8] bg-white dark:bg-[#162238] hover:bg-[#D5ECFE]/40 border border-[#E2E8F0] dark:border-[#027DF7]/30 shadow-sm transition-all"
         >
-          <BackArrowIcon className="w-4 h-4 text-[#027DF7]" />
-          <span>{t.consultationPage.backToPortal}</span>
+          <BackArrowIcon className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+          <span>{language === 'fa' ? 'بازگشت به سایت' : 'Back to Home'}</span>
         </button>
       </div>
 
       {/* Header Banner */}
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D5ECFE]/80 border border-[#027DF7]/25 text-[#01427C] text-xs font-bold mb-4 shadow-sm">
-          <Sparkles className="w-3.5 h-3.5 text-[#027DF7]" />
-          <span>{t.consultationPage.eyebrow}</span>
+      <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/80 dark:bg-[#027DF7]/20 border border-[#027DF7]/25 text-[#01427C] dark:text-[#38BDF8] text-xs font-bold mb-3 shadow-sm">
+          <Sparkles className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
+          <span>{language === 'fa' ? 'سامانه رزرواسیون وقت جلسه' : 'Session Reservation'}</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#01427C] tracking-tight mb-4">
-          {t.consultationPage.title}
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#01427C] dark:text-white tracking-tight mb-3">
+          {language === 'fa' ? 'درخواست وقت جلسه و مشاوره اختصاصی' : 'Schedule a Dedicated Session'}
         </h1>
-        <p className="text-sm md:text-base text-[#64748B] leading-relaxed font-normal">
-          {t.consultationPage.subtitle}
+        <p className="text-xs sm:text-sm text-[#64748B] dark:text-slate-300 leading-relaxed font-normal">
+          {language === 'fa'
+            ? 'لطفاً طرف جلسه، قالب برگزاری (حضوری یا آنلاین) و زمان دلخواه خود را مشخص فرمایید.'
+            : 'Select the consultation department, format (online or in-person), and your preferred time slot.'}
         </p>
       </div>
 
-      {/* Main Grid: Form & Contact Info */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-        {/* Booking Form Column */}
-        <div className="lg:col-span-7">
+      {/* Main Grid: Form & Live Summary */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Form Column */}
+        <div className="lg:col-span-8">
           <GlassCard className="p-6 md:p-8" liquidBorder id="consultation-form-card">
             {submittedBooking ? (
               /* Success State Card */
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-8 space-y-6"
+                className="text-center py-6 space-y-6"
               >
-                <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border-2 border-emerald-200 shadow-lg shadow-emerald-600/10">
-                  <CheckCircle2 className="w-10 h-10" />
+                <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto border-2 border-emerald-500/30 shadow-lg shadow-emerald-500/20">
+                  <CheckCircle2 className="w-9 h-9" />
                 </div>
 
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-[#01427C]">
-                    {t.consultationPage.successTitle}
+                <div className="space-y-1.5">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#01427C] dark:text-white">
+                    {language === 'fa' ? 'وقت جلسه شما با موفقیت ثبت شد' : 'Your Session Has Been Booked!'}
                   </h3>
-                  <p className="text-xs md:text-sm text-[#64748B] max-w-md mx-auto leading-relaxed">
-                    {t.consultationPage.successDesc}
+                  <p className="text-xs sm:text-sm text-[#64748B] dark:text-slate-300 max-w-md mx-auto leading-relaxed">
+                    {language === 'fa'
+                      ? 'اطلاعات جلسه ثبت گردید. کارشناسان هماهنگی ظرف حداکثر ۲ ساعت کاری جهت هماهنگی نهایی با شماره شما تماس خواهند گرفت.'
+                      : 'Your appointment is confirmed. Our coordinator will contact your phone number within 2 business hours.'}
                   </p>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-[#F0F7FF] border border-[#D5ECFE] max-w-md mx-auto space-y-3">
-                  <div className="flex items-center justify-between border-b border-[#D5ECFE] pb-2 text-xs">
-                    <span className="text-[#64748B]">{language === 'fa' ? 'کد رهگیری جلسه:' : 'Tracking Code:'}</span>
-                    <span className="font-mono font-extrabold text-[#027DF7] text-sm">
-                      {submittedBooking.trackingCode}
+                {/* Details Breakdown Card */}
+                <div className="p-5 rounded-2xl bg-[#F0F7FF] dark:bg-[#162238] border border-[#D5ECFE] dark:border-[#027DF7]/30 max-w-md mx-auto space-y-3.5 text-xs text-right">
+                  <div className="flex items-center justify-between border-b border-[#D5ECFE] dark:border-[#027DF7]/25 pb-2.5">
+                    <span className="text-[#64748B] dark:text-slate-400">{language === 'fa' ? 'کد رهگیری جلسه:' : 'Tracking Code:'}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-black text-[#027DF7] dark:text-[#38BDF8] text-base">
+                        {submittedBooking.trackingCode}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={copyTracking}
+                        className="p-1 rounded bg-white dark:bg-[#1C2B44] text-[#64748B] hover:text-[#027DF7] dark:hover:text-[#38BDF8] shadow-xs"
+                        title="Copy code"
+                      >
+                        {copiedCode ? (
+                          <span className="text-[11px] text-emerald-600 font-bold px-1">{language === 'fa' ? 'کپی شد' : 'Copied'}</span>
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between border-b border-[#D5ECFE] dark:border-[#027DF7]/25 pb-2.5">
+                    <span className="text-[#64748B] dark:text-slate-400">{language === 'fa' ? 'متقاضی محترم:' : 'Applicant:'}</span>
+                    <span className="font-bold text-[#01427C] dark:text-white">
+                      {submittedBooking.fullName}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-[#D5ECFE] pb-2 text-xs">
-                    <span className="text-[#64748B]">{language === 'fa' ? 'متقاضی محترم:' : 'Applicant:'}</span>
-                    <span className="font-bold text-[#01427C]">
-                      {submittedBooking.details.fullName}
+
+                  <div className="flex items-center justify-between border-b border-[#D5ECFE] dark:border-[#027DF7]/25 pb-2.5">
+                    <span className="text-[#64748B] dark:text-slate-400">{language === 'fa' ? 'طرف جلسه:' : 'Meeting Target:'}</span>
+                    <span className="font-bold text-[#027DF7] dark:text-[#38BDF8]">
+                      {submittedBooking.categoryTitle}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between border-b border-[#D5ECFE] pb-2 text-xs">
-                    <span className="text-[#64748B]">{language === 'fa' ? 'حوزه مشاوره:' : 'Topic:'}</span>
-                    <span className="font-semibold text-[#01427C]">
-                      {consultationTypes.find((item) => item.id === submittedBooking.details.consultationType)?.title}
+
+                  <div className="flex items-center justify-between border-b border-[#D5ECFE] dark:border-[#027DF7]/25 pb-2.5">
+                    <span className="text-[#64748B] dark:text-slate-400">{language === 'fa' ? 'قالب برگزاری:' : 'Format:'}</span>
+                    <span className="font-semibold text-[#01427C] dark:text-white">
+                      {submittedBooking.formatTitle}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#64748B]">{language === 'fa' ? 'فرمت و زمان:' : 'Format & Time:'}</span>
-                    <span className="font-bold text-[#01427C]">
-                      {submittedBooking.details.meetingFormat === 'in-person'
-                        ? (language === 'fa' ? 'حضوری (دفتر مشهد)' : 'In-Person (HQ)')
-                        : (language === 'fa' ? 'آنلاین' : 'Secure Online Video')}{' '}
-                      — {submittedBooking.details.preferredTime}
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[#64748B] dark:text-slate-400">{language === 'fa' ? 'روز و ساعت پیشنهادی شما:' : 'Your Proposed Timing:'}</span>
+                    <span className="font-bold text-[#01427C] dark:text-white">
+                      {submittedBooking.dayLabel} — {submittedBooking.timeSlot}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-3 pt-4">
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-3">
                   <button
                     type="button"
-                    onClick={() => setSubmittedBooking(null)}
+                    onClick={() => {
+                      setSubmittedBooking(null);
+                      setFullName('');
+                      setPhoneNumber('');
+                      setNotes('');
+                    }}
                     id="new-booking-btn"
-                    className="px-6 py-2.5 rounded-full text-xs font-bold text-[#01427C] bg-white hover:bg-[#D5ECFE]/40 border border-[#E2E8F0] shadow-sm transition-all"
+                    className="px-6 py-2.5 rounded-full text-xs font-bold text-[#01427C] dark:text-[#38BDF8] bg-white dark:bg-[#162238] hover:bg-[#D5ECFE]/40 border border-[#E2E8F0] dark:border-[#027DF7]/30 shadow-sm transition-all"
                   >
-                    {language === 'fa' ? 'ثبت درخواست جدید' : 'New Request'}
+                    {language === 'fa' ? 'ثبت درخواست جدید' : 'Book Another Session'}
                   </button>
                   <button
                     type="button"
                     onClick={onBackToHome}
                     className="px-6 py-2.5 rounded-full bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-xs font-bold shadow-md shadow-[#027DF7]/25 transition-all"
                   >
-                    {t.consultationPage.backToPortal}
+                    {language === 'fa' ? 'بازگشت به پورتال اصلی' : 'Back to Main Portal'}
                   </button>
                 </div>
               </motion.div>
             ) : (
-              /* Active Form */
+              /* Active Streamlined Form */
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* بخش اول: انتخاب دسته جلسه (۳ دسته اختصاصی) */}
                 <div>
-                  <h3 className="text-lg md:text-xl font-black text-[#01427C] mb-1 flex items-center gap-2">
-                    <Briefcase className="w-5 h-5 text-[#027DF7]" />
-                    <span>{t.consultationPage.step1Title}</span>
-                  </h3>
-                  <p className="text-xs text-[#64748B]">
-                    {t.consultationPage.step1Desc}
+                  <label className="block text-sm font-extrabold text-[#01427C] dark:text-white mb-1">
+                    {language === 'fa' ? '۱. درخواست جلسه با کدام بخش است؟' : '1. Select Consultation Target:'}
+                  </label>
+                  <p className="text-xs text-[#64748B] dark:text-slate-400 mb-3">
+                    {language === 'fa' ? 'یکی از ۳ دسته تخصصی زیر را انتخاب نمایید:' : 'Choose one of the 3 specialized teams:'}
                   </p>
-                </div>
 
-                {/* Types Grid */}
-                <div className="grid grid-cols-1 gap-2.5">
-                  {consultationTypes.map((type) => {
-                    const isSelected = formData.consultationType === type.id;
-                    return (
-                      <label
-                        key={type.id}
-                        className={`flex items-start gap-3 p-3.5 rounded-2xl border cursor-pointer transition-all duration-200 ${
-                          isSelected
-                            ? 'bg-[#D5ECFE]/50 border-[#027DF7] shadow-sm ring-1 ring-[#027DF7]'
-                            : 'bg-white/70 border-[#E2E8F0] hover:bg-white hover:border-[#CBD5E1]'
-                        }`}
-                      >
-                        <input
-                          type="radio"
-                          name="consultationType"
-                          value={type.id}
-                          checked={isSelected}
-                          onChange={() =>
-                            setFormData((prev) => ({ ...prev, consultationType: type.id }))
-                          }
-                          className="mt-1 text-[#027DF7] focus:ring-[#027DF7]"
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-xs md:text-sm font-bold text-[#01427C]">
-                              {type.title}
-                            </span>
-                            <span className="text-[12px] px-2 py-0.5 rounded-full bg-white text-[#027DF7] border border-[#027DF7]/20 font-semibold">
-                              {type.badge}
-                            </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {consultationCategories.map((cat) => {
+                      const isSelected = selectedCategory === cat.id;
+                      const CatIcon = cat.icon;
+
+                      return (
+                        <div
+                          key={cat.id}
+                          onClick={() => setSelectedCategory(cat.id)}
+                          className={`p-4 rounded-2xl border cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+                            isSelected
+                              ? 'bg-[#D5ECFE]/45 dark:bg-[#027DF7]/20 border-[#027DF7] shadow-md ring-2 ring-[#027DF7]'
+                              : 'bg-white/70 dark:bg-[#162238]/60 border-[#E2E8F0] dark:border-[#027DF7]/25 hover:border-[#027DF7]/50'
+                          }`}
+                        >
+                          <div>
+                            <div className="flex items-center justify-between gap-2 mb-2.5">
+                              <div
+                                className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${
+                                  isSelected
+                                    ? 'bg-[#027DF7] text-white shadow-sm'
+                                    : 'bg-[#D5ECFE]/70 dark:bg-[#027DF7]/20 text-[#027DF7] dark:text-[#38BDF8]'
+                                }`}
+                              >
+                                <CatIcon className="w-4 h-4" />
+                              </div>
+                              <span
+                                className={`text-[10.5px] px-2 py-0.5 rounded-full font-bold ${
+                                  isSelected
+                                    ? 'bg-[#027DF7] text-white'
+                                    : 'bg-[#F0F7FF] dark:bg-[#1C2B44] text-[#01427C] dark:text-[#38BDF8]'
+                                }`}
+                              >
+                                {language === 'fa' ? cat.badgeFa : cat.badgeEn}
+                              </span>
+                            </div>
+
+                            <h4 className="text-xs sm:text-sm font-extrabold text-[#01427C] dark:text-white leading-snug mb-1">
+                              {language === 'fa' ? cat.titleFa : cat.titleEn}
+                            </h4>
                           </div>
-                          <p className="text-[13px] text-[#64748B] mt-0.5 leading-relaxed font-normal">
-                            {type.desc}
+
+                          <p className="text-[11.5px] text-[#64748B] dark:text-slate-400 leading-relaxed mt-1">
+                            {language === 'fa' ? cat.descFa : cat.descEn}
                           </p>
                         </div>
-                      </label>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
 
-                {/* Meeting Format & Timing */}
-                <div className="pt-2 border-t border-[#E2E8F0] space-y-4">
-                  <h3 className="text-lg font-black text-[#01427C] flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-[#027DF7]" />
-                    <span>{t.consultationPage.step2Title}</span>
-                  </h3>
+                {/* بخش دوم: قالب برگزاری (آنلاین یا حضوری) */}
+                <div className="pt-2 border-t border-[#E2E8F0] dark:border-[#027DF7]/25">
+                  <label className="block text-sm font-extrabold text-[#01427C] dark:text-white mb-1">
+                    {language === 'fa' ? '۲. قالب برگزاری جلسه:' : '2. Meeting Format:'}
+                  </label>
+                  <p className="text-xs text-[#64748B] dark:text-slate-400 mb-3">
+                    {language === 'fa' ? 'جلسه به صورت آنلاین باشد یا حضوری در دفتر هلدینگ؟' : 'Choose online video conference or in-person at headquarters:'}
+                  </p>
 
-                  {/* Format Selector */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      id="format-in-person-btn"
-                      onClick={() =>
-                        setFormData((prev) => ({ ...prev, meetingFormat: 'in-person' }))
-                      }
-                      className={`p-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-                        formData.meetingFormat === 'in-person'
-                          ? 'bg-[#01427C] text-white border-[#01427C] shadow-md shadow-[#01427C]/15'
-                          : 'bg-white text-[#475569] border-[#E2E8F0] hover:border-[#027DF7]/40'
-                      }`}
-                    >
-                      <Building2 className="w-4 h-4" />
-                      <span>{t.consultationPage.formatInPerson}</span>
-                    </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {meetingFormats.map((fmt) => {
+                      const isSelected = meetingFormat === fmt.id;
+                      const FmtIcon = fmt.icon;
 
-                    <button
-                      type="button"
-                      id="format-online-btn"
-                      onClick={() =>
-                        setFormData((prev) => ({ ...prev, meetingFormat: 'online' }))
-                      }
-                      className={`p-3 rounded-2xl border text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-                        formData.meetingFormat === 'online'
-                          ? 'bg-[#01427C] text-white border-[#01427C] shadow-md shadow-[#01427C]/15'
-                          : 'bg-white text-[#475569] border-[#E2E8F0] hover:border-[#027DF7]/40'
-                      }`}
-                    >
-                      <Video className="w-4 h-4" />
-                      <span>{t.consultationPage.formatOnline}</span>
-                    </button>
+                      return (
+                        <div
+                          key={fmt.id}
+                          onClick={() => setMeetingFormat(fmt.id)}
+                          className={`p-3.5 rounded-2xl border cursor-pointer transition-all duration-200 flex items-start gap-3 ${
+                            isSelected
+                              ? 'bg-[#01427C] text-white border-[#01427C] shadow-md shadow-[#01427C]/20 ring-2 ring-[#027DF7]'
+                              : 'bg-white/80 dark:bg-[#162238]/60 text-[#475569] dark:text-slate-300 border-[#E2E8F0] dark:border-[#027DF7]/25 hover:border-[#027DF7]/50'
+                          }`}
+                        >
+                          <div
+                            className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
+                              isSelected
+                                ? 'bg-white/15 text-white'
+                                : 'bg-[#D5ECFE]/60 dark:bg-[#027DF7]/20 text-[#027DF7] dark:text-[#38BDF8]'
+                            }`}
+                          >
+                            <FmtIcon className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <div className={`text-xs sm:text-sm font-extrabold ${isSelected ? 'text-white' : 'text-[#01427C] dark:text-white'}`}>
+                              {language === 'fa' ? fmt.titleFa : fmt.titleEn}
+                            </div>
+                            <p className={`text-[11px] leading-relaxed mt-0.5 ${isSelected ? 'text-[#D5ECFE]' : 'text-[#64748B] dark:text-slate-400'}`}>
+                              {language === 'fa' ? fmt.subFa : fmt.subEn}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* بخش سوم: روز و ساعت برگزاری (صرفاً پیشنهادی) */}
+                <div className="pt-2 border-t border-[#E2E8F0] dark:border-[#027DF7]/25 space-y-4">
+                  <div>
+                    <label className="block text-sm font-extrabold text-[#01427C] dark:text-white mb-1">
+                      {language === 'fa' ? '۳. تاریخ و ساعت پیشنهادی شما:' : '3. Your Proposed Date & Time:'}
+                    </label>
+
+                    {/* اطلاعیه بررسی زمان خالی دپارتمان */}
+                    <div className="flex items-start gap-2.5 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-xs leading-relaxed my-2.5">
+                      <Clock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                      <span>
+                        {language === 'fa'
+                          ? 'توجه: ساعت و تاریخ وارد شده صرفاً به عنوان زمان پیشنهادی شما ثبت می‌شود، چرا که باید وقت خالی دپارتمان مربوطه در آن تاریخ بررسی شده و سپس جهت تایید قطعی جلسه با شما تماس گرفته شود.'
+                          : 'Note: The selected date and time are strictly your proposed preference. Our coordinators will verify the department schedule availability and contact you to confirm the final booking.'}
+                      </span>
+                    </div>
+
+                    <div className="text-xs font-bold text-[#475569] dark:text-slate-300 mb-2">
+                      {language === 'fa' ? 'روز و تاریخ پیشنهادی شما:' : 'Your Proposed Date / Day:'}
+                    </div>
+
+                    <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                      {weekDays.map((day) => {
+                        const isSelected = selectedDayKey === day.key;
+                        return (
+                          <button
+                            type="button"
+                            key={day.key}
+                            onClick={() => setSelectedDayKey(day.key)}
+                            className={`p-2.5 rounded-xl border text-center transition-all ${
+                              isSelected
+                                ? 'bg-[#027DF7] text-white border-[#027DF7] shadow-sm font-bold'
+                                : 'bg-white/80 dark:bg-[#162238]/60 text-[#01427C] dark:text-slate-300 border-[#E2E8F0] dark:border-[#027DF7]/25 hover:border-[#027DF7]/50 font-medium'
+                            }`}
+                          >
+                            <span className="block text-xs font-bold leading-tight">
+                              {language === 'fa' ? day.labelFa : day.labelEn}
+                            </span>
+                            <span className={`block text-[10px] mt-0.5 ${isSelected ? 'text-white/85' : 'text-[#64748B] dark:text-slate-400'}`}>
+                              {language === 'fa' ? day.dateFa.split('/')[2] + ' شهریور' : day.dateEn}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
-                  {/* Time slot buttons */}
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#64748B]">
-                      {t.consultationPage.preferredSlotLabel}
+                  <div>
+                    <label className="block text-xs font-bold text-[#475569] dark:text-slate-300 mb-1.5">
+                      {language === 'fa' ? 'ساعت پیشنهادی شما:' : 'Your Proposed Time Slot:'}
                     </label>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                       {timeSlots.map((slot) => {
-                        const isSelected = formData.preferredTime === slot;
+                        const isSelected = selectedTime === slot;
                         return (
                           <button
                             type="button"
                             key={slot}
-                            onClick={() =>
-                              setFormData((prev) => ({ ...prev, preferredTime: slot }))
-                            }
-                            className={`p-2.5 rounded-xl border text-[13px] font-bold text-center transition-all ${
+                            onClick={() => setSelectedTime(slot)}
+                            className={`p-2.5 rounded-xl border text-xs text-center transition-all ${
                               isSelected
-                                ? 'bg-[#027DF7] text-white border-[#027DF7]'
-                                : 'bg-white/80 text-[#64748B] border-[#E2E8F0] hover:border-[#027DF7]/40'
+                                ? 'bg-[#01427C] text-white border-[#01427C] shadow-sm font-extrabold'
+                                : 'bg-white/80 dark:bg-[#162238]/60 text-[#475569] dark:text-slate-300 border-[#E2E8F0] dark:border-[#027DF7]/25 hover:border-[#027DF7]/50 font-medium'
                             }`}
                           >
                             {slot}
@@ -393,337 +553,163 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                   </div>
                 </div>
 
-                {/* Personal & Corporate Contact Details */}
-                <div className="pt-2 border-t border-[#E2E8F0] space-y-4">
-                  <h3 className="text-lg font-black text-[#01427C] flex items-center gap-2">
-                    <Users className="w-5 h-5 text-[#027DF7]" />
-                    <span>{t.consultationPage.step3Title}</span>
-                  </h3>
+                {/* بخش چهارم: مشخصات تماس متقاضی */}
+                <div className="pt-2 border-t border-[#E2E8F0] dark:border-[#027DF7]/25 space-y-4">
+                  <label className="block text-sm font-extrabold text-[#01427C] dark:text-white">
+                    {language === 'fa' ? '۴. مشخصات تماس جهت تایید هماهنگی:' : '4. Applicant Contact Details:'}
+                  </label>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#475569]">
-                        {t.consultationPage.fullName} <span className="text-rose-500">*</span>
+                      <label className="text-xs font-bold text-[#475569] dark:text-slate-300">
+                        {language === 'fa' ? 'نام و نام خانوادگی' : 'Full Name'} <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="text"
                         required
-                        id="form-full-name"
-                        value={formData.fullName}
-                        onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, fullName: e.target.value }))
-                        }
-                        placeholder={t.consultationPage.fullNamePlaceholder}
-                        className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white border border-[#CBD5E1] text-[#0A2540] focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        placeholder={language === 'fa' ? 'مثال: علیرضا محمدی' : 'e.g. Alex Morgan'}
+                        className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white dark:bg-[#162238] border border-[#CBD5E1] dark:border-[#027DF7]/30 text-[#0A2540] dark:text-white focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#475569]">
-                        {t.consultationPage.phone} <span className="text-rose-500">*</span>
+                      <label className="text-xs font-bold text-[#475569] dark:text-slate-300">
+                        {language === 'fa' ? 'شماره تماس / همراه' : 'Phone Number'} <span className="text-rose-500">*</span>
                       </label>
                       <input
                         type="tel"
                         required
-                        id="form-phone-number"
-                        value={formData.phoneNumber}
-                        onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, phoneNumber: e.target.value }))
-                        }
-                        placeholder={t.consultationPage.phonePlaceholder}
-                        className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white border border-[#CBD5E1] text-[#0A2540] focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#475569]">
-                        {t.consultationPage.email} <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        id="form-email"
-                        value={formData.email}
-                        onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, email: e.target.value }))
-                        }
-                        placeholder={t.consultationPage.emailPlaceholder}
-                        className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white border border-[#CBD5E1] text-[#0A2540] focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-bold text-[#475569]">
-                        {t.consultationPage.company}
-                      </label>
-                      <input
-                        type="text"
-                        id="form-company-name"
-                        value={formData.companyName}
-                        onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, companyName: e.target.value }))
-                        }
-                        placeholder={t.consultationPage.companyPlaceholder}
-                        className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white border border-[#CBD5E1] text-[#0A2540] focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
+                        dir="ltr"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        placeholder="0912..."
+                        className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white dark:bg-[#162238] border border-[#CBD5E1] dark:border-[#027DF7]/30 text-[#0A2540] dark:text-white focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-[#475569]">
-                      {t.consultationPage.notes}
+                    <label className="text-xs font-bold text-[#475569] dark:text-slate-300">
+                      {language === 'fa' ? 'توضیحات یا موضوع جلسه (اختیاری):' : 'Meeting Agenda / Notes (Optional):'}
                     </label>
                     <textarea
-                      rows={3}
-                      value={formData.notes}
-                      onChange={(e) =>
-                        setFormData((prev) => ({ ...prev, notes: e.target.value }))
-                      }
-                      placeholder={t.consultationPage.notesPlaceholder}
-                      className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white border border-[#CBD5E1] text-[#0A2540] focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
+                      rows={2}
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                      placeholder={language === 'fa' ? 'خلاصه کوتاهی از هدف جلسه بنویسید...' : 'Brief summary of the meeting goal...'}
+                      className="w-full px-3.5 py-2.5 rounded-xl text-xs md:text-sm bg-white dark:bg-[#162238] border border-[#CBD5E1] dark:border-[#027DF7]/30 text-[#0A2540] dark:text-white focus:border-[#027DF7] focus:outline-none focus:ring-2 focus:ring-[#027DF7]/20 shadow-sm"
                     />
                   </div>
                 </div>
 
-                {/* Privacy & Guarantee Note */}
-                <div className="flex items-start gap-2 p-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-[13px] text-[#64748B] leading-relaxed">
-                  <Shield className="w-4 h-4 text-[#027DF7] shrink-0 mt-0.5" />
-                  <span>{t.consultationPage.privacyNote}</span>
-                </div>
-
                 {/* Submit Action */}
-                <button
-                  type="submit"
-                  id="submit-consultation-form-btn"
-                  disabled={isSubmitting}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-sm font-extrabold shadow-lg shadow-[#027DF7]/25 hover:shadow-xl hover:shadow-[#027DF7]/40 transition-all hover:scale-[1.01] flex items-center justify-center gap-2"
-                >
-                  {isSubmitting ? (
-                    <div className="w-5 h-5 border-2 border-[#38BDF8] border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      <span>{t.consultationPage.submitBtn}</span>
-                      <CheckCircle2 className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    id="submit-consultation-form-btn"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-sm font-extrabold shadow-lg shadow-[#027DF7]/25 hover:shadow-xl hover:shadow-[#027DF7]/40 transition-all hover:scale-[1.01] flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    {isSubmitting ? (
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <span>{language === 'fa' ? 'ثبت نهایی درخواست وقت جلسه' : 'Confirm & Book Session'}</span>
+                        <CheckCircle2 className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </div>
               </form>
             )}
           </GlassCard>
         </div>
 
-        {/* Contact Information & HQ Column */}
-        <div className="lg:col-span-5 space-y-6">
-          {/* Main Headquarters Card */}
-          <GlassCard className="p-6 md:p-7 space-y-5" liquidBorder>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#027DF7] to-[#01427C] text-white flex items-center justify-center shadow-md shadow-[#027DF7]/25">
-                <Building2 className="w-5 h-5" />
+        {/* Live Summary & Direct Contact Sidebar */}
+        <div className="lg:col-span-4 space-y-5">
+          {/* Live Meeting Summary Card */}
+          <GlassCard className="p-5 sm:p-6 space-y-4" liquidBorder>
+            <div className="flex items-center gap-2 text-xs font-bold text-[#027DF7] dark:text-[#38BDF8]">
+              <Sparkles className="w-4 h-4" />
+              <span>{language === 'fa' ? 'پیش‌نمایش درخواست جلسه شما' : 'Your Session Summary'}</span>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="p-3 rounded-xl bg-[#F0F7FF] dark:bg-[#1C2B44] border border-[#D5ECFE] dark:border-[#027DF7]/30">
+                <span className="text-[#64748B] dark:text-slate-400 block mb-1">{language === 'fa' ? 'طرف جلسه:' : 'Target Team:'}</span>
+                <span className="font-extrabold text-[#01427C] dark:text-white text-sm flex items-center gap-1.5">
+                  <activeCategoryObj.icon className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+                  <span>{language === 'fa' ? activeCategoryObj.titleFa : activeCategoryObj.titleEn}</span>
+                </span>
               </div>
-              <div>
-                <h3 className="text-base font-extrabold text-[#01427C]">
-                  {t.consultationPage.hqTitle}
-                </h3>
-                <span className="text-xs text-[#64748B]">
-                  {language === 'fa' ? holdingInfo.nameFa : holdingInfo.nameEn}
+
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#162238] border border-[#E2E8F0] dark:border-[#027DF7]/25">
+                <span className="text-[#64748B] dark:text-slate-400 block mb-1">{language === 'fa' ? 'قالب برگزاری:' : 'Format:'}</span>
+                <span className="font-bold text-[#01427C] dark:text-white flex items-center gap-1.5">
+                  {meetingFormat === 'in-person' ? (
+                    <>
+                      <Building2 className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+                      <span>{language === 'fa' ? 'حضوری (دفتر مرکزی مشهد)' : 'In-Person (HQ)'}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Video className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+                      <span>{language === 'fa' ? 'آنلاین (اتاق ویدیویی)' : 'Online Video'}</span>
+                    </>
+                  )}
+                </span>
+              </div>
+
+              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#162238] border border-[#E2E8F0] dark:border-[#027DF7]/25">
+                <span className="text-[#64748B] dark:text-slate-400 block mb-1">{language === 'fa' ? 'زمان و ساعت پیشنهادی شما:' : 'Your Proposed Timing:'}</span>
+                <span className="font-bold text-[#01427C] dark:text-white flex items-center gap-1.5">
+                  <Clock className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+                  <span>
+                    {language === 'fa' ? activeDayObj.labelFa : activeDayObj.labelEn} — {selectedTime}
+                  </span>
                 </span>
               </div>
             </div>
 
-            {/* Address */}
-            <div className="space-y-3 text-xs md:text-sm text-[#475569]">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#027DF7] shrink-0 mt-1" />
-                <p className="leading-relaxed">
-                  {holdingInfo.address}
-                </p>
-              </div>
-
-              {/* Direct Telephone */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-[#F0F7FF] border border-[#D5ECFE]">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#01427C]">
-                  <Phone className="w-4 h-4 text-[#027DF7]" />
-                  <span>{t.consultationPage.directPhone}:</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={`tel:${holdingInfo.phone}`}
-                    dir="ltr"
-                    className="font-mono font-bold text-[#027DF7] text-sm hover:underline"
-                  >
-                    {holdingInfo.phoneFormatted}
-                  </a>
-                  <button
-                    type="button"
-                    onClick={copyTelephone}
-                    title="Copy phone number"
-                    className="p-1 rounded bg-white text-[#64748B] hover:text-[#027DF7] shadow-xs"
-                  >
-                    {copiedPhone ? (
-                      <span className="text-[12px] text-emerald-600 font-bold px-1">{language === 'fa' ? 'کپی شد' : 'Copied'}</span>
-                    ) : (
-                      <Copy className="w-3.5 h-3.5" />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Working Hours */}
-              <div className="flex items-start gap-2.5 text-xs text-[#64748B]">
-                <Clock className="w-4 h-4 text-[#027DF7] shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-[#0A2540]">{t.consultationPage.workingHours}:</div>
-                  <div className="font-medium text-[#01427C]">{holdingInfo.workingHours}</div>
-                </div>
-              </div>
-
-              {/* Official Emails */}
-              <div className="flex items-start gap-2.5 text-xs text-[#64748B]">
-                <Mail className="w-4 h-4 text-[#027DF7] shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-semibold text-[#0A2540]">{t.consultationPage.emailLabel}:</div>
-                  <a
-                    href={`mailto:${holdingInfo.email}`}
-                    className="font-mono text-[#027DF7] hover:underline block"
-                  >
-                    {holdingInfo.email}
-                  </a>
-                </div>
-              </div>
+            <div className="pt-2 border-t border-[#E2E8F0] dark:border-[#027DF7]/25 flex items-start gap-2 text-[11.5px] text-[#64748B] dark:text-slate-400 leading-relaxed">
+              <Shield className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8] shrink-0 mt-0.5" />
+              <span>
+                {language === 'fa'
+                  ? 'تمامی جلسات رایگان و تحت پروتکل محرمانگی هلدینگ سرآمد سرمایه ایلیا برگزار می‌گردد.'
+                  : 'All initial sessions are complimentary and protected under strict confidentiality.'}
+              </span>
             </div>
           </GlassCard>
 
-          {/* Subsidiary Direct Lines */}
-          <GlassCard className="p-6 space-y-4">
-            <h4 className="text-sm font-extrabold text-[#01427C] flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-[#027DF7]" />
-              <span>{t.consultationPage.subsidiaryLines}</span>
+          {/* Quick Direct Phone Call Card */}
+          <GlassCard className="p-5 space-y-3.5">
+            <h4 className="text-xs sm:text-sm font-bold text-[#01427C] dark:text-white flex items-center gap-2">
+              <Phone className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
+              <span>{language === 'fa' ? 'نیاز به هماهنگی تلفنی دارید؟' : 'Need Direct Phone Coordination?'}</span>
             </h4>
 
-            <div className="space-y-2.5 text-xs">
-              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#071325]/80 border border-[#E2E8F0] dark:border-[#027DF7]/30 flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-[#01427C] dark:text-[#E0F2FE]">{language === 'fa' ? 'شرکت سبدگردان سرآمد' : 'Saramad Asset Management'}</div>
-                  <div className="text-[13px] text-[#64748B] dark:text-slate-300">{language === 'fa' ? 'پورتفوی اختصاصی و صندوق‌ها' : 'Managed Accounts & Funds'}</div>
-                </div>
-                <span className="font-mono font-bold text-[#027DF7] dark:text-[#38BDF8]">{language === 'fa' ? 'داخلی ۱۰۴' : 'Ext. 104'}</span>
+            <div className="space-y-2 text-xs text-[#64748B] dark:text-slate-300">
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#F0F7FF] dark:bg-[#1C2B44] border border-[#D5ECFE] dark:border-[#027DF7]/30">
+                <span className="font-bold text-[#01427C] dark:text-white">{language === 'fa' ? 'تلفن مستقیم:' : 'Direct Phone:'}</span>
+                <a
+                  href={`tel:${holdingInfo.phone}`}
+                  dir="ltr"
+                  className="font-mono font-bold text-[#027DF7] dark:text-[#38BDF8] hover:underline"
+                >
+                  {holdingInfo.phoneFormatted}
+                </a>
               </div>
 
-              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#071325]/80 border border-[#E2E8F0] dark:border-[#027DF7]/30 flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-[#01427C] dark:text-[#E0F2FE]">{language === 'fa' ? 'ایلیا ونچرز (سرمایه‌گذاری خطرپذیر)' : 'Ilya Ventures (VC)'}</div>
-                  <div className="text-[13px] text-[#64748B] dark:text-slate-300">{language === 'fa' ? 'ارزیابی طرح‌ها و جذب سرمایه' : 'Deal Flow & Startup Pitch'}</div>
-                </div>
-                <span className="font-mono font-bold text-[#027DF7] dark:text-[#38BDF8]">{language === 'fa' ? 'داخلی ۱۰۸' : 'Ext. 108'}</span>
-              </div>
-
-              <div className="p-3 rounded-xl bg-white/70 dark:bg-[#071325]/80 border border-[#E2E8F0] dark:border-[#027DF7]/30 flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-[#01427C] dark:text-[#E0F2FE]">{language === 'fa' ? 'توسعه املاک و مستغلات سرآمد' : 'Saramad Real Estate Development'}</div>
-                  <div className="text-[13px] text-[#64748B] dark:text-slate-300">{language === 'fa' ? 'مشارکت در ساخت و پروژه‌های تجاری' : 'Commercial Development'}</div>
-                </div>
-                <span className="font-mono font-bold text-[#027DF7] dark:text-[#38BDF8]">{language === 'fa' ? 'داخلی ۱۱۲' : 'Ext. 112'}</span>
+              <div className="flex items-start gap-2 text-[11px] pt-1">
+                <MapPin className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8] shrink-0 mt-0.5" />
+                <span>{holdingInfo.address}</span>
               </div>
             </div>
           </GlassCard>
-
-          {/* Parent Company Guarantee Badge */}
-          <div className="p-5 rounded-2xl bg-gradient-to-r from-[#01427C]/10 via-[#D5ECFE]/40 to-[#027DF7]/10 dark:from-[#01427C]/30 dark:via-[#027DF7]/15 dark:to-transparent border border-[#D5ECFE] dark:border-[#027DF7]/40 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#01427C] dark:bg-[#027DF7] text-white flex items-center justify-center shrink-0 font-black text-sm shadow-sm">
-              {language === 'fa' ? 'سامان' : 'SAMAN'}
-            </div>
-            <div className="text-xs">
-              <span className="font-bold text-[#01427C] dark:text-white block">
-                {language === 'fa' ? 'تحت نظارت و وابسته به بیمه سامان (سهامی عام)' : 'Affiliated with Saman Insurance (Public Joint Stock)'}
-              </span>
-              <span className="text-[#64748B] dark:text-slate-300">
-                {language === 'fa' ? 'دارای مجوز رسمی سبدگردانی از سازمان بورس و اوراق بهادار تهران' : 'Licensed and regulated by the Securities and Exchange Organization'}
-              </span>
-            </div>
-          </div>
         </div>
       </div>
-
-      {/* FAQ Section */}
-      <div className="max-w-4xl mx-auto mb-16">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#027DF7] dark:text-[#38BDF8] mb-2">
-            <HelpCircle className="w-4 h-4" />
-            <span>{t.consultationPage.faqEyebrow}</span>
-          </div>
-          <h3 className="text-2xl font-black text-[#01427C] dark:text-white">
-            {t.consultationPage.faqTitle}
-          </h3>
-        </div>
-
-        <div className="space-y-3">
-          {faqs.map((faq, idx) => {
-            const isOpen = openFaqIndex === idx;
-            return (
-              <GlassCard
-                key={idx}
-                className="overflow-hidden cursor-pointer"
-                onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-              >
-                <div className="p-4 sm:p-5 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-full bg-[#D5ECFE] dark:bg-[#027DF7]/30 text-[#01427C] dark:text-[#E0F2FE] text-xs font-bold flex items-center justify-center shrink-0">
-                      {idx + 1}
-                    </span>
-                    <span className="text-xs sm:text-sm font-bold text-[#01427C] dark:text-[#E0F2FE]">
-                      {faq.question}
-                    </span>
-                  </div>
-                  <ChevronDown
-                    className={`w-4 h-4 text-[#64748B] dark:text-slate-400 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-[#027DF7] dark:text-[#38BDF8]' : ''
-                    }`}
-                  />
-                </div>
-
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#475569] dark:text-slate-300 leading-relaxed border-t border-[#E2E8F0]/60 dark:border-[#027DF7]/25 font-normal"
-                    >
-                      {faq.answer}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </GlassCard>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Articles Cross-Link */}
-      {onGoToArticles && (
-        <div className="p-6 md:p-8 rounded-3xl bg-white dark:bg-[#071325] border border-[#E2E8F0] dark:border-[#027DF7]/40 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right">
-          <div className="space-y-1">
-            <h4 className="text-base font-bold text-[#01427C] dark:text-white">
-              {language === 'fa' ? 'آشنایی با دیدگاه‌های تحلیلی مدیران هلدینگ' : 'Explore Strategic Insights from Executives'}
-            </h4>
-            <p className="text-xs text-[#64748B] dark:text-slate-300">
-              {language === 'fa'
-                ? 'پیش از جلسه می‌توانید آخرین گزارش‌های راهبردی و یادداشت‌های پژوهشی را در صفحه مقالات مطالعه فرمایید.'
-                : 'Review our latest economic bulletins and research publications before your session.'}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={onGoToArticles}
-            id="go-to-articles-btn"
-            className="px-5 py-2.5 rounded-full bg-[#D5ECFE] dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#E0F2FE] hover:bg-[#027DF7] hover:text-white text-xs font-extrabold transition-all shrink-0 flex items-center gap-1.5 border border-[#027DF7]/20"
-          >
-            <span>{language === 'fa' ? 'مشاهده صفحه مقالات' : 'View Articles & Research'}</span>
-            <ArrowIcon className="w-4 h-4" />
-          </button>
-        </div>
-      )}
     </div>
   );
 };

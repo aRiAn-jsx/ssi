@@ -137,18 +137,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute inset-0 rounded-full bg-radial from-[#027DF7]/25 via-[#D5ECFE]/35 dark:from-[#38BDF8]/20 dark:via-[#027DF7]/15 to-transparent blur-2xl md:blur-3xl pointer-events-none -z-10"
+          className="absolute inset-0 rounded-full bg-radial from-[#38BDF8]/15 via-[#D5ECFE]/20 dark:from-[#38BDF8]/12 dark:via-[#1E3A8A]/15 to-transparent blur-3xl pointer-events-none -z-10"
         />
 
         {/* The 3D WebGL Globe canvas */}
         <Globe
           className="w-full h-full"
           config={isDark ? SARAMAD_GLOBE_DARK_CONFIG : SARAMAD_GLOBE_CONFIG}
-          speed={0.013}
+          speed={0.009}
         />
 
         {/* Soft Light Overlay over Globe for 100% Crisp Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-[#F7FAFC]/35 to-[#F7FAFC]/80 dark:via-[#060D17]/40 dark:to-[#060D17]/85 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-[#F7FAFC]/30 to-[#F7FAFC]/80 dark:via-[#0B1324]/30 dark:to-[#0B1324]/85 pointer-events-none" />
       </motion.div>
 
       {/* Floating Ambient Glow Orbs in Background */}
@@ -216,7 +216,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               } border-[#027DF7]/25 dark:border-[#027DF7]/40`}
             >
               <BadgeCheck className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
-              <span>{language === 'fa' ? 'سهامی عام' : 'PJSC'}</span>
+              <span>{language === 'fa' ? 'سهامی خاص' : 'PJS Co'}</span>
             </div>
           </motion.div>
 
@@ -345,90 +345,101 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.div>
           </motion.div>
 
-          {/* EXACTLY BELOW HERO IMAGE (Overlapping by 20px): Ultra-Sleek Liquid Glass Stat Dock */}
+          {/* HORIZONTAL ULTRA-SLEEK LIQUID GLASS COMMAND DOCK */}
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="statistics-numbers-container w-full max-w-[360px] sm:max-w-[430px] lg:max-w-[480px] -mt-5 relative z-20 px-2 sm:px-0"
+            className="statistics-numbers-container w-full max-w-[390px] sm:max-w-[480px] lg:max-w-[520px] -mt-5 relative z-20 px-1 sm:px-0"
           >
-            <div className="relative rounded-2xl sm:rounded-3xl px-3 py-2.5 sm:px-4 sm:py-3 bg-white/80 dark:bg-[#071325]/90 backdrop-blur-2xl border border-[#027DF7]/30 dark:border-[#027DF7]/55 shadow-lg shadow-[#01427C]/12 dark:shadow-2xl overflow-hidden group">
-              {/* Shimmer Ambient Sweep */}
+            {/* Ambient Cyan-Sapphire Glow Halo */}
+            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#027DF7]/25 via-[#38BDF8]/20 to-[#01427C]/25 blur-lg opacity-70 dark:opacity-90 pointer-events-none -z-10" />
+
+            <div className="relative rounded-2xl sm:rounded-full px-2.5 py-2 sm:px-4 sm:py-2.5 bg-white/90 dark:bg-[#071325]/90 backdrop-blur-2xl border border-white/80 dark:border-[#38BDF8]/40 shadow-xl shadow-[#01427C]/12 dark:shadow-[0_16px_45px_rgba(0,0,0,0.85),0_0_25px_rgba(2,125,247,0.25)] overflow-hidden group">
+              {/* Top Specular Edge Highlight */}
+              <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#027DF7]/70 dark:via-[#38BDF8]/80 to-transparent pointer-events-none" />
+
+              {/* Shimmer Sweep Animation */}
               <motion.div
-                animate={{ x: ['-200%', '300%'] }}
+                animate={{ x: isRtl ? ['200%', '-250%'] : ['-200%', '250%'] }}
                 transition={{
                   duration: 6,
                   repeat: Infinity,
                   ease: 'easeInOut',
                   repeatDelay: 2.5,
                 }}
-                className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/60 to-transparent -skew-x-12 pointer-events-none"
+                className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/50 dark:via-[#38BDF8]/20 to-transparent -skew-x-12 pointer-events-none"
               />
 
-              {/* Top Accent Subtle Glow Line */}
-              <div className="absolute top-0 inset-x-6 h-[1.5px] bg-gradient-to-r from-transparent via-[#027DF7]/45 to-transparent" />
-
-              {/* 4 Minimalist High-Precision Stat Columns */}
-              <div className="grid grid-cols-4 items-center relative z-10 divide-x divide-[#E2E8F0]/70 rtl:divide-x-reverse">
-                {/* 1. تعداد پروژه‌ها */}
-                <div className="flex flex-col items-center justify-center text-center px-1 group/item">
-                  <div className="flex items-center gap-1 mb-0.5">
-                    <Briefcase className="w-3 h-3 text-[#027DF7] opacity-80 group-hover/item:scale-110 transition-transform shrink-0" />
-                    <div className="text-base sm:text-lg font-black text-[#01427C] tracking-tight group-hover/item:text-[#027DF7] transition-colors leading-none">
-                      <AnimatedCounter end={165} prefix="+" language={language} />
-                    </div>
+              {/* 4 Horizontal Items in Single Sleek Row */}
+              <div className="grid grid-cols-4 items-center relative z-10 divide-x divide-slate-200/80 rtl:divide-x-reverse dark:divide-[#027DF7]/30">
+                {/* 1. پروژه‌ها */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#027DF7] to-[#01427C] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
+                    <Briefcase className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
                   </div>
-                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
-                    {language === 'fa' ? 'پروژه‌ها' : 'Projects'}
-                  </span>
+                  <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
+                    <span className="text-sm sm:text-base md:text-lg font-black text-[#01427C] dark:text-white group-hover/item:text-[#027DF7] dark:group-hover/item:text-[#38BDF8] transition-colors tracking-tight">
+                      <AnimatedCounter end={165} prefix="+" language={language} />
+                    </span>
+                    <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
+                      {language === 'fa' ? 'پروژه‌ها' : 'Projects'}
+                    </span>
+                  </div>
                 </div>
 
                 {/* 2. شروع کار */}
-                <div className="flex flex-col items-center justify-center text-center px-1 group/item">
-                  <div className="flex items-center gap-1 mb-0.5">
-                    <Calendar className="w-3 h-3 text-[#01427C] opacity-80 group-hover/item:scale-110 transition-transform shrink-0" />
-                    <div className="text-base sm:text-lg font-black text-[#01427C] tracking-tight group-hover/item:text-[#027DF7] transition-colors leading-none">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#01427C] to-[#0369A1] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
+                    <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
+                  </div>
+                  <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
+                    <span className="text-sm sm:text-base md:text-lg font-black text-[#01427C] dark:text-white group-hover/item:text-[#027DF7] dark:group-hover/item:text-[#38BDF8] transition-colors tracking-tight">
                       <AnimatedCounter
                         start={language === 'fa' ? 1380 : 2000}
                         end={language === 'fa' ? 1392 : 2013}
                         language={language}
                       />
-                    </div>
+                    </span>
+                    <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
+                      {language === 'fa' ? 'شروع کار' : 'Founded'}
+                    </span>
                   </div>
-                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
-                    {language === 'fa' ? 'شروع کار' : 'Founded'}
-                  </span>
                 </div>
 
-                {/* 3. تعداد کارکنان */}
-                <div className="flex flex-col items-center justify-center text-center px-1 group/item">
-                  <div className="flex items-center gap-1 mb-0.5">
-                    <Users className="w-3 h-3 text-[#0284C7] opacity-80 group-hover/item:scale-110 transition-transform shrink-0" />
-                    <div className="text-base sm:text-lg font-black text-[#01427C] tracking-tight group-hover/item:text-[#027DF7] transition-colors leading-none">
+                {/* 3. کارکنان */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#0284C7] to-[#004E8C] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
+                    <Users className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
+                  </div>
+                  <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
+                    <span className="text-sm sm:text-base md:text-lg font-black text-[#01427C] dark:text-white group-hover/item:text-[#027DF7] dark:group-hover/item:text-[#38BDF8] transition-colors tracking-tight">
                       <AnimatedCounter end={280} prefix="+" language={language} />
-                    </div>
+                    </span>
+                    <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
+                      {language === 'fa' ? 'کارکنان' : 'Team'}
+                    </span>
                   </div>
-                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#0A2540] transition-colors whitespace-nowrap">
-                    {language === 'fa' ? 'کارکنان' : 'Team'}
-                  </span>
                 </div>
 
-                {/* 4. پروژه‌های موفق */}
-                <div className="flex flex-col items-center justify-center text-center px-1 group/item">
-                  <div className="flex items-center gap-1 mb-0.5">
-                    <Award className="w-3 h-3 text-[#10B981] opacity-80 group-hover/item:scale-110 transition-transform shrink-0" />
-                    <div className="text-base sm:text-lg font-black text-[#10B981] tracking-tight leading-none">
+                {/* 4. موفقیت */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#10B981] to-[#047857] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
+                    <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
+                  </div>
+                  <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
+                    <span className="text-sm sm:text-base md:text-lg font-black text-[#10B981] dark:text-[#34D399] tracking-tight">
                       <AnimatedCounter
                         end={98.4}
                         suffix={language === 'fa' ? '٪' : '%'}
                         decimals={1}
                         language={language}
                       />
-                    </div>
+                    </span>
+                    <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
+                      {language === 'fa' ? 'موفقیت' : 'Success'}
+                    </span>
                   </div>
-                  <span className="text-[12px] sm:text-[13px] font-semibold text-[#64748B] group-hover/item:text-[#10B981] transition-colors whitespace-nowrap">
-                    {language === 'fa' ? 'موفقیت' : 'Success'}
-                  </span>
                 </div>
               </div>
             </div>
@@ -456,6 +467,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <ChevronDown className="w-3.5 h-3.5 text-[#01427C]/60" />
         </motion.div>
       </div>
+
     </section>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUp, ArrowUpLeft, ArrowUpRight, Mail, Phone, MapPin, ShieldCheck, CheckCircle2, Clock } from 'lucide-react';
+import { ArrowUp, ArrowUpLeft, ArrowUpRight, Mail, Phone, MapPin, ShieldCheck, CheckCircle2, Clock, Sparkles } from 'lucide-react';
 import { getHoldingInfo } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -240,24 +240,35 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
           </div>
         </div>
 
-        {/* Bottom Bar with Copyright + Back-to-Top Floating Button */}
+        {/* Bottom Bar with Copyright + Loader Preview + Back-to-Top Floating Button */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#D5ECFE]/60">
           <div className="text-center sm:text-right">
             {language === 'fa' 
-              ? `کلیه حقوق مادی و معنوی متعلق به ${holdingInfo.nameFa} (سهامی عام) است. © ۲۰۲۶`
-              : `All rights reserved for ${holdingInfo.nameEn} (Public Joint Stock). © 2026`}
+              ? `کلیه حقوق مادی و معنوی متعلق به ${holdingInfo.nameFa} (سهامی خاص) است. © ۲۰۲۶`
+              : `All rights reserved for ${holdingInfo.nameEn} (Private Joint Stock). © 2026`}
           </div>
 
-          <button
-            type="button"
-            onClick={scrollToTop}
-            id="back-to-top-btn"
-            aria-label="Back to top"
-            className="flex items-center gap-2 px-4 py-2 rounded-full liquid-glass-card bg-white/10 hover:bg-white/20 text-white border border-[#027DF7]/40 transition-all hover:scale-105"
-          >
-            <span>{t.footer.backToTop}</span>
-            <ArrowUp className="w-4 h-4 text-[#027DF7]" />
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-preloader'))}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full liquid-glass-card bg-[#027DF7]/20 hover:bg-[#027DF7]/35 text-[#D5ECFE] hover:text-white border border-[#027DF7]/40 transition-all cursor-pointer font-bold"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#38BDF8]" />
+              <span>{language === 'fa' ? 'طرح‌های لودینگ سایت' : 'Preloader Styles'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={scrollToTop}
+              id="back-to-top-btn"
+              aria-label="Back to top"
+              className="flex items-center gap-2 px-4 py-2 rounded-full liquid-glass-card bg-white/10 hover:bg-white/20 text-white border border-[#027DF7]/40 transition-all hover:scale-105"
+            >
+              <span>{t.footer.backToTop}</span>
+              <ArrowUp className="w-4 h-4 text-[#027DF7]" />
+            </button>
+          </div>
         </div>
       </div>
     </footer>

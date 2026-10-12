@@ -12,9 +12,9 @@ export interface SeoConfig {
 export const SEO_PAGE_CONFIGS: Record<Language, Record<string, SeoConfig>> = {
   fa: {
     home: {
-      title: 'هلدینگ سرآمد سرمایه ایلیا (سهامی عام) | پرتال رسمی',
+      title: 'هلدینگ سرآمد سرمایه ایلیا (سهامی خاص) | پرتال رسمی',
       description:
-        'پرتال رسمی هلدینگ سرمایه‌گذاری سرآمد سرمایه ایلیا (سهامی عام) - مدیریت دارایی، سبدگردانی اختصاصی، تأمین مالی و نوآوری‌های فین‌تک تحت نظارت سازمان بورس و وابسته به بیمه سامان.',
+        'پرتال رسمی هلدینگ سرمایه‌گذاری سرآمد سرمایه ایلیا (سهامی خاص) - مدیریت دارایی، سبدگردانی اختصاصی، تأمین مالی و نوآوری‌های فین‌تک تحت نظارت سازمان بورس و وابسته به بیمه سامان.',
       url: 'https://ssiholding.co/',
       locale: 'fa_IR',
     },
@@ -44,7 +44,7 @@ export const SEO_PAGE_CONFIGS: Record<Language, Record<string, SeoConfig>> = {
     home: {
       title: 'Ilya Saramad Capital Holding | Official Portal',
       description:
-        'Official Portal of Ilya Saramad Capital Holding (Public Joint Stock) - Wealth Management, Dedicated Portfolios, Corporate Financing & FinTech Innovation affiliated with Saman Insurance.',
+        'Official Portal of Ilya Saramad Capital Holding (Private Joint Stock) - Wealth Management, Dedicated Portfolios, Corporate Financing & FinTech Innovation affiliated with Saman Insurance.',
       url: 'https://ssiholding.co/',
       locale: 'en_US',
     },

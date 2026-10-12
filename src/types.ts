@@ -21,13 +21,23 @@ export interface PortfolioItem {
 export interface SubsidiaryNode {
   id: string;
   name: string;
+  shortName?: string;
   role: string;
+  category?: string;
   equity: string;
   color: string;
-  x: number; // percentage
-  y: number; // percentage
+  badgeColor?: string;
+  x?: number; // percentage
+  y?: number; // percentage
   description: string;
   metrics: { label: string; value: string }[];
+  website?: string;
+  websiteLabel?: string;
+  logoMonogram?: string;
+  logoSubtitle?: string;
+  highlights?: string[];
+  logoImage?: string;
+  secondaryColor?: string;
 }
 
 export interface StatItem {

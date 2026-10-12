@@ -200,8 +200,8 @@ export const TeamMemberProfileModal: React.FC<TeamMemberProfileModalProps> = ({
               <div className="p-3.5 rounded-2xl bg-gradient-to-r from-[#D5ECFE]/40 to-transparent dark:from-[#027DF7]/10 dark:to-transparent border border-[#027DF7]/20 flex items-center justify-between text-xs text-[#64748B] dark:text-slate-300">
                 <span>
                   {language === 'fa'
-                    ? 'هلدینگ سرآمد سرمایه ایلیا (سهامی عام)'
-                    : 'Saramad Capital Ilya Holding (P.J.S.C)'}
+                    ? 'هلدینگ سرآمد سرمایه ایلیا (سهامی خاص)'
+                    : 'Saramad Capital Ilya Holding (Private Joint Stock)'}
                 </span>
                 <span className="font-semibold text-[#027DF7] dark:text-[#38BDF8]">
                   {language === 'fa' ? 'تیم سازمانی' : 'Corporate Team'}
