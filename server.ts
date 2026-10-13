@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { createServer as createViteServer } from 'vite';
+import { forwardToBot } from './botForms';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -200,6 +202,23 @@ async function startServer() {
 
       bookingsStore.push(booking);
 
+      // Telegram bot integration: the holding bot's admins receive this booking too.
+      void forwardToBot({
+        form: 'consultation',
+        form_title: 'رزرو جلسه مشاوره',
+        site_ref: booking.trackingCode,
+        name: booking.fullName,
+        phone: booking.phoneNumber,
+        message: booking.notes,
+        fields: {
+          'حوزه مشاوره': booking.categoryTitle,
+          'نحوه برگزاری': booking.formatTitle,
+          'روز': booking.dayLabel,
+          'ساعت': booking.timeSlot,
+        },
+        page: '/consultation',
+      });
+
       return res.status(201).json({
         success: true,
         message: 'درخواست مشاوره با موفقیت در سیستم ثبت گردید.',
@@ -257,10 +276,70 @@ async function startServer() {
 
     contactInquiriesStore.push(inquiry);
 
+    // Telegram bot integration. "contact" is free text: an email address or a phone number.
+    void forwardToBot({
+      form: 'contact',
+      form_title: 'تماس با ما',
+      site_ref: inquiry.id,
+      name: inquiry.name,
+      subject: inquiry.subject,
+      message: inquiry.message,
+      ...(inquiry.contact.includes('@') ? { email: inquiry.contact } : { phone: inquiry.contact }),
+    });
+
     return res.status(201).json({
       success: true,
       message: 'پیام شما دریافت شد و کارشناسان هلدینگ با شما تماس خواهند گرفت.',
       inquiryId: inquiry.id,
+    });
+  });
+
+  // 7. Callback request (home page CTA) — delivered to the holding's Telegram bot
+  app.post('/api/callback', (req: Request, res: Response) => {
+    const phone = typeof req.body?.phone === 'string' ? req.body.phone.trim() : '';
+
+    if (phone.length < 8 || phone.length > 20) {
+      return res.status(400).json({
+        success: false,
+        error: 'شماره تلفن معتبر الزامی است.',
+      });
+    }
+
+    void forwardToBot({
+      form: 'callback',
+      form_title: 'درخواست تماس',
+      site_ref: `cb-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      phone,
+      page: '/',
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: 'درخواست تماس شما ثبت شد.',
+    });
+  });
+
+  // 8. Newsletter subscription — delivered to the holding's Telegram bot
+  app.post('/api/newsletter', (req: Request, res: Response) => {
+    const email = typeof req.body?.email === 'string' ? req.body.email.trim() : '';
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+      return res.status(400).json({
+        success: false,
+        error: 'ایمیل معتبر الزامی است.',
+      });
+    }
+
+    void forwardToBot({
+      form: 'newsletter',
+      form_title: 'عضویت در خبرنامه',
+      site_ref: `nl-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      email,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: 'عضویت شما در خبرنامه ثبت شد.',
     });
   });
 

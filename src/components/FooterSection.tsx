@@ -31,6 +31,12 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (newsletterEmail.trim()) {
+      // The server passes the address on to the holding's Telegram bot.
+      fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: newsletterEmail.trim() }),
+      }).catch(() => {});
       setNewsletterSubscribed(true);
       setNewsletterEmail('');
     }

@@ -88,6 +88,12 @@ export const ArticlesPage: React.FC<ArticlesPageProps> = ({
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsletterEmail) return;
+    // The server passes the address on to the holding's Telegram bot.
+    fetch('/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: newsletterEmail.trim() }),
+    }).catch(() => {});
     setNewsletterSubscribed(true);
     setTimeout(() => {
       setNewsletterEmail('');

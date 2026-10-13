@@ -12,13 +12,30 @@ export const CtaSection: React.FC<CtaSectionProps> = ({ onGoToConsultation }) =>
   const { language, isRtl, t } = useLanguage();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [phone, setPhone] = useState('');
+  const [isSending, setIsSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const holdingInfo = getHoldingInfo(language);
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (phone.trim()) {
+    if (!phone.trim() || isSending) return;
+
+    setIsSending(true);
+    setSendError(false);
+    try {
+      // The server passes the request on to the holding's Telegram bot.
+      const response = await fetch('/api/callback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: phone.trim() }),
+      });
+      if (!response.ok) throw new Error('callback request failed');
       setFormSubmitted(true);
+    } catch {
+      setSendError(true);
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -89,12 +106,20 @@ export const CtaSection: React.FC<CtaSectionProps> = ({ onGoToConsultation }) =>
                     <button
                       type="submit"
                       id="contact-submit-btn"
+                      disabled={isSending}
                       className="shrink-0 px-6 py-3 rounded-full bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white text-xs sm:text-sm font-bold shadow-md shadow-[#027DF7]/30 hover:shadow-lg transition-all duration-300 hover:scale-102 flex items-center justify-center gap-2 animate-pulse hover:animate-none"
                     >
                       <span>{t.cta.requestCall}</span>
                       <ArrowIcon className="w-4 h-4" />
                     </button>
                   </div>
+                  {sendError && (
+                    <p className="mt-3 text-xs font-bold text-red-600" role="alert">
+                      {language === 'fa'
+                        ? 'ثبت درخواست انجام نشد. لطفاً دوباره تلاش کنید یا با ما تماس بگیرید.'
+                        : 'Your request could not be sent. Please try again or call us.'}
+                    </p>
+                  )}
                 </form>
 
                 {onGoToConsultation && (
