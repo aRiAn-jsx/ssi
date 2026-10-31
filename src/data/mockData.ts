@@ -22,16 +22,16 @@ export interface HoldingInfo {
 }
 
 export const HOLDING_INFO_FA: HoldingInfo = {
-  name: 'گروه شرکت‌های سرآمد سرمایه',
-  nameFa: 'گروه شرکت‌های سرآمد سرمایه',
-  nameEn: 'Saramad Capital Holding Group',
-  shortName: 'گروه شرکت‌های سرآمد سرمایه',
+  name: 'هلدینگ ایلیا',
+  nameFa: 'هلدینگ ایلیا',
+  nameEn: 'Ilya Saramad Capital Holding',
+  shortName: 'هلدینگ ایلیا',
   regNumber: 'شماره ثبت: ۷۹۷۳۸',
   domain: 'ssiholding.co',
-  parentCompany: 'هلدینگ سرآمد سرمایه ایلیا (سهامی خاص)',
-  license: 'مجموعه خصوصی و دانش‌بنیان (تأسیس ۱۳۸۸/۰۸/۰۸)',
+  parentCompany: 'گروه شرکت‌های سرآمد سرمایه (سهامی خاص)',
+  license: 'گروه شرکت‌های سرآمد سرمایه | شماره ثبت: ۷۹۷۳۸ (تأسیس ۱۳۸۸/۰۸/۰۸)',
   tagline: 'موفقیت یک انتخاب است | بیش از ۱۴ سال خلق ارزش',
-  subTagline: 'پلتفرم جامع سرمایه گذاری، مشاوره کسب و کار، صادرات و واردات و آژانس دیجیتال مارکتینگ هدهد',
+  subTagline: 'پلتفرم جامع سرمایه گذاری، مشاوره کسب و کار، صادرات و واردات و طراحی سایت',
   address: 'مشهد، بلوار سجاد، بزرگمهر شمالی ۲، پلاک ۴۴، طبقه ۳',
   city: 'مشهد',
   email: 'info@ssiholding.co',

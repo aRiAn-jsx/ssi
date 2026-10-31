@@ -83,7 +83,7 @@ export const AboutSection: React.FC = () => {
               <div className="relative rounded-[22px] overflow-hidden aspect-[4/5] sm:aspect-[4/4.5] group">
                 <img
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
-                  alt={language === 'fa' ? 'تیم متخصص مشاوره تجاری و سرمایه گذاری در هولدینگ ایلیا' : t.about.title}
+                  alt={language === 'fa' ? 'تیم متخصص مشاوره تجاری و سرمایه گذاری در هلدینگ ایلیا' : t.about.title}
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

@@ -217,16 +217,16 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
 
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-xs sm:text-sm md:text-base text-[#01427C] dark:text-white tracking-tight group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors whitespace-nowrap">
-                  {language === 'fa' ? 'گروه شرکت‌های سرآمد سرمایه' : holdingInfo.shortName}
+                <span className="font-extrabold text-base sm:text-lg text-[#01427C] dark:text-white tracking-tight group-hover:text-[#027DF7] dark:group-hover:text-[#38BDF8] transition-colors whitespace-nowrap">
+                  {language === 'fa' ? 'هلدینگ ایلیا' : 'Ilya Holding'}
                 </span>
                 {/* Decluttered on mobile: badge shown only on tablet/desktop */}
                 <span className="hidden sm:inline-block text-[10px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-[#D5ECFE]/80 dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#38BDF8] border-none whitespace-nowrap">
                   {language === 'fa' ? 'سهامی خاص' : 'PJS Co'}
                 </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-medium text-[#64748B] dark:text-slate-300 block whitespace-nowrap">
-                {language === 'fa' ? (holdingInfo.regNumber || 'شماره ثبت: ۷۹۷۳۸') : (holdingInfo.regNumber || 'Reg. No: 79738')}
+              <span className="text-[10px] sm:text-[11px] font-medium text-[#64748B]/85 dark:text-slate-400 block whitespace-nowrap mt-0.5">
+                {language === 'fa' ? 'گروه شرکت‌های سرآمد سرمایه | شماره ثبت: ۷۹۷۳۸' : 'Saramad Capital Group | Reg. No: 79738'}
               </span>
             </div>
           </button>
