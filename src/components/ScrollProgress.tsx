@@ -18,15 +18,14 @@ export const ScrollProgress: React.FC = () => {
 
   const sections = [
     { id: 'home', label: t.nav.home },
-    { id: 'about', label: t.nav.about },
-    { id: 'services', label: t.nav.services },
     { id: 'stats', label: t.nav.stats },
-    { id: 'portfolio', label: t.nav.portfolio },
+    { id: 'about', label: t.nav.about },
     { id: 'subsidiaries', label: t.nav.subsidiaries },
-    { id: 'dashboard', label: t.nav.dashboard },
-    { id: 'news', label: t.nav.news },
+    { id: 'virgol-groups', label: language === 'fa' ? 'کارگروه‌ها' : 'Virgol Groups' },
+    { id: 'values', label: language === 'fa' ? 'ارزش‌ها' : 'Values' },
+    { id: 'certifications', label: language === 'fa' ? 'گواهینامه‌ها' : 'ISO' },
     { id: 'team', label: t.nav.team },
-    { id: 'cta', label: t.nav.consultation },
+    { id: 'contact', label: t.nav.consultation },
   ];
 
   // Tip position based on direction

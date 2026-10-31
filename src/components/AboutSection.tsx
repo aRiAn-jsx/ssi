@@ -5,7 +5,7 @@ import { GlassCard } from './GlassCard';
 import { useLanguage } from '../context/LanguageContext';
 
 export const AboutSection: React.FC = () => {
-  const { isRtl, t } = useLanguage();
+  const { isRtl, language, t } = useLanguage();
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
 
   return (
@@ -59,7 +59,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             <a
-              href="#subsidiaries"
+              href="#departments"
               id="about-learn-more-btn"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full liquid-glass-card hover:bg-[#D5ECFE]/40 text-[#01427C] dark:text-[#E0F2FE] font-semibold text-sm transition-all duration-300 hover:scale-102 border border-[#027DF7]/30 dark:border-[#027DF7]/50"
             >
@@ -82,8 +82,8 @@ export const AboutSection: React.FC = () => {
             <div className="relative w-full max-w-lg rounded-[28px] p-2.5 liquid-glass-card shadow-2xl">
               <div className="relative rounded-[22px] overflow-hidden aspect-[4/5] sm:aspect-[4/4.5] group">
                 <img
-                  src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80"
-                  alt={t.about.title}
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+                  alt={language === 'fa' ? 'تیم متخصص مشاوره تجاری و سرمایه گذاری در هولدینگ ایلیا' : t.about.title}
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

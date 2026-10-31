@@ -138,28 +138,28 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
               <li>
                 <button
                   type="button"
-                  onClick={() => handleLinkClick('home', 'services')}
-                  className={`hover:text-[#027DF7] transition-colors ${isRtl ? 'text-right' : 'text-left'}`}
-                >
-                  {t.nav.services}
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={() => handleLinkClick('home', 'portfolio')}
-                  className={`hover:text-[#027DF7] transition-colors ${isRtl ? 'text-right' : 'text-left'}`}
-                >
-                  {t.nav.portfolio}
-                </button>
-              </li>
-              <li>
-                <button
-                  type="button"
                   onClick={() => handleLinkClick('home', 'subsidiaries')}
                   className={`hover:text-[#027DF7] transition-colors ${isRtl ? 'text-right' : 'text-left'}`}
                 >
                   {t.nav.subsidiaries}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleLinkClick('home', 'values')}
+                  className={`hover:text-[#027DF7] transition-colors ${isRtl ? 'text-right' : 'text-left'}`}
+                >
+                  {language === 'fa' ? 'ارزش‌های سازمانی' : 'Values'}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleLinkClick('home', 'certifications')}
+                  className={`hover:text-[#027DF7] transition-colors ${isRtl ? 'text-right' : 'text-left'}`}
+                >
+                  {language === 'fa' ? 'گواهینامه‌های ISO' : 'ISO Certifications'}
                 </button>
               </li>
             </ul>
@@ -180,7 +180,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
                 <a
                   href={`tel:${holdingInfo.phone}`}
                   dir="ltr"
-                  className="font-bold text-white hover:text-[#027DF7] transition-colors"
+                  className="font-bold text-white hover:text-[#027DF7] transition-colors font-mono inline-block text-left"
                 >
                   {holdingInfo.phoneFormatted}
                 </a>

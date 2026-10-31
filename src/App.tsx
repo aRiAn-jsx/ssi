@@ -9,15 +9,15 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GlassNavbar } from './components/GlassNavbar';
 import { HeroSection } from './components/HeroSection';
-import { AboutSection } from './components/AboutSection';
-import { ServicesSection } from './components/ServicesSection';
 import { StatisticsSection } from './components/StatisticsSection';
-import { PortfolioSection } from './components/PortfolioSection';
+import { AboutSection } from './components/AboutSection';
+import { VirgolWorkingGroupsSection } from './components/VirgolWorkingGroupsSection';
+import { OrganizationalValuesSection } from './components/OrganizationalValuesSection';
+import { IsoCertificationsSection } from './components/IsoCertificationsSection';
 import { SubsidiariesSection } from './components/SubsidiariesSection';
-import { PerformanceDashboard } from './components/PerformanceDashboard';
 import { NewsSection } from './components/NewsSection';
 import { TeamSection } from './components/TeamSection';
-import { CtaSection } from './components/CtaSection';
+import { FastSmsCtaBanner } from './components/FastSmsCtaBanner';
 import { FooterSection } from './components/FooterSection';
 import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
@@ -128,7 +128,7 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#F7FAFC] dark:bg-[#060D17] text-[#0A2540] dark:text-[#F8FAFC] font-sans selection:bg-[#027DF7]/20 selection:text-[#01427C] dark:selection:text-[#38BDF8] transition-colors duration-300">
+    <div className="relative min-h-screen bg-[#F7FAFC] dark:bg-[#060D17] text-[#0A2540] dark:text-[#F8FAFC] font-sans selection:bg-[#027DF7]/20 selection:text-[#01427C] dark:selection:text-[#38BDF8] transition-colors duration-300 overflow-x-hidden max-w-full">
       {/* Liquid Glass Splash Preloader (Runs on initial entrance and selectable designs) */}
       {showPreloader && (
         <LiquidPreloader onComplete={() => setShowPreloader(false)} minDuration={1600} />
@@ -218,44 +218,44 @@ export default function App() {
             transition={{ duration: 0.25 }}
             className="w-full overflow-hidden"
           >
-            {/* SECTION 1 — HERO (Interactive Polygonal Pattern, Mouse & Scroll Reactive) */}
+            {/* SECTION 1 — HERO (Preserved structure, updated official keywords & alt) */}
             <HeroSection
               onGoToConsultation={() => handleNavigateView('consultation')}
               onGoToArticles={() => handleNavigateView('articles')}
             />
 
-            {/* SECTION 2 — ABOUT / درباره ما */}
-            <AboutSection />
-
-            {/* SECTION 3 — SERVICES / خدمات */}
-            <ServicesSection />
-
-            {/* SECTION 4 — STATISTICS / آمار */}
+            {/* SECTION 2 — STATS & TRUST BAR / نوار شاخص‌های واقعی هلدینگ */}
             <StatisticsSection />
 
-            {/* SECTION 5 — PORTFOLIO / نمونه سرمایه‌گذاری‌ها */}
-            <PortfolioSection />
+            {/* SECTION 3 — ABOUT / درباره هلدینگ سرآمد سرمایه ایلیا (تاسیس ۱۳۸۸/۰۸/۰۸) */}
+            <AboutSection />
 
-            {/* SECTION 6 — SUBSIDIARIES / شرکت‌های تابعه */}
+            {/* SECTION 4 — SUBSIDIARIES / شرکت‌های زیرمجموعه هلدینگ (انتقال‌یافته به جای دپارتمان‌ها) */}
             <SubsidiariesSection />
 
-            {/* SECTION 7 — PERFORMANCE DASHBOARD */}
-            <PerformanceDashboard />
+            {/* SECTION 5 — VIRGOL WORKING GROUPS / ۱۲ کارگروه تخصصی آکادمی ویرگول */}
+            <VirgolWorkingGroupsSection onGoToConsultation={() => handleNavigateView('consultation')} />
 
-            {/* SECTION 8 — NEWS / اخبار و مقالات تحلیلی */}
-            <NewsSection
-              onGoToArticles={() => handleNavigateView('articles')}
-              onSelectArticle={handleSelectArticle}
-            />
+            {/* SECTION 6 — VALUES / ارزش‌ها و اصول راهبردی هلدینگ ایلیا */}
+            <OrganizationalValuesSection />
 
-            {/* SECTION 9 — TEAM / تیم مدیریت */}
+            {/* SECTION 7 — ISO CERTIFICATIONS / گواهینامه‌های بین‌المللی و استانداردها */}
+            <IsoCertificationsSection />
+
+            {/* SECTION 9 — TEAM / تیم مدیریت و ارکان راهبری هلدینگ */}
             <TeamSection
               onGoToTeamPage={() => handleNavigateView('team')}
               onGoToConsultation={() => handleNavigateView('consultation')}
             />
 
-            {/* SECTION 10 — FINAL CTA / فرم تماس و مشاوره */}
-            <CtaSection onGoToConsultation={() => handleNavigateView('consultation')} />
+            {/* SECTION 10 — NEWS & ARTICLES / اخبار و مقالات تحلیلی */}
+            <NewsSection
+              onGoToArticles={() => handleNavigateView('articles')}
+              onSelectArticle={handleSelectArticle}
+            />
+
+            {/* SECTION 10 — FAST SMS & CALL BANNER / بنر ارتباط سریع، سامانه پیامکی ۷۷۷ */}
+            <FastSmsCtaBanner />
           </motion.main>
         )}
       </AnimatePresence>

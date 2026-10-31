@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useInView } from 'motion/react';
+import { Sparkles, Award, Layers, Globe2, ShieldCheck } from 'lucide-react';
 import { getStatsData } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -106,41 +107,61 @@ export const StatisticsSection: React.FC = () => {
           />
         </div>
 
-        {/* 4 Large Numbers */}
-        <div className={`statistics-numbers-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 divide-y sm:divide-y-0 lg:divide-x ${isRtl ? 'lg:divide-x-reverse' : ''} lg:divide-[#027DF7]/30`}>
-          {statsData.map((item, idx) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: idx * 0.15 }}
-              className="flex flex-col items-center text-center px-4 py-6 sm:py-2"
-            >
-              {/* Value with CountUp */}
-              <div className="flex items-baseline gap-1 text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight mb-3">
-                <CountUpNumber value={item.value} isRtl={isRtl} />
-                <span className="text-xl sm:text-2xl font-bold text-[#D5ECFE]">
-                  {item.suffix}
-                </span>
-              </div>
+        {/* 4 Glassmorphic Indicator Cards: 2 cols on mobile, 4 on desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+          {statsData.map((item, idx) => {
+            const icons = [
+              <Sparkles key="1" className="w-5 h-5 sm:w-6 sm:h-6 text-[#38BDF8]" />,
+              <Award key="2" className="w-5 h-5 sm:w-6 sm:h-6 text-[#F59E0B]" />,
+              <Layers key="3" className="w-5 h-5 sm:w-6 sm:h-6 text-[#10B981]" />,
+              <Globe2 key="4" className="w-5 h-5 sm:w-6 sm:h-6 text-[#38BDF8]" />,
+            ];
 
-              {/* Label in #D5ECFE */}
-              <h4 className="text-sm sm:text-base font-bold text-[#D5ECFE] mb-2">
-                {item.label}
-              </h4>
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: idx * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                className="relative rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 md:p-6 bg-white/10 dark:bg-[#071325]/70 backdrop-blur-xl border border-white/20 dark:border-[#027DF7]/40 shadow-xl shadow-[#01427C]/20 hover:border-[#38BDF8]/60 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between"
+              >
+                {/* Ambient Top Glow */}
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#38BDF8]/60 to-transparent rounded-t-2xl sm:rounded-t-3xl" />
 
-              {/* Subtext */}
-              <p className="text-xs text-white/70 font-medium">
-                {item.subtext}
-              </p>
-            </motion.div>
-          ))}
+                <div>
+                  <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform">
+                    {icons[idx % icons.length]}
+                  </div>
+
+                  {/* Value with CountUp */}
+                  <div className="flex items-baseline gap-1 text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-1 sm:mb-2">
+                    {item.prefix && <span className="text-xl sm:text-3xl font-extrabold text-[#38BDF8]">{item.prefix}</span>}
+                    <CountUpNumber value={item.value} isRtl={isRtl} />
+                    <span className="text-sm sm:text-lg font-bold text-[#D5ECFE]">
+                      {item.suffix}
+                    </span>
+                  </div>
+
+                  {/* Label */}
+                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-[#D5ECFE] mb-1.5 sm:mb-2 leading-snug">
+                    {item.label}
+                  </h3>
+                </div>
+
+                {/* Subtext */}
+                <p className="text-[10px] sm:text-xs text-white/70 font-medium leading-relaxed pt-2 sm:pt-3 border-t border-white/10 line-clamp-2 sm:line-clamp-none">
+                  {item.subtext}
+                </p>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Bottom Trust Seal */}
-        <div className="mt-10 pt-6 border-t border-[#027DF7]/30 text-center text-xs text-white/60">
-          {t.stats.sourceAudit}
+        <div className="mt-12 pt-6 border-t border-[#027DF7]/30 text-center text-xs text-[#D5ECFE]/80 flex items-center justify-center gap-2">
+          <ShieldCheck className="w-4 h-4 text-[#38BDF8]" />
+          <span>{t.stats.sourceAudit}</span>
         </div>
       </div>
     </section>
