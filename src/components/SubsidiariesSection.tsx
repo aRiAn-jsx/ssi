@@ -13,7 +13,6 @@ import {
   Building2,
   X,
   Layers,
-  Sparkles,
   ArrowUpLeft,
   ArrowUpRight,
 } from 'lucide-react';
@@ -328,13 +327,19 @@ export const SubsidiariesSection: React.FC = () => {
                 transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                 className="relative z-10 w-28 h-28 sm:w-34 sm:h-34 rounded-full bg-white dark:bg-[#071325] border-2 border-[#01427C] dark:border-[#38BDF8] flex flex-col items-center justify-center p-3 shadow-xl text-center select-none"
               >
-                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#01427C] flex items-center justify-center text-white mb-1 shadow-xs">
-                  <Sparkles className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white dark:bg-[#081325] p-1 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-center shadow-xs mb-1 overflow-hidden">
+                  <img
+                    src="/logo.webp"
+                    alt={language === 'fa' ? 'لوگوی هلدینگ سرآمد سرمایه ایلیا (SSI)' : 'SSI Holding Logo'}
+                    className="w-full h-full object-contain"
+                    width={48}
+                    height={48}
+                  />
                 </div>
                 <span className="text-xs sm:text-sm font-black text-[#01427C] dark:text-white leading-tight">
                   {language === 'fa' ? 'هلدینگ SSI' : 'SSI Holding'}
                 </span>
-                <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
+                <span className="text-[11.5px] text-slate-500 dark:text-slate-400 font-semibold">
                   {language === 'fa' ? 'مرکز راهبری' : 'Central Hub'}
                 </span>
                 <div className="absolute -inset-2 rounded-full border border-[#01427C]/30 animate-ping opacity-20 pointer-events-none" />
@@ -517,7 +522,7 @@ export const SubsidiariesSection: React.FC = () => {
                                 key={mIdx}
                                 className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center"
                               >
-                                <span className="block text-[10px] text-slate-500 dark:text-slate-400 truncate mb-0.5">
+                                <span className="block text-[11.5px] text-slate-500 dark:text-slate-400 truncate mb-0.5">
                                   {m.label}
                                 </span>
                                 <span className="block text-xs sm:text-sm font-black text-[#01427C] dark:text-white">
@@ -658,7 +663,7 @@ export const SubsidiariesSection: React.FC = () => {
                             >
                               {sub.category || sub.role}
                             </span>
-                            <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                            <span className="text-[11.5px] text-slate-500 dark:text-slate-400 font-medium">
                               {sub.equity}
                             </span>
                           </div>
@@ -688,7 +693,7 @@ export const SubsidiariesSection: React.FC = () => {
                             {sub.highlights.slice(0, 2).map((h, hIdx) => (
                               <span
                                 key={hIdx}
-                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/80 text-[10px] sm:text-[11px] font-medium text-slate-700 dark:text-slate-300 border border-slate-200/70 dark:border-slate-700/70"
+                                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800/80 text-[11.5px] sm:text-[11px] font-medium text-slate-700 dark:text-slate-300 border border-slate-200/70 dark:border-slate-700/70"
                               >
                                 <CheckCircle2
                                   className="w-3.5 h-3.5 shrink-0"
@@ -854,7 +859,7 @@ export const SubsidiariesSection: React.FC = () => {
                           key={idx}
                           className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center"
                         >
-                          <span className="text-[10px] text-slate-500 dark:text-slate-400 block mb-1 truncate">
+                          <span className="text-[11.5px] text-slate-500 dark:text-slate-400 block mb-1 truncate">
                             {m.label}
                           </span>
                           <span className="text-xs sm:text-sm font-extrabold text-[#01427C] dark:text-white">

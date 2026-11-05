@@ -103,7 +103,7 @@ export const TeamMemberProfileModal: React.FC<TeamMemberProfileModalProps> = ({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#012140]/40 to-transparent pointer-events-none" />
                 </div>
-                <div className="absolute -bottom-2 sm:-bottom-2.5 inset-x-2 py-0.5 sm:py-1 rounded-full bg-[#027DF7] text-white text-[10px] sm:text-[11px] font-bold text-center shadow-md">
+                <div className="absolute -bottom-2 sm:-bottom-2.5 inset-x-2 py-0.5 sm:py-1 rounded-full bg-[#027DF7] text-white text-[11.5px] sm:text-[11px] font-bold text-center shadow-md">
                   {person.nameEn}
                 </div>
               </div>

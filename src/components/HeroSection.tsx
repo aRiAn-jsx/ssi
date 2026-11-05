@@ -1,475 +1,274 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'motion/react';
-import {
-  ArrowUpLeft,
-  ArrowUpRight,
-  ShieldCheck,
-  TrendingUp,
-  BadgeCheck,
-  Globe2,
-  ChevronDown,
-  Layers,
-  Briefcase,
-  Calendar,
-  Users,
-  Award,
-  Sparkles,
-} from 'lucide-react';
-import { Globe, SARAMAD_GLOBE_CONFIG, SARAMAD_GLOBE_DARK_CONFIG } from './ui/globe';
+import React, { useEffect, useState } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform, type Variants } from 'motion/react';
+import { ArrowUpLeft, ArrowUpRight, BadgeCheck, ChevronDown, Layers } from 'lucide-react';
+import { HeroVisual } from './HeroVisual';
+import { Starfield } from './ui/Starfield';
+import { AnimatedNumber } from './ui/AnimatedNumber';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
-import { getHoldingInfo } from '../data/mockData';
-
-interface AnimatedCounterProps {
-  end: number;
-  start?: number;
-  decimals?: number;
-  duration?: number;
-  prefix?: string;
-  suffix?: string;
-  language: string;
-}
-
-const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
-  end,
-  start = 0,
-  decimals = 0,
-  duration = 2.4,
-  prefix = '',
-  suffix = '',
-  language,
-}) => {
-  const [val, setVal] = useState(0);
-  const containerRef = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: '-20px' });
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    let startTimestamp: number | null = null;
-    let animationFrameId: number;
-    const initialStart = start !== undefined && start > 0 ? start : 0;
-
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
-      // Smooth exponential/cubic easeOut
-      const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      const current = initialStart + eased * (end - initialStart);
-      setVal(current);
-
-      if (progress < 1) {
-        animationFrameId = requestAnimationFrame(step);
-      } else {
-        setVal(end);
-      }
-    };
-
-    animationFrameId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isInView, end, start, duration]);
-
-  const numStr = decimals > 0 ? val.toFixed(decimals) : Math.round(val).toString();
-  const displayVal = language === 'fa'
-    ? numStr.replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)])
-    : numStr;
-
-  return (
-    <motion.span
-      ref={containerRef}
-      initial={{ opacity: 0, scale: 0.85, filter: 'blur(4px)' }}
-      animate={isInView ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : {}}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="tabular-nums font-extrabold tracking-tight inline-block"
-    >
-      {prefix}
-      {displayVal}
-      {suffix}
-    </motion.span>
-  );
-};
 
 interface HeroSectionProps {
   onGoToConsultation?: () => void;
   onGoToArticles?: () => void;
+  /** false while the intro preloader is still covering the page */
+  introReady?: boolean;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({
-  onGoToConsultation,
-  onGoToArticles,
-}) => {
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const container: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+};
+
+const rise: Variants = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+};
+
+// Title lines slide up from behind a mask
+const line: Variants = {
+  hidden: { y: '110%' },
+  show: { y: '0%', transition: { duration: 0.85, ease: EASE } },
+};
+
+
+export const HeroSection: React.FC<HeroSectionProps> = ({ onGoToConsultation, introReady = true }) => {
   const { language, isRtl, t } = useLanguage();
   const { isDark } = useTheme();
-  const holdingInfo = getHoldingInfo(language);
-  const headingWords = t.hero.titleWords;
+  const reduceMotion = useReducedMotion();
+
+  // The planet is desktop-only; on smaller screens it isn't mounted at all,
+  // so phones never spin up the WebGL globe.
+  const [isDesktop, setIsDesktop] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches
+  );
+  // The astronaut drifts in only once everything is in place: page loaded,
+  // preloader gone, moon surface baked and the image itself decoded.
+  const [pageLoaded, setPageLoaded] = useState(
+    () => typeof document !== 'undefined' && document.readyState === 'complete'
+  );
+  const [moonReady, setMoonReady] = useState(false);
+  const [astroLoaded, setAstroLoaded] = useState(false);
+  useEffect(() => {
+    if (pageLoaded) return;
+    const onLoad = () => setPageLoaded(true);
+    window.addEventListener('load', onLoad);
+    return () => window.removeEventListener('load', onLoad);
+  }, [pageLoaded]);
+  useEffect(() => {
+    if (!isDark) setMoonReady(false);
+  }, [isDark]);
+  const showAstronaut = isDark && introReady && pageLoaded && moonReady && astroLoaded;
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const onChange = () => setIsDesktop(mq.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+  const fa = language === 'fa';
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
 
-  // Parallax subtle vertical movement on scroll
   const { scrollY } = useScroll();
-  const globeParallaxY = useTransform(scrollY, [0, 600], [0, -70]);
+  const visualY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : 90]);
+  const skyY = useTransform(scrollY, [0, 700], [0, reduceMotion ? 0 : 140]);
+
+  const titleLines = fa
+    ? [
+        { text: 'هلدینگ ایلیا؛', accent: false },
+        { text: 'پلتفرم جامع سرمایه‌گذاری،', accent: true },
+        { text: 'مشاوره کسب‌وکار و توسعه فناوری', accent: false },
+      ]
+    : [
+        { text: 'Ilya Holding:', accent: false },
+        { text: 'an integrated investment,', accent: true },
+        { text: 'business & technology platform', accent: false },
+      ];
+
+  const stats = [
+    { value: 165, prefix: '+', label: fa ? 'پروژه موفق' : 'Projects' },
+    { value: fa ? 1392 : 2013, from: fa ? 1380 : 2000, label: fa ? 'آغاز فعالیت' : 'Founded' },
+    { value: 280, prefix: '+', label: fa ? 'نیروی متخصص' : 'Team' },
+    { value: 98.4, decimals: 1, suffix: fa ? '٪' : '%', label: fa ? 'رضایت مشتری' : 'Success' },
+  ];
 
   return (
     <section
       id="home"
-      className="relative min-h-[100dvh] lg:h-screen lg:min-h-screen pt-24 sm:pt-28 lg:pt-24 pb-3 sm:pb-5 flex flex-col justify-between overflow-hidden"
+      className="hero-section relative isolate min-h-[100dvh] flex flex-col overflow-hidden pt-24 sm:pt-28"
     >
-      {/* ========================================================================= */}
-      {/* 3D WEBGL GLOBE BACKGROUND LAYER (Magic UI / COBE)                         */}
-      {/* Interactive, auto-rotating financial globe visible on both Mobile & Desktop*/}
-      {/* ========================================================================= */}
-      <motion.div
-        style={{ y: globeParallaxY }}
-        initial={{ opacity: 0, scale: 0.88 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className={`absolute top-20 sm:top-24 md:top-1/2 md:-translate-y-1/2 ${
-          isRtl ? '-right-10 sm:-right-14 md:-right-24 lg:-right-16 xl:right-4' : '-left-10 sm:-left-14 md:-left-24 lg:-left-16 xl:left-4'
-        } w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] md:w-[540px] md:h-[540px] lg:w-[640px] lg:h-[640px] xl:w-[700px] xl:h-[700px] pointer-events-auto z-0 select-none overflow-hidden max-w-full`}
-      >
-        {/* Soft Radial Ambient Aura behind Globe with subtle breathing animation */}
-        <motion.div
-          animate={{
-            scale: [1, 1.08, 1],
-            opacity: [0.75, 0.95, 0.75],
-          }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-          className="absolute inset-0 rounded-full bg-radial from-[#38BDF8]/15 via-[#D5ECFE]/20 dark:from-[#38BDF8]/12 dark:via-[#1E3A8A]/15 to-transparent blur-3xl pointer-events-none -z-10"
-        />
-
-        {/* The 3D WebGL Globe canvas */}
-        <Globe
-          className="w-full h-full"
-          config={isDark ? SARAMAD_GLOBE_DARK_CONFIG : SARAMAD_GLOBE_CONFIG}
-          speed={0.009}
-        />
-
-        {/* Soft Light Overlay over Globe for 100% Crisp Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent via-[#F7FAFC]/30 to-[#F7FAFC]/80 dark:via-[#0B1324]/30 dark:to-[#0B1324]/85 pointer-events-none" />
+      {/* ================= BACKDROP ================= */}
+      <motion.div style={{ y: skyY }} className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+        {isDark ? (
+          <>
+            <div className="absolute inset-0 hero-space" />
+            <Starfield className="absolute inset-0" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 hero-daylight" />
+            <div className="hero-aurora hero-aurora--a" />
+            <div className="hero-aurora hero-aurora--b" />
+          </>
+        )}
       </motion.div>
+      {/* blend into the next section */}
+      <div className="hero-bottom-fade" aria-hidden="true" />
 
-      {/* Floating Ambient Glow Orbs in Background */}
-      <motion.div
-        animate={{
-          x: [0, 30, -20, 0],
-          y: [0, -40, 20, 0],
-          scale: [1, 1.1, 0.95, 1],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        className={`absolute top-1/4 ${
-          isRtl ? 'right-4 md:right-10' : 'left-4 md:left-10'
-        } w-60 h-60 md:w-96 md:h-96 rounded-full bg-[#D5ECFE]/40 blur-3xl pointer-events-none -z-10 max-w-full`}
-      />
-      <motion.div
-        animate={{
-          x: [0, -30, 20, 0],
-          y: [0, 50, -30, 0],
-          scale: [1, 0.95, 1.05, 1],
-        }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-        className={`absolute bottom-20 ${
-          isRtl ? 'left-4 md:left-10' : 'right-4 md:right-10'
-        } w-60 h-60 md:w-[400px] md:h-[400px] rounded-full bg-[#027DF7]/10 blur-3xl pointer-events-none -z-10 max-w-full`}
-      />
-
-      {/* Subtle Noise Texture Overlay */}
-      <div className="absolute inset-0 bg-noise pointer-events-none -z-10" />
-
-      {/* ========================================================================= */}
-      {/* HERO FOREGROUND CONTENT                                                   */}
-      {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full my-auto flex-1 flex items-center relative z-10 pointer-events-none py-4 sm:py-6 lg:py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center w-full">
-          {/* Text Column (Right side in RTL) */}
-          <div
-            className={`lg:col-span-7 flex flex-col items-center lg:items-start ${
-              isRtl ? 'text-center lg:text-right' : 'text-center lg:text-left'
-            } pointer-events-auto`}
+      {/* ================= CONTENT ================= */}
+      <div className="relative z-10 flex-1 flex items-center max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-12 pb-6 lg:pb-10 pointer-events-none">
+        <div className="w-full">
+          {/* Text column */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="w-full lg:w-[52%] xl:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-start pointer-events-auto"
           >
-            {/* Eyebrow Tag - Minimalist Iconographic Brand Badge (Hidden on mobile per user request) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 dark:bg-[#071325]/90 border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-2xs backdrop-blur-md mb-4 lg:mb-6"
+              variants={rise}
+              className="inline-flex items-center gap-2 ps-2 pe-3.5 py-1.5 mb-6 rounded-full hero-chip text-[13px] font-bold text-[#01427C] dark:text-[#E0F2FE]"
             >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#027DF7] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#027DF7]" />
+              <span className="relative flex h-2 w-2 ms-1">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#027DF7] opacity-60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#027DF7] dark:bg-[#38BDF8]" />
               </span>
-              <span className="text-xs font-bold text-[#01427C] dark:text-[#E0F2FE]">
-                {language === 'fa' 
-                  ? 'بیش از ۱۴ سال خلق ارزش، نوآوری و توسعه پایدار | موفقیت یک انتخاب است'
-                  : t.hero.eyebrow}
+              <span className="hidden sm:inline">
+                {fa ? 'بیش از ۱۴ سال خلق ارزش و توسعه پایدار' : t.hero.eyebrow}
               </span>
-              <div
-                className={`flex items-center gap-1 text-[13px] font-semibold text-[#027DF7] dark:text-[#38BDF8] ${
-                  isRtl ? 'border-r pr-2' : 'border-l pl-2'
-                } border-[#027DF7]/25 dark:border-[#027DF7]/40`}
-              >
-                <BadgeCheck className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
-                <span>{language === 'fa' ? 'سهامی خاص' : 'PJS Co'}</span>
-              </div>
+              <span className="sm:hidden">{fa ? 'موفقیت یک انتخاب است' : 'Success is a choice'}</span>
+              <span className="flex items-center gap-1 ps-2 border-s border-[#027DF7]/25 text-[#027DF7] dark:text-[#38BDF8]">
+                <BadgeCheck className="w-3.5 h-3.5" />
+                {fa ? 'سهامی خاص' : 'PJS Co'}
+              </span>
             </motion.div>
 
-            {/* H1 Heading - SEO Optimized with Fluid Typography & Highlights */}
-            <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[54px] font-extrabold text-[#01427C] dark:text-white leading-snug sm:leading-tight lg:leading-[1.25] tracking-tight mb-4 sm:mb-6 drop-shadow-2xs ${isRtl ? 'text-center lg:text-right' : 'text-center lg:text-left'}`}>
-              {language === 'fa' ? (
-                <>
-                  <span className="inline-block">هلدینگ ایلیا؛ </span>{' '}
-                  <span className="inline-block bg-gradient-to-r from-[#027DF7] via-[#0284C7] to-[#38BDF8] bg-clip-text text-transparent">
-                    پلتفرم جامع سرمایه گذاری،
-                  </span>{' '}
-                  <span className="inline-block">مشاوره کسب و کار </span>{' '}
-                  <span className="inline-block bg-gradient-to-l from-[#027DF7] to-[#01427C] dark:from-[#38BDF8] dark:to-white bg-clip-text text-transparent">
-                    و توسعه فناوری
-                  </span>
-                </>
-              ) : (
-                headingWords.map((word, index) => (
+            <h1 className="hero-title font-black tracking-tight text-[#01427C] dark:text-white mb-6">
+              {titleLines.map((l, i) => (
+                <span key={i} className="block overflow-hidden pb-[0.12em] -mb-[0.12em]">
                   <motion.span
-                    key={index}
-                    initial={{ opacity: 0, y: 35 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      duration: 0.75,
-                      delay: 0.12 + index * 0.07,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    className="inline-block"
+                    variants={line}
+                    className={`inline-block hero-line ${l.accent ? 'hero-title-accent' : ''}`}
                   >
-                    {word}{' '}
+                    {l.text}
                   </motion.span>
-                ))
-              )}
+                </span>
+              ))}
             </h1>
 
-            {/* Subtitle - Centered on mobile with readable line-height */}
             <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55, ease: 'easeOut' }}
-              className={`text-sm sm:text-base md:text-lg lg:text-xl text-[#64748B] dark:text-[#CBD5E1] font-normal leading-7 sm:leading-relaxed max-w-2xl mb-6 sm:mb-8 ${isRtl ? 'text-center lg:text-right' : 'text-center lg:text-left'} mx-auto lg:mx-0`}
+              variants={rise}
+              className="text-base sm:text-lg leading-8 text-[#475569] dark:text-[#CBD5E1] max-w-xl mb-8"
             >
               {t.hero.subtitle}
             </motion.p>
 
-            {/* CTA Buttons - Full Width Stacked on Mobile, Side by Side on sm+ */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.75, ease: 'easeOut' }}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto"
-            >
+            <motion.div variants={rise} className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
               <button
                 type="button"
                 id="hero-primary-cta"
                 onClick={onGoToConsultation}
-                className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-gradient-to-l from-[#01427C] to-[#027DF7] text-white font-bold text-sm sm:text-base min-h-[48px] shadow-lg shadow-[#027DF7]/25 hover:shadow-xl hover:shadow-[#027DF7]/40 transition-all duration-300 hover:scale-102 flex items-center justify-center gap-2 group cursor-pointer whitespace-nowrap"
+                className="hero-cta-primary group w-full sm:w-auto min-h-[52px] px-7 rounded-full text-white font-bold flex items-center justify-center gap-2 cursor-pointer"
               >
-                <span>{language === 'fa' ? 'درخواست مشاوره تخصصی' : t.hero.ctaPrimary}</span>
-                <ArrowIcon className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-y-1 transition-transform shrink-0" />
+                <span>{fa ? 'درخواست مشاوره تخصصی' : t.hero.ctaPrimary}</span>
+                <ArrowIcon className="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-0.5 rtl:group-hover:-translate-x-0.5 ltr:group-hover:translate-x-0.5" />
               </button>
-
               <a
                 href="#subsidiaries"
                 id="hero-secondary-cta"
-                className="w-full sm:w-auto px-6 sm:px-7 py-3 sm:py-3.5 rounded-full liquid-glass-card hover:bg-white text-[#01427C] dark:text-[#E0F2FE] font-bold text-sm sm:text-base min-h-[48px] transition-all duration-300 hover:scale-102 flex items-center justify-center gap-2 border border-[#027DF7]/30 dark:border-[#027DF7]/50 shadow-xs group whitespace-nowrap"
+                className="group w-full sm:w-auto min-h-[52px] px-7 rounded-full hero-chip font-bold text-[#01427C] dark:text-[#E0F2FE] flex items-center justify-center gap-2 transition-colors hover:text-[#027DF7] dark:hover:text-[#38BDF8]"
               >
-                <Layers className="w-4 h-4 text-[#027DF7] group-hover:rotate-6 transition-transform shrink-0" />
-                <span>{language === 'fa' ? 'آشنایی با شرکت‌های زیرمجموعه' : t.hero.ctaSecondary}</span>
+                <Layers className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8] transition-transform duration-300 group-hover:rotate-6" />
+                <span>{fa ? 'شرکت‌های زیرمجموعه' : t.hero.ctaSecondary}</span>
               </a>
             </motion.div>
 
-            {/* Bottom Micro Badges */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.95 }}
-              className="mt-6 sm:mt-8 pt-4 sm:pt-5 border-t border-[#027DF7]/20 dark:border-[#027DF7]/40 flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3"
+            {/* Stats */}
+            <motion.dl
+              variants={rise}
+              className="mt-10 grid grid-cols-4 w-full max-w-xl divide-x rtl:divide-x-reverse divide-[#027DF7]/15 dark:divide-[#38BDF8]/15"
             >
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 dark:bg-[#071325]/80 backdrop-blur-xs border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-2xs text-[#01427C] dark:text-[#E0F2FE]">
-                <ShieldCheck className="w-4 h-4 text-[#027DF7] shrink-0" />
-                <span className="font-bold text-xs sm:text-[13px]">{language === 'fa' ? 'دانش‌بنیان (تأسیس ۱۳۸۸/۰۸/۰۸)' : 'Est. 2009'}</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 dark:bg-[#071325]/80 backdrop-blur-xs border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-2xs text-[#01427C] dark:text-[#E0F2FE]">
-                <Award className="w-4 h-4 text-[#10B981] shrink-0" />
-                <span className="font-bold text-xs sm:text-[13px]">{language === 'fa' ? '۸ نشان بین‌المللی ISO' : '8 ISO Badges'}</span>
-              </div>
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/70 dark:bg-[#071325]/80 backdrop-blur-xs border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-2xs text-[#01427C] dark:text-[#E0F2FE]">
-                <Globe2 className="w-4 h-4 text-[#027DF7] shrink-0" />
-                <span className="font-bold text-xs sm:text-[13px]">{language === 'fa' ? 'همکاری بین‌المللی (اروپا و آسیا)' : 'Europe & Asia Partners'}</span>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Floating Hero Visual Graphic & Glass Stats HUD (Left side in RTL) */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-center pointer-events-auto w-full">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full max-w-[280px] sm:max-w-[360px] lg:max-w-[420px] xl:max-w-[480px] flex items-center justify-center select-none"
-            >
-              {/* Pure Hero Image - 1:1 Aspect Ratio with zero background */}
-              <motion.div
-                animate={{
-                  y: [0, -8, 0],
-                }}
-                transition={{
-                  duration: 5.5,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="w-full aspect-square flex items-center justify-center"
-              >
-                <img
-                  src="/hero-img.webp"
-                  alt="پلتفرم هلدینگ ایلیا پیشرو در سرمایه گذاری و مشاوره کسب و کار"
-                  width={1024}
-                  height={1024}
-                  className="w-full h-full object-contain select-none pointer-events-none"
-                  loading="eager"
-                />
-              </motion.div>
-            </motion.div>
-
-            {/* HORIZONTAL ULTRA-SLEEK LIQUID GLASS COMMAND DOCK */}
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="statistics-numbers-container w-full max-w-[360px] sm:max-w-[460px] lg:max-w-[500px] -mt-3 lg:-mt-4 relative z-20 px-1 sm:px-0"
-            >
-              {/* Ambient Cyan-Sapphire Glow Halo */}
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#027DF7]/25 via-[#38BDF8]/20 to-[#01427C]/25 blur-lg opacity-70 dark:opacity-90 pointer-events-none -z-10" />
-
-              <div className="relative rounded-2xl sm:rounded-full px-2.5 py-2 sm:px-4 sm:py-2.5 bg-white/90 dark:bg-[#071325]/90 backdrop-blur-2xl border border-white/80 dark:border-[#38BDF8]/40 shadow-xl shadow-[#01427C]/12 dark:shadow-[0_16px_45px_rgba(0,0,0,0.85),0_0_25px_rgba(2,125,247,0.25)] overflow-hidden group">
-                {/* Top Specular Edge Highlight */}
-                <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#027DF7]/70 dark:via-[#38BDF8]/80 to-transparent pointer-events-none" />
-
-                {/* Shimmer Sweep Animation */}
-                <motion.div
-                  animate={{ x: isRtl ? ['200%', '-250%'] : ['-200%', '250%'] }}
-                  transition={{
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    repeatDelay: 2.5,
-                  }}
-                  className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/50 dark:via-[#38BDF8]/20 to-transparent -skew-x-12 pointer-events-none"
-                />
-
-                {/* 4 Horizontal Items in Single Sleek Row */}
-                <div className="grid grid-cols-4 items-center relative z-10 divide-x divide-slate-200/80 rtl:divide-x-reverse dark:divide-[#027DF7]/30">
-                  {/* 1. پروژه‌ها */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#027DF7] to-[#01427C] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
-                      <Briefcase className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-                    </div>
-                    <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
-                      <span className="text-sm sm:text-base md:text-lg font-black text-[#01427C] dark:text-white group-hover/item:text-[#027DF7] dark:group-hover/item:text-[#38BDF8] transition-colors tracking-tight">
-                        <AnimatedCounter end={165} prefix="+" language={language} />
-                      </span>
-                      <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
-                        {language === 'fa' ? 'پروژه‌ها' : 'Projects'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* 2. شروع کار */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#01427C] to-[#0369A1] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
-                      <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-                    </div>
-                    <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
-                      <span className="text-sm sm:text-base md:text-lg font-black text-[#01427C] dark:text-white group-hover/item:text-[#027DF7] dark:group-hover/item:text-[#38BDF8] transition-colors tracking-tight">
-                        <AnimatedCounter
-                          start={language === 'fa' ? 1380 : 2000}
-                          end={language === 'fa' ? 1392 : 2013}
-                          language={language}
-                        />
-                      </span>
-                      <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
-                        {language === 'fa' ? 'شروع کار' : 'Founded'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* 3. کارکنان */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#0284C7] to-[#004E8C] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
-                      <Users className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-                    </div>
-                    <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
-                      <span className="text-sm sm:text-base md:text-lg font-black text-[#01427C] dark:text-white group-hover/item:text-[#027DF7] dark:group-hover/item:text-[#38BDF8] transition-colors tracking-tight">
-                        <AnimatedCounter end={280} prefix="+" language={language} />
-                      </span>
-                      <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
-                        {language === 'fa' ? 'کارکنان' : 'Team'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* 4. موفقیت */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 px-1 py-1 text-center sm:text-right rtl:sm:text-right ltr:sm:text-left group/item cursor-pointer">
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#10B981] to-[#047857] flex items-center justify-center text-white shadow-xs group-hover/item:scale-110 transition-transform shrink-0">
-                      <Award className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-                    </div>
-                    <div className="flex flex-col items-center sm:items-start rtl:sm:items-start ltr:sm:items-start leading-none">
-                      <span className="text-sm sm:text-base md:text-lg font-black text-[#10B981] dark:text-[#34D399] tracking-tight">
-                        <AnimatedCounter
-                          end={98.4}
-                          suffix={language === 'fa' ? '٪' : '%'}
-                          decimals={1}
-                          language={language}
-                        />
-                      </span>
-                      <span className="text-[10px] sm:text-[11.5px] font-bold text-[#64748B] dark:text-slate-300 mt-0.5 whitespace-nowrap">
-                        {language === 'fa' ? 'موفقیت' : 'Success'}
-                      </span>
-                    </div>
-                  </div>
+              {stats.map((s) => (
+                <div key={s.label} className="px-2 sm:px-4 first:ps-0 last:pe-0 flex flex-col items-center lg:items-start">
+                  <dd className="text-xl sm:text-3xl font-black text-[#01427C] dark:text-white leading-none">
+                    <AnimatedNumber
+                      value={s.value}
+                      from={s.from ?? 0}
+                      decimals={s.decimals ?? 0}
+                      prefix={s.prefix ?? ''}
+                      suffix={s.suffix ?? ''}
+                      locale={fa ? 'fa' : 'en'}
+                      duration={2.2}
+                    />
+                  </dd>
+                  <dt className="mt-2 text-[11px] sm:text-[13px] font-semibold text-[#64748B] dark:text-[#94A3B8] whitespace-nowrap">
+                    {s.label}
+                  </dt>
                 </div>
-              </div>
-            </motion.div>
-          </div>
+              ))}
+            </motion.dl>
+          </motion.div>
+
         </div>
       </div>
 
-      {/* Bottom Scroll Indicator - Positioned naturally at bottom */}
-      <div className="w-full flex flex-col items-center justify-center gap-1 pb-2 sm:pb-3 pointer-events-none z-10 shrink-0">
-        <a href="#stats" className="pointer-events-auto flex flex-col items-center gap-1 group">
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-5 h-8 rounded-full border-1.5 border-[#01427C]/35 dark:border-white/40 flex justify-center pt-1 bg-white/50 dark:bg-white/10 backdrop-blur-xs shadow-2xs group-hover:border-[#027DF7]"
-          >
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-1 h-1.5 rounded-full bg-[#027DF7]"
-            />
-          </motion.div>
-          <motion.div
-            animate={{ opacity: [0.35, 0.9, 0.35], y: [0, 3, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: 0.15 }}
-          >
-            <ChevronDown className="w-3.5 h-3.5 text-[#01427C]/60 dark:text-white/60 group-hover:text-[#027DF7]" />
-          </motion.div>
-        </a>
-      </div>
+      {/* Planet — desktop only, beside the text */}
+      {isDesktop && (
+        <motion.div
+          style={{ y: visualY }}
+          initial={{ opacity: 0, scale: 0.94 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.3, delay: 0.15, ease: EASE }}
+          className="hero-planet"
+        >
+          <HeroVisual isDark={isDark} className="w-full" onMoonReady={() => setMoonReady(true)} />
+
+          {/* astronaut floating up toward the moon, pointing at it (dark mode) */}
+          {isDark && (
+            <div className="hero-astronaut" aria-hidden="true">
+              <div className="hero-astronaut-float">
+                <div className="hero-astronaut-flip">
+                  <motion.img
+                    src="/assets/hero/astronaut.webp"
+                    alt=""
+                    width={676}
+                    height={900}
+                    decoding="async"
+                    draggable={false}
+                    onLoad={() => setAstroLoaded(true)}
+                    // drifts in from the outer edge (left in RTL), below, tilted
+                    initial={{ opacity: 0, x: isRtl ? '-55%' : '55%', y: '60%', rotate: isRtl ? -16 : 16, scale: 0.82 }}
+                    animate={
+                      showAstronaut
+                        ? { opacity: 1, x: '0%', y: '0%', rotate: 0, scale: 1 }
+                        : { opacity: 0, x: isRtl ? '-55%' : '55%', y: '60%', rotate: isRtl ? -16 : 16, scale: 0.82 }
+                    }
+                    transition={{
+                      duration: showAstronaut ? 2.6 : 0.4,
+                      delay: showAstronaut ? 0.35 : 0,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="w-full h-auto select-none"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+        </motion.div>
+      )}
+
+      {/* Scroll cue */}
+      <a
+        href="#stats"
+        className="relative z-10 mx-auto mb-4 hidden lg:flex flex-col items-center gap-1 text-[#01427C]/60 dark:text-white/50 hover:text-[#027DF7] dark:hover:text-[#38BDF8] transition-colors"
+        aria-label={fa ? 'ادامه' : 'Scroll down'}
+      >
+        <span className="w-5 h-8 rounded-full border border-current flex justify-center pt-1.5">
+          <span className="hero-scroll-dot w-1 h-1.5 rounded-full bg-current" />
+        </span>
+        <ChevronDown className="w-3.5 h-3.5" />
+      </a>
     </section>
   );
 };

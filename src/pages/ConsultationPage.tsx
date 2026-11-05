@@ -61,6 +61,17 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
       color: '#0284C7',
     },
     {
+      id: 'knowledge-based',
+      titleFa: 'مشاوره دانش‌بنیان',
+      titleEn: 'Knowledge-Based Advisory',
+      descFa: 'مشاوره تخصصی به شرکت‌ها و استارتاپ‌ها جهت احراز صلاحیت، تدوین مستندات و اخذ گواهی رسمی دانش‌بنیان',
+      descEn: 'Strategic advisory for companies & startups to qualify and achieve official Knowledge-Based certification',
+      badgeFa: 'مشاوره و اخذ مجوز',
+      badgeEn: 'Certification Advisory',
+      icon: Sparkles,
+      color: '#10B981',
+    },
+    {
       id: 'dr-tahourian',
       titleFa: 'مشاوره با دکتر طهوریان',
       titleEn: 'Consultation with Dr. Tahourian',
@@ -409,7 +420,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                                 <CatIcon className="w-4 h-4" />
                               </div>
                               <span
-                                className={`text-[10.5px] px-2 py-0.5 rounded-full font-bold ${
+                                className={`text-[12px] px-2 py-0.5 rounded-full font-bold ${
                                   isSelected
                                     ? 'bg-[#027DF7] text-white'
                                     : 'bg-[#F0F7FF] dark:bg-[#1C2B44] text-[#01427C] dark:text-[#38BDF8]'
@@ -518,7 +529,7 @@ export const ConsultationPage: React.FC<ConsultationPageProps> = ({
                             <span className="block text-xs font-bold leading-tight">
                               {language === 'fa' ? day.labelFa : day.labelEn}
                             </span>
-                            <span className={`block text-[10px] mt-0.5 ${isSelected ? 'text-white/85' : 'text-[#64748B] dark:text-slate-400'}`}>
+                            <span className={`block text-[11.5px] mt-0.5 ${isSelected ? 'text-white/85' : 'text-[#64748B] dark:text-slate-400'}`}>
                               {language === 'fa' ? day.dateFa.split('/')[2] + ' شهریور' : day.dateEn}
                             </span>
                           </button>

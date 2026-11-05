@@ -18,6 +18,7 @@ export interface ValueItem {
   title: string;
   titleEn: string;
   description: string;
+  descriptionEn: string;
   icon: React.ComponentType<{ className?: string }>;
   accentColor: string;
 }
@@ -28,6 +29,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'نوآوری مستمر و تفکر خلاق',
     titleEn: 'Continuous Innovation',
     description: 'خلق راهکارهای نوآورانه در سرمایه‌گذاری، طراحی فناوری‌های نوین و تفکر پویای خارج از چارچوب‌های سنتی.',
+    descriptionEn: 'Innovative solutions in investment, new technology design and dynamic thinking beyond traditional frameworks.',
     icon: Sparkles,
     accentColor: '#027DF7',
   },
@@ -36,6 +38,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'تعهد به کیفیت و استانداردسازی جهانی',
     titleEn: 'Global Standards & Quality',
     description: 'پایبندی خدشه‌ناپذیر به استانداردهای بین‌المللی با اخذ ۸ نشان رسمی ISO و رعایت چارچوب‌های IFC و BRC.',
+    descriptionEn: 'Uncompromising adherence to international standards, with 8 official ISO certifications and IFC and BRC frameworks.',
     icon: ShieldCheck,
     accentColor: '#01427C',
   },
@@ -44,6 +47,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'توسعه سرمایه انسانی و شایسته‌سالاری',
     titleEn: 'Human Capital Development',
     description: 'حضور حداکثری جوانان متخصص و دانشگاهی در کنار اساتید و صنعتگران باتجربه در فضایی شایسته‌سالار.',
+    descriptionEn: 'Young specialists and graduates working alongside experienced professors and industry leaders in a merit-based culture.',
     icon: Users,
     accentColor: '#0284C7',
   },
@@ -52,6 +56,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'حفظ سلامت جامعه و محیط زیست',
     titleEn: 'Public Health & Sustainability',
     description: 'ترویج سبک زندگی سالم، اصلاح تغذیه، تولید محصولات طبیعی ارگانیک و تعهد به حفاظت از محیط زیست.',
+    descriptionEn: 'Promoting healthy lifestyles and nutrition, producing natural organic products and protecting the environment.',
     icon: Leaf,
     accentColor: '#16A34A',
   },
@@ -60,6 +65,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'کارآفرینی پایدار و اشتغال‌زایی',
     titleEn: 'Sustainable Entrepreneurship',
     description: 'تسهیل راه‌اندازی استارتاپ‌ها، ایجاد اشتغال مولد و پیوند دادن نخبگان دانشگاهی به پروژه‌های صنعتی.',
+    descriptionEn: 'Helping startups launch, creating productive jobs and connecting academic talent with industrial projects.',
     icon: Rocket,
     accentColor: '#EA580C',
   },
@@ -68,6 +74,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'شفافیت، صداقت و رفتار اخلاقی',
     titleEn: 'Ethics & Transparency',
     description: 'حکمرانی شفاف، رعایت اخلاق حرفه‌ای در معاملات و ارتباط صادقانه با سهامداران، مشتریان و شرکای تجاری.',
+    descriptionEn: 'Transparent governance, professional ethics in every deal and honest relations with shareholders, clients and partners.',
     icon: CheckCircle2,
     accentColor: '#0D9488',
   },
@@ -76,6 +83,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'مشتری‌مداری و ایجاد ارزش مشترک',
     titleEn: 'Client Focus & Shared Value',
     description: 'درک عمیق نیازهای ذی‌نفعان و تمرکز بر ایجاد سود دوجانبه پایدار در تمامی قراردادها و همکاری‌ها.',
+    descriptionEn: 'Deep understanding of stakeholder needs and a focus on lasting mutual value in every contract and partnership.',
     icon: Target,
     accentColor: '#6366F1',
   },
@@ -84,6 +92,7 @@ export const ORGANIZATIONAL_VALUES: ValueItem[] = [
     title: 'ارتقای فرهنگ و مسئولیت اجتماعی',
     titleEn: 'Social Responsibility',
     description: 'مشارکت فعالانه در پیشرفت علمی، پژوهشی و فرهنگی جامعه از طریق همایش‌ها و کارگاه‌های آکادمی ویرگول.',
+    descriptionEn: 'Active contribution to the scientific, research and cultural growth of society through Virgol Academy events and workshops.',
     icon: Globe2,
     accentColor: '#8B5CF6',
   },
@@ -168,12 +177,12 @@ export const OrganizationalValuesSection: React.FC = () => {
                   </h3>
 
                   {/* Description */}
-                  <p className="text-[10px] sm:text-xs md:text-sm text-[#64748B] dark:text-[#94A3B8] leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">
-                    {val.description}
+                  <p className="text-[11.5px] sm:text-xs md:text-sm text-[#64748B] dark:text-[#94A3B8] leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">
+                    {language === 'fa' ? val.description : val.descriptionEn}
                   </p>
                 </div>
 
-                <div className="mt-3 sm:mt-5 pt-2 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[10px] sm:text-[11px] font-bold text-[#64748B] dark:text-slate-400">
+                <div className="mt-3 sm:mt-5 pt-2 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11.5px] sm:text-[11px] font-bold text-[#64748B] dark:text-slate-400">
                   <span>{language === 'fa' ? `اصل ۰${idx + 1}` : `Principle 0${idx + 1}`}</span>
                   <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: val.accentColor }} />
                 </div>

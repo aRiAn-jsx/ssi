@@ -1,4 +1,12 @@
-import 'dotenv/config';
+// Safely load .env variables using Node 20.6+ native loader with fallback
+if (typeof process.loadEnvFile === 'function') {
+  try {
+    process.loadEnvFile();
+  } catch {
+    // .env file is optional in container / cloud environments
+  }
+}
+
 import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
@@ -367,9 +375,8 @@ async function startServer() {
     return res.status(404).send('Robots.txt not found');
   });
 
-  // ==========================================
-  // VITE DEV MIDDLEWARE OR PRODUCTION STATIC
-  // ==========================================
+  // Serve public directory assets directly (ensures newly added assets are served immediately)
+  app.use(express.static(path.resolve(__dirname, 'public')));
 
   if (!isProd) {
     const vite = await createViteServer({

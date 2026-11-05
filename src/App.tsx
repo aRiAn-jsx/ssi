@@ -31,10 +31,25 @@ import { updatePageSeo } from './utils/seo';
 import { useLanguage } from './context/LanguageContext';
 import { BookOpen } from 'lucide-react';
 
+type View = 'home' | 'articles' | 'article' | 'consultation' | 'team';
+
+// Resolve the view from the URL hash so deep links render the right page on
+// first paint instead of flashing the home page and transitioning away.
+const viewFromHash = (): { view: View; articleId?: string } => {
+  const hash = typeof window === 'undefined' ? '' : window.location.hash.toLowerCase();
+  if (hash.startsWith('#article/') || hash.startsWith('#articles/')) {
+    return { view: 'article', articleId: hash.split('/')[1] || 'article-1' };
+  }
+  if (hash === '#articles') return { view: 'articles' };
+  if (hash === '#consultation') return { view: 'consultation' };
+  if (hash === '#team') return { view: 'team' };
+  return { view: 'home' };
+};
+
 export default function App() {
   const { language } = useLanguage();
-  const [currentView, setCurrentView] = useState<'home' | 'articles' | 'article' | 'consultation' | 'team'>('home');
-  const [activeArticleId, setActiveArticleId] = useState<string>('article-1');
+  const [currentView, setCurrentView] = useState<View>(() => viewFromHash().view);
+  const [activeArticleId, setActiveArticleId] = useState<string>(() => viewFromHash().articleId ?? 'article-1');
   const [isDesignSpecOpen, setIsDesignSpecOpen] = useState(false);
   const [showPreloader, setShowPreloader] = useState(() => {
     try {
@@ -220,6 +235,7 @@ export default function App() {
           >
             {/* SECTION 1 — HERO (Preserved structure, updated official keywords & alt) */}
             <HeroSection
+              introReady={!showPreloader}
               onGoToConsultation={() => handleNavigateView('consultation')}
               onGoToArticles={() => handleNavigateView('articles')}
             />

@@ -21,7 +21,9 @@ export interface IsoCertification {
   title: string;
   titleEn: string;
   category: string;
+  categoryEn: string;
   scope: string;
+  scopeEn: string;
   icon: React.ComponentType<{ className?: string }>;
   accentColor: string;
 }
@@ -34,6 +36,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Quality Management Systems (QMS)',
     category: 'کیفیت و فرآیندها',
     scope: 'تضمین انطباق فرآیندهای هلدینگ و شرکت‌های تابعه با بالاترین استانداردهای تضمین کیفیت.',
+    categoryEn: 'Quality & Processes',
+    scopeEn: 'Ensuring the processes of the holding and its subsidiaries meet the highest quality-assurance standards.',
     icon: Award,
     accentColor: '#027DF7',
   },
@@ -44,6 +48,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Environmental Management Systems (EMS)',
     category: 'محیط زیست و پایداری',
     scope: 'کاهش اثرات زیست‌محیطی و پایبندی به تولید سبز و مصرف بهینه منابع در زنجیره تأمین.',
+    categoryEn: 'Environment & Sustainability',
+    scopeEn: 'Reducing environmental impact, committing to green production and efficient resource use across the supply chain.',
     icon: ShieldCheck,
     accentColor: '#16A34A',
   },
@@ -54,6 +60,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Occupational Health & Safety (OH&S)',
     category: 'ایمنی و سرمایه انسانی',
     scope: 'صیانت کامل از سلامت جسمی و روانی کارکنان و ارتقای استانداردهای ارگونومی و محیط کار.',
+    categoryEn: 'Safety & People',
+    scopeEn: 'Protecting the physical and mental health of employees and raising ergonomic and workplace standards.',
     icon: FileCheck2,
     accentColor: '#EA580C',
   },
@@ -64,6 +72,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Customer Complaints Handling',
     category: 'مشتری‌مداری',
     scope: 'فرآیند نظام‌مند دریافت، ارزیابی، پیگیری سریع و شفاف شکایات و بازخوردهای مخاطبان.',
+    categoryEn: 'Customer Focus',
+    scopeEn: 'A systematic process for receiving, assessing and quickly, transparently resolving complaints and feedback.',
     icon: MessageSquare,
     accentColor: '#0284C7',
   },
@@ -74,6 +84,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Customer Satisfaction Monitoring',
     category: 'رضایت مشتریان',
     scope: 'سنجش منظم و داده‌محور سطح رضایتمندی مشتریان از خدمات دپارتمان‌های ۵گانه هلدینگ.',
+    categoryEn: 'Customer Satisfaction',
+    scopeEn: 'Regular, data-driven measurement of client satisfaction across the holding’s five departments.',
     icon: Smile,
     accentColor: '#0D9488',
   },
@@ -84,6 +96,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Information Security Management (ISMS)',
     category: 'امنیت اطلاعات',
     scope: 'صیانت حداکثری از داده‌های محرمانه مشتریان، اسناد شرکتی و زیرساخت‌های سرور و نرم‌افزار.',
+    categoryEn: 'Information Security',
+    scopeEn: 'Maximum protection of confidential client data, corporate documents and server and software infrastructure.',
     icon: Lock,
     accentColor: '#01427C',
   },
@@ -94,6 +108,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Educational Organizations Management (EOMS)',
     category: 'آموزش و پژوهش',
     scope: 'استانداردسازی آموزش‌های آکادمی ویرگول و تطابق سیلابس‌های مهارتی با استانداردهای جهانی.',
+    categoryEn: 'Education & Research',
+    scopeEn: 'Standardising Virgol Academy training and aligning skill syllabi with international standards.',
     icon: GraduationCap,
     accentColor: '#8B5CF6',
   },
@@ -104,6 +120,8 @@ export const ISO_CERTIFICATIONS: IsoCertification[] = [
     titleEn: 'Information Technology & User Interfaces',
     category: 'فناوری اطلاعات و UI/UX',
     scope: 'بهینه‌سازی تجربه کاربری (UX) و دسترسی‌پذیری پلتفرم‌های دیجیتال هلدینگ برای عموم کاربران.',
+    categoryEn: 'IT & UI/UX',
+    scopeEn: 'Optimising the user experience and accessibility of the holding’s digital platforms for everyone.',
     icon: Globe2,
     accentColor: '#027DF7',
   },
@@ -215,7 +233,7 @@ export const IsoCertificationsSection: React.FC = () => {
                     </span>
                     <span
                       dir="ltr"
-                      className="font-mono text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-white/80 border border-white/10 text-left inline-block"
+                      className="font-mono text-[11.5px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-white/80 border border-white/10 text-left inline-block"
                     >
                       {cert.year}
                     </span>
@@ -230,25 +248,25 @@ export const IsoCertificationsSection: React.FC = () => {
                       <h3 className="text-xs sm:text-sm md:text-base font-bold text-white group-hover:text-[#38BDF8] transition-colors leading-snug">
                         {language === 'fa' ? cert.title : cert.titleEn}
                       </h3>
-                      <span className="text-[10px] sm:text-[11px] font-semibold text-[#D5ECFE]/70 block mt-0.5">
-                        {cert.category}
+                      <span className="text-[11.5px] sm:text-[11px] font-semibold text-[#D5ECFE]/70 block mt-0.5">
+                        {language === 'fa' ? cert.category : cert.categoryEn}
                       </span>
                     </div>
                   </div>
 
                   {/* Scope */}
                   <p className="text-[11px] sm:text-xs text-slate-300/80 leading-relaxed font-normal mt-2 sm:mt-3">
-                    {cert.scope}
+                    {language === 'fa' ? cert.scope : cert.scopeEn}
                   </p>
                 </div>
 
                 {/* Bottom Verification Seal */}
-                <div className="mt-4 sm:mt-5 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-[10px] sm:text-[11px] text-[#38BDF8] font-bold">
+                <div className="mt-4 sm:mt-5 pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between text-[11.5px] sm:text-[11px] text-[#38BDF8] font-bold">
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
                     <span>{language === 'fa' ? 'دارای تاییدیه معتبر' : 'Verified'}</span>
                   </div>
-                  <span dir="ltr" className="text-white/50 text-[10px] font-mono">SSI Holding</span>
+                  <span dir="ltr" className="text-white/50 text-[11.5px] font-mono">SSI Holding</span>
                 </div>
               </motion.div>
             );

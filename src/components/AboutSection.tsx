@@ -59,7 +59,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             <a
-              href="#departments"
+              href="#subsidiaries"
               id="about-learn-more-btn"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full liquid-glass-card hover:bg-[#D5ECFE]/40 text-[#01427C] dark:text-[#E0F2FE] font-semibold text-sm transition-all duration-300 hover:scale-102 border border-[#027DF7]/30 dark:border-[#027DF7]/50"
             >

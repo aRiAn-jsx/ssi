@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Menu,
@@ -46,7 +46,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
   const holdingInfo = getHoldingInfo(language);
 
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [sidebarToolbarOpen, setSidebarToolbarOpen] = useState(false);
   const [hoveredNavIndex, setHoveredNavIndex] = useState<number | null>(null);
@@ -64,14 +64,14 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
     {
       id: 'stats',
       label: language === 'fa' ? 'شاخص‌ها و آمار کلیدی' : 'Key Statistics',
-      description: language === 'fa' ? '+۱۴ سال، ۸ نشان ISO، ۳ برند زیرمجموعه' : '14+ Years, 8 ISO Badges, 3 Core Brands',
+      description: language === 'fa' ? '۱۴+ سال، ۸ نشان ISO، ۳ برند زیرمجموعه' : '14+ Years, 8 ISO Badges, 3 Core Brands',
       href: '#stats',
       icon: TrendingUp,
     },
     {
       id: 'about',
       label: t.drawer.about.label,
-      description: language === 'fa' ? 'تاریخچه دانش‌بنیان، تاسیس ۱۳۸۸/۰۸/۰۸ و چشم‌انداز' : t.drawer.about.desc,
+      description: language === 'fa' ? 'تاریخچه هلدینگ، تاسیس ۱۳۸۸/۰۸/۰۸ و چشم‌انداز' : t.drawer.about.desc,
       href: '#about',
       icon: Building2,
     },
@@ -112,23 +112,33 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
     },
   ];
 
-  // Auto-hide on fast scroll down, reveal on scroll up
+  // Auto-hide on scroll down, reveal on scroll up. Last position lives in a ref
+  // and work is batched per frame, so scrolling doesn't re-render the navbar.
   useEffect(() => {
-    const handleScroll = () => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
       const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollY.current;
       if (currentScrollY < 80) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 150) {
-        setIsVisible(false);
+      } else if (Math.abs(delta) > 6) {
+        setIsVisible(!(delta > 0 && currentScrollY > 150));
       } else {
-        setIsVisible(true);
+        return;
       }
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
+    };
+    const handleScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
 
   // Lock scroll when mobile menu or sidebar toolbar is active
   useEffect(() => {
@@ -221,11 +231,11 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                   {language === 'fa' ? 'هلدینگ ایلیا' : 'Ilya Holding'}
                 </span>
                 {/* Decluttered on mobile: badge shown only on tablet/desktop */}
-                <span className="hidden sm:inline-block text-[10px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-[#D5ECFE]/80 dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#38BDF8] border-none whitespace-nowrap">
+                <span className="hidden sm:inline-block text-[11.5px] sm:text-[11px] font-bold px-1.5 py-0.5 rounded-full bg-[#D5ECFE]/80 dark:bg-[#027DF7]/25 text-[#01427C] dark:text-[#38BDF8] border-none whitespace-nowrap">
                   {language === 'fa' ? 'سهامی خاص' : 'PJS Co'}
                 </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-medium text-[#64748B]/85 dark:text-slate-400 block whitespace-nowrap mt-0.5">
+              <span className="text-[11.5px] sm:text-[11px] font-medium text-[#64748B]/85 dark:text-slate-400 block whitespace-nowrap mt-0.5">
                 {language === 'fa' ? 'گروه شرکت‌های سرآمد سرمایه | شماره ثبت: ۷۹۷۳۸' : 'Saramad Capital Group | Reg. No: 79738'}
               </span>
             </div>
@@ -272,7 +282,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                   )}
                   <span>{item.label}</span>
                   {item.badge && (
-                    <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold leading-tight shadow-xs">
+                    <span className="text-[11.5px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold leading-tight shadow-xs">
                       {item.badge}
                     </span>
                   )}
@@ -289,11 +299,11 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
               id="open-sidebar-toolbar-btn"
               onClick={() => setSidebarToolbarOpen(true)}
               className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#01427C] dark:text-[#E0F2FE] bg-[#D5ECFE]/70 hover:bg-[#D5ECFE] dark:bg-[#027DF7]/20 dark:hover:bg-[#027DF7]/35 border-none shadow-xs transition-all duration-200 hover:scale-102 active:scale-95 cursor-pointer"
-              title={language === 'fa' ? 'مشاهده تول‌بار بخش‌های صفحه' : 'View Sections Toolbar'}
+              title={language === 'fa' ? 'نوار ابزار' : 'Toolbar'}
             >
               <LayoutGrid className="w-3.5 h-3.5 text-[#027DF7] dark:text-[#38BDF8]" />
               <span className="hidden sm:inline">
-                {language === 'fa' ? 'تول‌بار بخش‌ها' : 'Sections'}
+                {language === 'fa' ? 'نوار ابزار' : 'Toolbar'}
               </span>
             </button>
 
@@ -414,7 +424,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                     </div>
                     <div>
                       <h3 className="text-sm font-extrabold text-[#01427C] dark:text-white">
-                        {language === 'fa' ? 'تول‌بار بخش‌های صفحه' : 'Sections Toolbar'}
+                        {language === 'fa' ? 'نوار ابزار بخش‌های صفحه' : 'Sections Toolbar'}
                       </h3>
                       <p className="text-[11.5px] text-[#64748B] dark:text-slate-300">
                         {language === 'fa' ? 'دسترسی سریع به بخش‌های داخلی هلدینگ' : 'Quick jump to on-page sections'}
@@ -651,7 +661,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                             </div>
                             <span className="text-sm">{item.label}</span>
                             {item.badge && (
-                              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold">
+                              <span className="text-[11.5px] px-1.5 py-0.2 rounded-full bg-[#027DF7] text-white font-extrabold">
                                 {item.badge}
                               </span>
                             )}

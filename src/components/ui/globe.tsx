@@ -9,6 +9,13 @@ export interface GlobeProps {
    * Default: 0.0075 (smooth, lively rotation)
    */
   speed?: number;
+  /**
+   * [lat, lng] to keep facing the viewer. When set, the globe sways around
+   * this point instead of spinning, and springs back to it after a drag.
+   */
+  focus?: [number, number];
+  /** sway amplitude in radians around `focus` (default 0.45) */
+  sway?: number;
 }
 
 /**
@@ -23,12 +30,12 @@ export interface GlobeProps {
 export const SARAMAD_GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
-  devicePixelRatio: 2,
+  devicePixelRatio: 1.5,
   phi: 0,
   theta: 0.28,
   dark: 0,                          // Light luxury mode — seamless with soft white canvas
   diffuse: 0.55,
-  mapSamples: 20000,                // Ultra-high dot resolution for crisp continents
+  mapSamples: 14000,
   mapBrightness: 1.35,
   baseColor: [0.65, 0.78, 0.94],    // Soft, premium sky-slate particle dots
   markerColor: [0.65, 0.78, 0.94],  // Subtle matching tone
@@ -45,7 +52,6 @@ export const SARAMAD_GLOBE_DARK_CONFIG: COBEOptions = {
   ...SARAMAD_GLOBE_CONFIG,
   dark: 1,
   diffuse: 1.5,
-  mapSamples: 20000,
   mapBrightness: 3.2,
   baseColor: [0.28, 0.46, 0.72],    // Ethereal glowing sapphire point-cloud
   markerColor: [0.28, 0.46, 0.72],
@@ -60,6 +66,8 @@ export const Globe: React.FC<GlobeProps> = ({
   className = '',
   config = {},
   speed = 0.013,
+  focus,
+  sway = 0.45,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<{ x: number; y: number } | null>(null);
@@ -69,8 +77,14 @@ export const Globe: React.FC<GlobeProps> = ({
   const widthRef = useRef(0);
   const isHoveredRef = useRef(false);
   const currentSpeedRef = useRef(0.013);
+  const dragOffsetRef = useRef(0);
+  const focusKey = focus ? focus.join(',') : '';
 
-  const mergedConfig = { ...SARAMAD_GLOBE_CONFIG, ...config };
+  // The globe is torn down and rebuilt whenever this changes, so key it on the
+  // config's contents rather than its identity (callers pass inline objects).
+  const configKey = JSON.stringify(config);
+  const configRef = useRef(config);
+  configRef.current = config;
 
   const handlePointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     pointerInteracting.current = { x: e.clientX, y: e.clientY };
@@ -95,6 +109,7 @@ export const Globe: React.FC<GlobeProps> = ({
       const thetaDelta = -deltaY * 0.004;
 
       phiRef.current += phiDelta;
+      dragOffsetRef.current += phiDelta;
       // Clamp theta between 0.08 and 0.52 to prevent flipping
       thetaRef.current = Math.max(0.08, Math.min(0.52, thetaRef.current + thetaDelta));
 
@@ -121,8 +136,11 @@ export const Globe: React.FC<GlobeProps> = ({
   }, []);
 
   useEffect(() => {
+    const mergedConfig = { ...SARAMAD_GLOBE_CONFIG, ...configRef.current };
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     let globe: ReturnType<typeof createGlobe> | null = null;
     let isVisible = true;
+    let isPageVisible = document.visibilityState === 'visible';
     let animationFrameId: number;
     let lastTime = performance.now();
 
@@ -133,7 +151,15 @@ export const Globe: React.FC<GlobeProps> = ({
     };
 
     window.addEventListener('resize', onResize);
+    const resizeObserver = new ResizeObserver(onResize);
+    if (canvasRef.current) resizeObserver.observe(canvasRef.current);
     onResize();
+
+    const onVisibility = () => {
+      isPageVisible = document.visibilityState === 'visible';
+      if (isPageVisible) lastTime = performance.now();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
 
     // Pause rendering when scrolled away to preserve GPU performance
     const observer = new IntersectionObserver(
@@ -152,10 +178,11 @@ export const Globe: React.FC<GlobeProps> = ({
 
     if (canvasRef.current) {
       const currentCanvas = canvasRef.current;
-      const initialWidth = (widthRef.current || 400) * 2;
+      const initialWidth = (widthRef.current || 400) * dpr;
 
       globe = createGlobe(currentCanvas, {
         ...mergedConfig,
+        devicePixelRatio: dpr,
         width: initialWidth,
         height: initialWidth,
       });
@@ -163,14 +190,38 @@ export const Globe: React.FC<GlobeProps> = ({
       // Target resting angle
       const defaultTheta = mergedConfig.theta ?? 0.28;
 
+      // cobe's phi that puts a longitude at the front of the sphere
+      const focusPhi = focus ? Math.PI - ((focus[1] * Math.PI) / 180 - Math.PI / 2) : null;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const swayAmp = reduceMotion ? 0 : sway;
+      let swayClock = 0;
+      if (focusPhi !== null) {
+        phiRef.current = focusPhi;
+        dragOffsetRef.current = 0;
+      }
+
       // Ultra-smooth, delta-time normalized physics loop
       const renderLoop = (time: number) => {
         const deltaMs = Math.min(time - lastTime, 64); // Guard against background tab time jumps
         const dt = Math.max(0.5, deltaMs / 16.667); // Normalized to 60 FPS standard frame
         lastTime = time;
 
-        if (globe && isVisible) {
-          if (pointerInteracting.current !== null) {
+        if (globe && isVisible && isPageVisible) {
+          if (focusPhi !== null) {
+            if (pointerInteracting.current === null) {
+              // throw momentum, then ease the drag offset back to the focus point
+              const dampFactor = Math.pow(0.92, dt);
+              velocityRef.current.phi *= dampFactor;
+              velocityRef.current.theta *= dampFactor;
+              dragOffsetRef.current += velocityRef.current.phi * dt;
+              dragOffsetRef.current *= Math.pow(0.975, dt);
+              const springProgress = 1 - Math.pow(0.95, dt);
+              thetaRef.current += (defaultTheta - thetaRef.current) * springProgress + velocityRef.current.theta * dt;
+              swayClock += dt * (isHoveredRef.current ? 0.4 : 1);
+            }
+            // slow, breathing sway (~40s period)
+            phiRef.current = focusPhi + Math.sin(swayClock * 0.0026) * swayAmp + dragOffsetRef.current;
+          } else if (pointerInteracting.current !== null) {
             // Actively dragging
           } else {
             // Exponential momentum damping for natural organic feel
@@ -192,7 +243,7 @@ export const Globe: React.FC<GlobeProps> = ({
             thetaRef.current += (defaultTheta - thetaRef.current) * springProgress + velocityRef.current.theta * dt;
           }
 
-          const currentWidth = (widthRef.current || 400) * 2;
+          const currentWidth = (widthRef.current || 400) * dpr;
           globe.update({
             phi: phiRef.current,
             theta: thetaRef.current,
@@ -215,13 +266,16 @@ export const Globe: React.FC<GlobeProps> = ({
 
     return () => {
       window.removeEventListener('resize', onResize);
+      resizeObserver.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       observer.disconnect();
       cancelAnimationFrame(animationFrameId);
       if (globe) {
         globe.destroy();
       }
     };
-  }, [mergedConfig, speed]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [configKey, speed, focusKey, sway]);
 
   return (
     <div className={`relative flex items-center justify-center select-none ${className}`}>
@@ -238,7 +292,7 @@ export const Globe: React.FC<GlobeProps> = ({
           isHoveredRef.current = false;
           handlePointerUp(e);
         }}
-        className="w-full h-full aspect-square opacity-0 transition-opacity duration-1000 cursor-grab will-change-transform"
+        className="w-full h-full aspect-square opacity-0 transition-opacity duration-1000 cursor-grab"
         style={{
           contain: 'layout paint size',
           maxWidth: '100%',

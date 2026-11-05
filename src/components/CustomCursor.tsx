@@ -1,93 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'motion/react';
 
+const INTERACTIVE = 'button, a, input, textarea, select, label, .interactive-cursor';
+
+/**
+ * Pointer follower for fine-pointer devices.
+ *
+ * Position lives in motion values, so moving the mouse never re-renders React;
+ * state only flips when the cursor enters/leaves the window or an interactive
+ * element. Size changes use transform scale instead of width/height.
+ */
 export const CustomCursor: React.FC = () => {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
-  const [isHovering, setIsHovering] = useState(false);
+  const [enabled, setEnabled] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [hasFinePointer, setHasFinePointer] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const hoveringRef = useRef(false);
+  const visibleRef = useRef(false);
+
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const ringX = useSpring(x, { damping: 28, stiffness: 420, mass: 0.25 });
+  const ringY = useSpring(y, { damping: 28, stiffness: 420, mass: 0.25 });
 
   useEffect(() => {
-    // Only enable on desktop/laptop with mouse cursor
-    if (!window.matchMedia('(pointer: fine)').matches) {
-      return;
-    }
-    setHasFinePointer(true);
+    const fine = window.matchMedia('(pointer: fine)');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!fine.matches || reduce.matches) return;
+    setEnabled(true);
 
-    const onMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      if (!isVisible) setIsVisible(true);
-
-      const target = e.target as HTMLElement;
-      if (
-        target &&
-        (target.closest('button') ||
-          target.closest('a') ||
-          target.closest('.interactive-cursor') ||
-          target.tagName === 'BUTTON' ||
-          target.tagName === 'A' ||
-          target.tagName === 'INPUT' ||
-          target.tagName === 'TEXTAREA')
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
+    const onMove = (e: PointerEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        setIsVisible(true);
+      }
+      const hovering = !!(e.target as Element | null)?.closest?.(INTERACTIVE);
+      if (hovering !== hoveringRef.current) {
+        hoveringRef.current = hovering;
+        setIsHovering(hovering);
       }
     };
-
-    const onMouseLeave = () => {
+    const onLeave = () => {
+      visibleRef.current = false;
       setIsVisible(false);
     };
 
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-    document.body.addEventListener('mouseleave', onMouseLeave);
-
+    window.addEventListener('pointermove', onMove, { passive: true });
+    document.documentElement.addEventListener('pointerleave', onLeave);
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      document.body.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('pointermove', onMove);
+      document.documentElement.removeEventListener('pointerleave', onLeave);
     };
-  }, [isVisible]);
+  }, [x, y]);
 
-  if (!hasFinePointer || !isVisible) return null;
+  if (!enabled) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[100] overflow-hidden">
-      {/* Outer soft glowing circle */}
+    <div
+      className="pointer-events-none fixed inset-0 z-[100] transition-opacity duration-200"
+      style={{ opacity: isVisible ? 1 : 0 }}
+      aria-hidden="true"
+    >
       <motion.div
-        className="absolute rounded-full border border-[#027DF7]/40 bg-[#027DF7]/10 backdrop-blur-[1px]"
-        animate={{
-          x: position.x - (isHovering ? 24 : 14),
-          y: position.y - (isHovering ? 24 : 14),
-          width: isHovering ? 48 : 28,
-          height: isHovering ? 48 : 28,
-          borderColor: isHovering ? 'rgba(2, 125, 247, 0.7)' : 'rgba(2, 125, 247, 0.3)',
-          backgroundColor: isHovering ? 'rgba(2, 125, 247, 0.15)' : 'rgba(213, 236, 254, 0.2)',
-          boxShadow: isHovering
-            ? '0 0 24px rgba(2, 125, 247, 0.45)'
-            : '0 0 12px rgba(2, 125, 247, 0.2)',
-        }}
-        transition={{
-          type: 'spring',
-          damping: 24,
-          stiffness: 400,
-          mass: 0.2,
-        }}
+        className="absolute top-0 left-0 -ml-[14px] -mt-[14px] w-7 h-7 rounded-full border border-[#027DF7]/50 bg-[#027DF7]/10 dark:border-[#38BDF8]/60"
+        style={{ x: ringX, y: ringY }}
+        animate={{ scale: isHovering ? 1.7 : 1, opacity: isHovering ? 0.9 : 0.6 }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
       />
-
-      {/* Center sharp dot */}
       <motion.div
-        className="absolute w-1.5 h-1.5 rounded-full bg-[#027DF7]"
-        animate={{
-          x: position.x - 3,
-          y: position.y - 3,
-          scale: isHovering ? 0 : 1,
-        }}
-        transition={{
-          type: 'spring',
-          damping: 30,
-          stiffness: 600,
-          mass: 0.1,
-        }}
+        className="absolute top-0 left-0 -ml-[3px] -mt-[3px] w-1.5 h-1.5 rounded-full bg-[#027DF7] dark:bg-[#38BDF8]"
+        style={{ x, y }}
+        animate={{ scale: isHovering ? 0 : 1 }}
+        transition={{ duration: 0.15 }}
       />
     </div>
   );

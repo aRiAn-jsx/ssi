@@ -166,9 +166,14 @@
     color: #F8FAFC;
   }
 
+  /* English: Times New Roman everywhere (Tailwind's font-sans reads this var) */
+  html[lang="en"] {
+    --font-sans: 'Times New Roman', Times, 'Liberation Serif', serif;
+    --font-mono: 'Times New Roman', Times, serif;
+  }
   body.font-english,
   html[lang="en"] body {
-    letter-spacing: -0.015em;
+    font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
   }
 
   button,
@@ -635,4 +640,521 @@ div#root > div > header > div:nth-of-type(1) > nav:nth-of-type(1) {
   animation: spinSlow 20s linear infinite;
 }
 
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
 
+.animate-float {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+
+
+/* ======================================================== */
+/* AMBIENT ORBS (compositor-only drift, no JS)              */
+/* ======================================================== */
+@keyframes orbDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.8; }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.12); opacity: 1; }
+}
+.ambient-orb {
+  animation: orbDrift 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+.ambient-orb--slow {
+  animation-duration: 18s;
+  animation-delay: -6s;
+}
+
+/* ======================================================== */
+/* HERO                                                     */
+/* ======================================================== */
+
+/* Light: soft daylight sky with drifting aurora */
+.hero-daylight {
+  background:
+    radial-gradient(120% 80% at 80% 0%, #E3F1FF 0%, transparent 60%),
+    radial-gradient(90% 70% at 0% 100%, #EEF6FF 0%, transparent 55%),
+    linear-gradient(180deg, #F7FAFC 0%, #EFF6FD 100%);
+}
+.hero-aurora {
+  position: absolute;
+  border-radius: 9999px;
+  width: 60vmax;
+  height: 60vmax;
+  will-change: transform;
+  animation: orbDrift 20s ease-in-out infinite;
+}
+.hero-aurora--a {
+  top: -25vmax;
+  inset-inline-end: -15vmax;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 62%);
+}
+.hero-aurora--b {
+  bottom: -30vmax;
+  inset-inline-start: -20vmax;
+  background: radial-gradient(circle, rgba(2, 125, 247, 0.14) 0%, transparent 62%);
+  animation-duration: 26s;
+  animation-delay: -9s;
+}
+
+/* Dark: deep space + nebula + a faint milky-way band (static gradients) */
+.hero-space {
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 50%, #0B1A36 0%, transparent 70%),
+    linear-gradient(180deg, #030712 0%, #050B1C 55%, #060D17 100%);
+}
+/* Glass chip — no backdrop-filter: it would re-blur the animated globe every frame */
+.hero-chip {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(2, 125, 247, 0.16);
+  box-shadow: 0 8px 24px -10px rgba(1, 66, 124, 0.25);
+}
+.dark .hero-chip {
+  background: rgba(10, 20, 40, 0.78);
+  border-color: rgba(56, 189, 248, 0.22);
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.hero-title {
+  font-size: 2rem;
+  line-height: 1.38;
+}
+@media (min-width: 640px) {
+  .hero-title { font-size: 2.75rem; line-height: 1.32; }
+}
+@media (min-width: 1024px) {
+  .hero-title { font-size: clamp(2.15rem, 3.4vw, 3.4rem); line-height: 1.3; }
+}
+.hero-title-accent {
+  background: linear-gradient(90deg, #01427C 0%, #027DF7 45%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .hero-title-accent {
+  background-image: linear-gradient(90deg, #A5B4FC 0%, #38BDF8 45%, #E0F2FE 100%);
+}
+
+/* Light mode: galaxy-filled title — nebula colours with tiny stars inside the
+   letters, drifting slowly. Dark mode keeps the white + accent title. */
+html:not(.dark) .hero-line {
+  background-image:
+    radial-gradient(circle at 22% 30%, rgba(255, 255, 255, 0.95) 0 0.9px, transparent 1.7px),
+    radial-gradient(circle at 68% 64%, rgba(214, 228, 245, 0.85) 0 0.7px, transparent 1.4px),
+    radial-gradient(circle at 45% 85%, rgba(255, 255, 255, 0.7) 0 0.6px, transparent 1.2px),
+    radial-gradient(55% 140% at 12% 45%, rgba(30, 64, 120, 0.85) 0%, transparent 62%),
+    radial-gradient(45% 140% at 62% 55%, rgba(22, 52, 96, 0.9) 0%, transparent 62%),
+    radial-gradient(35% 120% at 92% 35%, rgba(43, 87, 151, 0.6) 0%, transparent 62%),
+    linear-gradient(90deg, #050B18 0%, #0B1A33 35%, #0F2747 65%, #050B18 100%);
+  background-size: 23px 19px, 37px 31px, 53px 47px, 200% 100%, 200% 100%, 200% 100%, 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: heroGalaxyDrift 26s linear infinite;
+}
+html:not(.dark) .hero-line.hero-title-accent {
+  background-image:
+    radial-gradient(circle at 22% 30%, rgba(255, 255, 255, 1) 0 0.95px, transparent 1.8px),
+    radial-gradient(circle at 68% 64%, rgba(255, 255, 255, 0.9) 0 0.75px, transparent 1.5px),
+    radial-gradient(circle at 45% 85%, rgba(255, 255, 255, 0.75) 0 0.6px, transparent 1.3px),
+    radial-gradient(50% 140% at 15% 50%, rgba(37, 84, 150, 0.95) 0%, transparent 62%),
+    radial-gradient(45% 140% at 55% 45%, rgba(28, 72, 135, 0.95) 0%, transparent 62%),
+    radial-gradient(35% 130% at 90% 55%, rgba(52, 104, 176, 0.75) 0%, transparent 62%),
+    linear-gradient(90deg, #0B1A33 0%, #12305A 35%, #173E73 65%, #0B1A33 100%);
+}
+html:not(.dark) .hero-title {
+  filter: drop-shadow(0 10px 22px rgba(11, 26, 51, 0.18));
+}
+@keyframes heroGalaxyDrift {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0% 0, 100% 0, 30% 0, 0% 0;
+  }
+  to {
+    background-position: 46px 19px, -74px 31px, 53px -47px, 100% 0, 0% 0, 130% 0, 100% 0;
+  }
+}
+
+.hero-cta-primary {
+  background: linear-gradient(135deg, #01427C 0%, #027DF7 100%);
+  box-shadow: 0 12px 28px -10px rgba(2, 125, 247, 0.6);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.hero-cta-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px -12px rgba(2, 125, 247, 0.75);
+}
+.dark .hero-cta-primary {
+  background: linear-gradient(135deg, #2563EB 0%, #38BDF8 100%);
+  box-shadow: 0 12px 32px -10px rgba(56, 189, 248, 0.55);
+}
+
+/* ---------- Astronaut (dark mode, desktop) ---------- */
+/* sits on the moon's outer side (left in RTL) and points up at it from there */
+.hero-astronaut {
+  position: absolute;
+  /* finger (≈95% across, 22% down the image) lands just off the moon's edge, at mid-height */
+  width: 60%;
+  inset-inline-end: -59%;
+  bottom: -7%;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 22px rgba(148, 197, 255, 0.12));
+}
+@media (max-width: 1279px) {
+  .hero-astronaut { width: 56%; inset-inline-end: -55%; bottom: -3%; }
+}
+@media (min-width: 1536px) {
+  .hero-astronaut { width: 66%; inset-inline-end: -65%; bottom: -13%; }
+}
+@keyframes astronautFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-2deg); }
+  50% { transform: translate3d(-6px, -14px, 0) rotate(2.5deg); }
+}
+.hero-astronaut-float {
+  animation: astronautFloat 7s ease-in-out infinite;
+  will-change: transform;
+}
+/* the image points right (RTL: astronaut left of the moon); mirror it in LTR */
+[dir='ltr'] .hero-astronaut-flip {
+  transform: scaleX(-1);
+}
+
+/* ---------- Hero → achievements seam ---------- */
+/* the hero eases into a "seam" colour, and the achievements section starts
+   from that same colour and eases into its navy, so nothing jumps */
+.hero-bottom-fade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 240px;
+  z-index: -10;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(247, 250, 252, 0) 0%,
+    rgba(247, 250, 252, 0.35) 35%,
+    rgba(247, 250, 252, 0.75) 65%,
+    #F7FAFC 100%
+  );
+}
+.dark .hero-bottom-fade {
+  background: linear-gradient(
+    180deg,
+    rgba(6, 13, 23, 0) 0%,
+    rgba(6, 13, 23, 0.4) 35%,
+    rgba(6, 13, 23, 0.8) 65%,
+    #060D17 100%
+  );
+}
+.stats-blend {
+  background: linear-gradient(
+    180deg,
+    #F7FAFC 0px,
+    #E4EFFA 28px,
+    #C3DAF1 58px,
+    #8EB5DC 92px,
+    #4F86BF 128px,
+    #1D5C9A 165px,
+    #01427C 205px,
+    #01427C 100%
+  );
+}
+/* texture fades in with the colour so the seam has no edge */
+.stats-noise {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 220px);
+  mask-image: linear-gradient(180deg, transparent 0, #000 220px);
+}
+.dark .stats-blend {
+  background: linear-gradient(
+    180deg,
+    #060D17 0px,
+    #07132A 40px,
+    #0A2246 85px,
+    #07305E 130px,
+    #033A70 168px,
+    #01427C 210px,
+    #01427C 100%
+  );
+}
+
+/* ---------- Hero planet (desktop only; not mounted below 1024px) ---------- */
+.hero-planet {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .hero-planet {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    inset-inline-end: 4vw;
+    width: min(40vw, 620px, 78dvh);
+    translate: 0 -46%;
+  }
+}
+@media (min-width: 1536px) {
+  .hero-planet { inset-inline-end: 7vw; }
+}
+/* dark mode: a smaller moon, nudged toward the centre (room for an astronaut) */
+@media (min-width: 1024px) {
+  .dark .hero-planet {
+    width: min(28vw, 440px, 58dvh);
+    inset-inline-end: 17vw;
+    translate: 0 -50%;
+  }
+}
+@media (min-width: 1536px) {
+  .dark .hero-planet { inset-inline-end: 19vw; }
+}
+
+.hv-perspective {
+  perspective: 1400px;
+}
+.hv-atmosphere {
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(2, 125, 247, 0.07) 44%, transparent 64%);
+}
+/* light-mode Earth: atmosphere rim hugging the sphere + soft shadow below */
+.hv-rim {
+  box-shadow:
+    0 0 60px -8px rgba(56, 189, 248, 0.45),
+    inset 0 0 46px -6px rgba(56, 189, 248, 0.35),
+    inset -18px -22px 60px -20px rgba(1, 66, 124, 0.18);
+}
+.hv-ground-shadow {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: -2%;
+  height: 9%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(1, 66, 124, 0.22), transparent);
+  pointer-events: none;
+}
+.dark .hv-atmosphere {
+  background: radial-gradient(circle, rgba(186, 214, 255, 0.16) 0%, rgba(125, 160, 230, 0.07) 42%, transparent 64%);
+}
+/* no WebGL: a soft painted moon */
+.moon-fallback::before {
+  content: '';
+  position: absolute;
+  inset: 6%;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 34% 40%, rgba(0, 0, 0, 0.08) 0 9%, transparent 10%),
+    radial-gradient(circle at 58% 62%, rgba(0, 0, 0, 0.07) 0 12%, transparent 13%),
+    radial-gradient(circle at 62% 32%, rgba(0, 0, 0, 0.06) 0 6%, transparent 7%),
+    radial-gradient(circle at 65% 35%, #F1F3F6 0%, #C9CED6 55%, #8E96A3 100%);
+  box-shadow: 0 0 80px rgba(160, 190, 235, 0.35);
+}
+
+@keyframes heroScrollDot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+.hero-scroll-dot {
+  animation: heroScrollDot 1.8s ease-in-out infinite;
+}
+
+/* ======================================================== */
+/* REDUCED MOTION                                           */
+/* ======================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ======================================================== */
+/* VIRGOL WORKING GROUPS                                    */
+/* ======================================================== */
+.vg-card {
+  --accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+  --accent-ink: var(--accent);
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: 132px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid rgba(1, 66, 124, 0.07);
+  box-shadow: 0 1px 2px rgba(1, 66, 124, 0.04), 0 12px 28px -22px rgba(1, 66, 124, 0.35);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+@media (min-width: 640px) {
+  .vg-card { height: 140px; }
+}
+.dark .vg-card {
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, transparent);
+  --accent-ink: color-mix(in srgb, var(--accent) 55%, #fff);
+  background: linear-gradient(135deg, #0B1628 0%, #08111F 100%);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 14px 30px -22px rgba(0, 0, 0, 0.9);
+}
+.vg-card:hover,
+.vg-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 22px 40px -24px color-mix(in srgb, var(--accent) 75%, transparent);
+}
+.vg-card:focus-visible {
+  outline: 2px solid var(--accent-ink);
+  outline-offset: 3px;
+}
+
+/* clipped background layer: glow circle + watermark number */
+.vg-card-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.vg-spot {
+  position: absolute;
+  inset-inline-start: 2px;
+  bottom: -38px;
+  width: 136px;
+  height: 136px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--accent) 30%, transparent) 0%, var(--accent-soft) 52%, transparent 72%);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.vg-watermark {
+  position: absolute;
+  inset-inline-end: 14px;
+  top: 6px;
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: color-mix(in srgb, var(--accent) 8%, transparent);
+  transition: color 0.4s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dark .vg-watermark { color: color-mix(in srgb, var(--accent) 16%, transparent); }
+.vg-card:hover .vg-watermark {
+  color: color-mix(in srgb, var(--accent) 16%, transparent);
+  transform: translateY(4px);
+}
+
+/* character pops out above the card's top edge */
+.vg-figure {
+  position: relative;
+  width: 104px;
+  flex-shrink: 0;
+}
+@media (min-width: 640px) {
+  .vg-figure { width: 112px; }
+}
+.vg-character {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  translate: -50% 0;
+  height: 154px;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  user-select: none;
+  filter: drop-shadow(0 8px 10px rgba(1, 66, 124, 0.16));
+  transform-origin: bottom center;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (min-width: 640px) {
+  .vg-character { height: 164px; }
+}
+.dark .vg-character { filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.55)); }
+.vg-card:hover .vg-character { transform: translateY(-5px) scale(1.05); }
+.vg-card:hover .vg-spot { transform: scale(1.14); }
+
+.vg-body {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding-block: 14px;
+  padding-inline: 2px 16px;
+}
+
+.vg-icon {
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --accent-ink: var(--accent);
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  flex-shrink: 0;
+}
+.dark .vg-icon {
+  --accent-soft: color-mix(in srgb, var(--accent) 22%, transparent);
+  --accent-ink: color-mix(in srgb, var(--accent) 55%, #fff);
+}
+
+.vg-go {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.vg-card:hover .vg-go,
+.vg-card:focus-visible .vg-go {
+  background: var(--accent);
+  color: #fff;
+  transform: rotate(-8deg);
+}
+
+.vg-modal-stage .vg-spot {
+  inset-inline-start: auto;
+  left: 50%;
+  bottom: 10%;
+  width: 85%;
+  height: auto;
+  aspect-ratio: 1;
+  translate: -50% 0;
+}
+.vg-modal-stage {
+  --accent-soft: color-mix(in srgb, var(--accent) 10%, transparent);
+  background: linear-gradient(180deg, #F8FAFC 0%, color-mix(in srgb, var(--accent) 8%, #F8FAFC) 100%);
+}
+.dark .vg-modal-stage {
+  --accent-soft: color-mix(in srgb, var(--accent) 18%, transparent);
+  background: linear-gradient(180deg, #0B1728 0%, color-mix(in srgb, var(--accent) 12%, #07101E) 100%);
+}
+.vg-step {
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: #fff;
+  background: var(--accent);
+}

@@ -102,7 +102,7 @@ export const LiquidPreloader: React.FC<LiquidPreloaderProps> = ({
                 repeat: Infinity,
                 ease: 'easeInOut',
               }}
-              className="w-[420px] h-[420px] rounded-full bg-radial from-[#027DF7]/20 via-[#38BDF8]/10 to-transparent blur-3xl"
+              className="w-[420px] h-[420px] rounded-full bg-radial from-[#027DF7]/20 via-[#38BDF8]/10 to-transparent"
             />
           </div>
 
