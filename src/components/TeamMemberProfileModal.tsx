@@ -165,6 +165,16 @@ export const TeamMemberProfileModal: React.FC<TeamMemberProfileModalProps> = ({
                     </svg>
                     <span>{language === 'fa' ? 'اینستاگرام' : 'Instagram'}</span>
                   </a>
+
+                  {/* Public profile page (indexable, carries the person's name for search) */}
+                  {person.profileUrl && (
+                    <a
+                      href={person.profileUrl}
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#01427C] hover:bg-[#027DF7] text-white border border-[#01427C] text-xs font-bold transition-all duration-200"
+                    >
+                      <span>{language === 'fa' ? `صفحه ${person.name}` : `${person.nameEn}'s page`}</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

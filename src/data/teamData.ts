@@ -17,6 +17,8 @@ export interface TeamPerson {
   skillsEn?: string[];
   experienceFa?: string;
   experienceEn?: string;
+  /** public, indexable profile page */
+  profileUrl?: string;
 }
 
 export const teamPeople: TeamPerson[] = [
@@ -159,6 +161,7 @@ export const teamPeople: TeamPerson[] = [
     name: 'آرین جوان',
     nameEn: 'Arian Javan',
     image: '/team/ارین.png',
+    profileUrl: '/team/arian-javan/',
     placement: 'member',
     role: 'تحقیق و توسعه (R&D) · برنامه‌نویس فول‌استک',
     roleEn: 'R&D · Full-Stack Developer',

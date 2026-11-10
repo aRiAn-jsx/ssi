@@ -51,4 +51,14 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://ssiholding.co/team/arian-javan/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+      <image:loc>https://ssiholding.co/team/arian-javan/arian-javan.jpg</image:loc>
+      <image:title>آرین جوان (Arian Javan)</image:title>
+    </image:image>
+  </url>
 </urlset>
