@@ -4,8 +4,9 @@ export interface TeamPerson {
   id: string;
   name: string;
   nameEn: string;
-  image: string;
-  placement: 'lead' | 'advisor' | 'executive' | 'member';
+  /** empty → an initials placeholder is shown */
+  image?: string;
+  placement: 'council' | 'ceo' | 'deputy' | 'manager' | 'member';
   role: string;
   roleEn: string;
   bioFa?: string;
@@ -20,11 +21,60 @@ export interface TeamPerson {
 
 export const teamPeople: TeamPerson[] = [
   {
+    id: 'sabeghi',
+    name: 'دکتر صابقی مقدم',
+    nameEn: 'Dr. Sabeghi Moghaddam',
+    placement: 'council',
+    role: 'شورای عالی',
+    roleEn: 'Supreme Council',
+    bioFa: 'عضو شورای عالی هلدینگ؛ سیاست‌گذاری کلان، نظارت راهبردی و تصویب جهت‌گیری‌های بلندمدت مجموعه.',
+    bioEn: 'Member of the Supreme Council: high-level policy, strategic oversight and approval of the group’s long-term direction.',
+  },
+  {
+    id: 'khorsand',
+    name: 'دکتر مجید خرسند',
+    nameEn: 'Dr. Majid Khorsand',
+    image: '/team/2026/khorsand.webp',
+    placement: 'deputy',
+    role: 'معاون طرح، برنامه و بودجه',
+    roleEn: 'Deputy of Planning, Programs & Budget',
+    bioFa: 'راهبری طرح‌ها و برنامه‌های هلدینگ، تدوین و کنترل بودجه و پایش تحقق اهداف سالانه.',
+    bioEn: 'Leads the holding’s plans and programs, budget preparation and control, and tracking of annual targets.',
+    telegram: 'https://t.me/saramad_ilya',
+    instagram: 'https://instagram.com/saramad_holding',
+  },
+  {
+    id: 'choupanzadeh',
+    name: 'امید چوپان‌زاده',
+    nameEn: 'Omid Choupanzadeh',
+    image: '/team/2026/choupanzadeh.webp',
+    placement: 'member',
+    role: 'تیم تولید محتوا',
+    roleEn: 'Content Production Team',
+    bioFa: 'عضو تیم تولید محتوای هلدینگ.',
+    bioEn: 'Member of the holding’s content production team.',
+    telegram: 'https://t.me/saramad_ilya',
+    instagram: 'https://instagram.com/saramad_holding',
+  },
+  {
+    id: 'pahlevan',
+    name: 'متین پهلوان',
+    nameEn: 'Matin Pahlevan',
+    image: '/team/2026/pahlevan.webp',
+    placement: 'member',
+    role: 'آموزش',
+    roleEn: 'Training',
+    bioFa: 'مسئول آموزش در معاونت اداری، پشتیبانی و مالی هلدینگ.',
+    bioEn: 'Responsible for training within the Administration, Support & Finance deputy.',
+    telegram: 'https://t.me/saramad_ilya',
+    instagram: 'https://instagram.com/saramad_holding',
+  },
+  {
     id: 'tahourian',
     name: 'حسین طهوریان',
     nameEn: 'Hossein Tahourian',
-    image: '/team/حسین طهوریان.png',
-    placement: 'lead',
+    image: '/team/2026/tahourian.webp',
+    placement: 'ceo',
     role: 'مدیرعامل',
     roleEn: 'Chief Executive Officer',
     bioFa: 'راهبری کلان استراتژیک، نظارت بر سبد شرکت‌های تابعه هلدینگ، مدیریت پرتفوی سرمایه‌گذاری و پیاده‌سازی حکمرانی شرکتی در تراز بازارهای مدرن سرمایه.',
@@ -41,9 +91,9 @@ export const teamPeople: TeamPerson[] = [
     name: 'هادی قلی‌نیاراد',
     nameEn: 'Hadi Gholiniarad',
     image: '/team/هادی راد.png',
-    placement: 'advisor',
-    role: 'مشاور',
-    roleEn: 'Advisor',
+    placement: 'deputy',
+    role: 'معاون اداری، پشتیبانی و مالی',
+    roleEn: 'Deputy of Administration, Support & Finance',
     bioFa: 'هدایت مشاوره‌ای در تدوین مدل‌های مالی، مهندسی سرمایه‌گذاری، مدیریت ریسک‌های سیستماتیک و ارتقای بازدهی اقتصادی ساختارهای هلدینگ.',
     bioEn: 'Advisory guidance in financial modeling, investment structuring, risk management, and economic asset optimization.',
     telegram: 'https://t.me/saramad_ilya',
@@ -58,9 +108,9 @@ export const teamPeople: TeamPerson[] = [
     name: 'دکتر جلال رسولی',
     nameEn: 'Dr. Jalal Rasouli',
     image: '/team/دکتر رسولی.png',
-    placement: 'executive',
-    role: 'مدیر برنامه‌نویسی',
-    roleEn: 'Programming Manager',
+    placement: 'deputy',
+    role: 'معاون فنی و اجرایی',
+    roleEn: 'Deputy of Technical & Operations',
     bioFa: 'رهبری معماری و مهندسی نرم‌افزار، توسعه سیستم‌های ابری با مقیاس‌پذیری بالا، مدیریت متدولوژی‌های چابک و خلق پلتفرم‌های دیجیتال هلدینگ.',
     bioEn: 'Leading software engineering and system architecture, scalable cloud infrastructure, agile engineering culture, and digital product suites.',
     telegram: 'https://t.me/saramad_ilya',
@@ -74,10 +124,10 @@ export const teamPeople: TeamPerson[] = [
     id: 'sajjad-azad',
     name: 'سجاد آزاد',
     nameEn: 'Sajjad Azad',
-    image: '/team/سجاد آزاد.jpg',
-    placement: 'executive',
-    role: 'فیلم‌نامه‌نویس و مدیر تولید محتوا',
-    roleEn: 'Screenwriter & Content Production Manager',
+    image: '/team/2026/sajjad-azad.webp',
+    placement: 'manager',
+    role: 'مدیر تولید محتوا',
+    roleEn: 'Content Production Manager',
     bioFa: 'نگارش فیلم‌نامه، طراحی سناریوهای خلاقانه چندرسانه‌ای، تدوین استراتژی جامع رسانه‌ای، رهبری کمپین‌های تبلیغاتی، داستان‌سرایی برند و مدیریت تولید محتوای هلدینگ.',
     bioEn: 'Screenwriting and creative script development, directing omnichannel media strategy, multimedia production, brand narrative, and corporate communications.',
     telegram: 'https://t.me/saramad_ilya',
@@ -92,9 +142,9 @@ export const teamPeople: TeamPerson[] = [
     name: 'حمید حمیدی',
     nameEn: 'Hamid Hamidi',
     image: '/team/حمید حمیدی.png',
-    placement: 'executive',
-    role: 'مدیر اداری',
-    roleEn: 'Administrative Manager',
+    placement: 'manager',
+    role: 'مسئول دفتر',
+    roleEn: 'Office Manager',
     bioFa: 'یکپارچه‌سازی فرآیندهای اداری، هماهنگی دپارتمان‌های تابعه، استانداردهای تعالی سازمانی و ارتقای بهره‌وری زنجیره لجستیک هلدینگ.',
     bioEn: 'Operations and administrative workflow harmonization, corporate logistics standards, and operational excellence across subsidiaries.',
     telegram: 'https://t.me/saramad_ilya',
@@ -110,8 +160,8 @@ export const teamPeople: TeamPerson[] = [
     nameEn: 'Arian Javan',
     image: '/team/ارین.png',
     placement: 'member',
-    role: 'برنامه‌نویس فول‌استک',
-    roleEn: 'Full-Stack Developer',
+    role: 'تحقیق و توسعه (R&D) · برنامه‌نویس فول‌استک',
+    roleEn: 'R&D · Full-Stack Developer',
     bioFa: 'توسعه جامع فول‌استک سامانه‌ها، پیاده‌سازی معماری‌های مقیاس‌پذیر فرانت‌اند و بک‌اند، بهینه‌سازی پرفورمنس نرم‌افزار و مهندسی پلتفرم‌های دیجیتال هلدینگ.',
     bioEn: 'Full-stack engineering of scalable software systems, high-performance frontend and backend architectures, modern UI/UX, and robust digital platforms.',
     telegram: 'https://t.me/saramad_ilya',
@@ -125,10 +175,10 @@ export const teamPeople: TeamPerson[] = [
     id: 'alizadeh',
     name: 'حسین علیزاده',
     nameEn: 'Hossein Alizadeh',
-    image: '/team/حسین علیزاده.jpg',
+    image: '/team/2026/alizadeh.webp',
     placement: 'member',
-    role: 'توسعه‌دهنده وب',
-    roleEn: 'Web Developer',
+    role: 'تحقیق و توسعه (R&D) · توسعه‌دهنده وب',
+    roleEn: 'R&D · Web Developer',
     bioFa: 'پیاده‌سازی رابط‌های کاربری مدرن با React و Next.js، بهینه‌سازی پرفورمنس وب، انیمیشن‌های تعاملی و یکپارچه‌سازی رابط‌های کاربری پاسخ‌گرا.',
     bioEn: 'Modern UI development with React & Next.js, web performance optimization, fluid interactive micro-animations, and responsive UX.',
     telegram: 'https://t.me/saramad_ilya',
@@ -142,10 +192,10 @@ export const teamPeople: TeamPerson[] = [
     id: 'ramezani',
     name: 'امین رمضانی',
     nameEn: 'Amin Ramezani',
-    image: '/team/امین رمضانی.png',
+    image: '/team/2026/ramezani.webp',
     placement: 'member',
-    role: 'کارشناس بخش اداری',
-    roleEn: 'Administrative Specialist',
+    role: 'کارشناس دفتر',
+    roleEn: 'Office Specialist',
     bioFa: 'مدیریت پرونده‌های سازمانی، دبیرخانه مرکزی، تعامل با سهامداران و سازمان‌ها و پایش فرآیندهای انطباق مستندات هلدینگ.',
     bioEn: 'Corporate record coordination, executive documentation management, stakeholder coordination, and administrative compliance.',
     telegram: 'https://t.me/saramad_ilya',
@@ -172,27 +222,75 @@ export const teamPeople: TeamPerson[] = [
     experienceFa: 'بیش از ۴ سال پشتیبانی تخصصی',
     experienceEn: '+4 Years Technical Support',
   },
-  {
-    id: 'khoshkho',
-    name: 'مسعود خوشخو',
-    nameEn: 'Masoud Khoshkho',
-    image: '/team/مسعود خوشخو.png',
-    placement: 'member',
-    role: 'تدوینگر',
-    roleEn: 'Video Editor',
-    bioFa: 'تدوین خلاقانه موشن‌گرافیک و تیزرهای صنعتی، تصحیح رنگ سینمایی، طراحی صدا و تولید محتوای ویدیویی پریمیوم برای برندینگ هلدینگ.',
-    bioEn: 'Creative motion design, commercial and documentary video editing, cinematic color grading, sound design, and premium corporate videos.',
-    telegram: 'https://t.me/saramad_ilya',
-    instagram: 'https://instagram.com/saramad_holding',
-    skillsFa: ['تدوین ویدیو پریمیر', 'افترافکت و موشن‌گرافیک', 'اصلاح رنگ و نور', 'طراحی صدا'],
-    skillsEn: ['Premiere Pro', 'After Effects Motion', 'Color Grading', 'Sound Design'],
-    experienceFa: 'بیش از ۶ سال تدوین و موشن‌گرافی',
-    experienceEn: '+6 Years Video Production',
-  },
 ];
 
+/** Organisational chart (ids refer to teamPeople) */
+export interface OrgUnit {
+  id: string;
+  titleFa: string;
+  titleEn: string;
+  leadId?: string;
+  memberIds: string[];
+  /** open seats shown as "Coming soon" cards */
+  comingSoon?: number;
+}
+export interface OrgDeputy {
+  id: string;
+  titleFa: string;
+  titleEn: string;
+  deputyId: string;
+  units: OrgUnit[];
+}
+
+export const orgChart: { councilId: string; ceoId: string; deputies: OrgDeputy[] } = {
+  councilId: 'sabeghi',
+  ceoId: 'tahourian',
+  deputies: [
+    {
+      id: 'tech',
+      titleFa: 'معاونت فنی و اجرایی',
+      titleEn: 'Technical & Operations',
+      deputyId: 'rasouli',
+      units: [
+        { id: 'content', titleFa: 'تولید محتوا', titleEn: 'Content Production', leadId: 'sajjad-azad', memberIds: ['choupanzadeh'], comingSoon: 1 },
+        { id: 'rnd', titleFa: 'تحقیق و توسعه (R&D)', titleEn: 'Research & Development', memberIds: ['javan', 'alizadeh'], comingSoon: 1 },
+      ],
+    },
+    {
+      id: 'planning',
+      titleFa: 'معاونت طرح، برنامه و بودجه',
+      titleEn: 'Planning, Programs & Budget',
+      deputyId: 'khorsand',
+      units: [],
+    },
+    {
+      id: 'admin',
+      titleFa: 'معاونت اداری، پشتیبانی و مالی',
+      titleEn: 'Administration, Support & Finance',
+      deputyId: 'rad',
+      units: [
+        { id: 'office', titleFa: 'دفتر، آموزش و پشتیبانی', titleEn: 'Office, Training & Support', leadId: 'hamidi', memberIds: ['ramezani', 'pahlevan', 'vaziri'] },
+      ],
+    },
+  ],
+};
+
+// display order, top of the chart down
+const ORDER = [
+  'sabeghi', 'tahourian',
+  'rasouli', 'khorsand', 'rad',
+  'sajjad-azad', 'hamidi',
+  'choupanzadeh', 'javan', 'alizadeh', 'ramezani', 'pahlevan', 'vaziri',
+];
+
+/** two-letter monogram for people without a photo */
+export const initialsOf = (name: string) =>
+  name.replace(/^(دکتر|Dr\.)\s*/, '').split(/\s+/).slice(0, 2).map((w) => w[0]).join('‌');
+
 export const getTeamPeople = (language: Language) =>
-  teamPeople.map((person) => ({
+  [...teamPeople]
+    .sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id))
+    .map((person) => ({
     ...person,
     displayName: language === 'fa' ? person.name : person.nameEn,
     displayRole: language === 'fa' ? person.role : person.roleEn,

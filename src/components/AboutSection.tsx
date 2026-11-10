@@ -76,28 +76,22 @@ export const AboutSection: React.FC = () => {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 relative flex justify-center"
           >
-            {/* Intense Blue Glow Behind Image */}
-            <div className="absolute -inset-6 rounded-[36px] bg-gradient-to-br from-[#027DF7]/30 via-[#D5ECFE]/50 to-transparent blur-3xl -z-10" />
+            {/* Soft glow behind the phone */}
+            <div className="absolute inset-[8%] rounded-full bg-radial from-[#027DF7]/25 via-[#38BDF8]/10 to-transparent -z-10" />
 
-            <div className="relative w-full max-w-lg rounded-[28px] p-2.5 liquid-glass-card shadow-2xl">
-              <div className="relative rounded-[22px] overflow-hidden aspect-[4/5] sm:aspect-[4/4.5] group">
+            <div className="relative w-full max-w-lg">
+              {/* HQ location: floating phone with the map to the office */}
+              <div className="about-phone-float">
                 <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
-                  alt={language === 'fa' ? 'تیم متخصص مشاوره تجاری و سرمایه گذاری در هلدینگ ایلیا' : t.about.title}
+                  src="/assets/about/hq-map-phone.webp"
+                  alt={language === 'fa' ? 'نقشه دفتر مرکزی هلدینگ ایلیا در مشهد، بزرگمهر شمالی ۲، پلاک ۴۴، طبقه ۳' : 'Map to Ilya Holding head office in Mashhad'}
+                  width={1000}
+                  height={1069}
                   loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  decoding="async"
+                  className="w-full h-auto select-none"
+                  draggable={false}
                 />
-                <div className="absolute inset-0 bg-[#027DF7]/10 mix-blend-multiply" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#01427C]/80 via-transparent to-transparent" />
-
-                <div className={`absolute bottom-5 ${isRtl ? 'right-5 text-right' : 'left-5 text-left'} right-5 left-5 text-white`}>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/25 backdrop-blur-md inline-block mb-2">
-                    {t.about.badgeOffice}
-                  </span>
-                  <p className="text-sm font-medium text-white/90">
-                    {t.about.badgeOfficeDesc}
-                  </p>
-                </div>
               </div>
 
               {/* Floating Mini-Card 1 */}
@@ -106,7 +100,7 @@ export const AboutSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, delay: 0.3 }}
-                className={`absolute -top-6 ${isRtl ? '-left-6 sm:-left-8' : '-right-6 sm:-right-8'}`}
+                className={`absolute top-[42%] ${isRtl ? '-left-2 sm:-left-6' : '-right-2 sm:-right-6'}`}
               >
                 <GlassCard className="p-3.5 shadow-xl max-w-[200px]">
                   <div className="flex items-center gap-3">

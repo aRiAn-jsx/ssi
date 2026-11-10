@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Award, Briefcase, ExternalLink, MessageCircle, Send, ArrowUpLeft, ArrowUpRight } from 'lucide-react';
-import type { TeamPerson } from '../data/teamData';
+import { initialsOf, type TeamPerson } from '../data/teamData';
 import { useLanguage } from '../context/LanguageContext';
 
 interface TeamMemberProfileModalProps {
@@ -96,11 +96,17 @@ export const TeamMemberProfileModal: React.FC<TeamMemberProfileModalProps> = ({
               {/* Photo Frame */}
               <div className="relative shrink-0 group">
                 <div className="w-28 h-36 sm:w-36 sm:h-48 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl shadow-[#01427C]/20 border-2 border-[#027DF7]/40 dark:border-[#027DF7]/60 bg-gradient-to-b from-[#D5ECFE] to-[#01427C]/30 relative">
-                  <img
-                    src={person.image}
-                    alt={person.displayName}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  />
+                  {person.image ? (
+                    <img
+                      src={person.image}
+                      alt={person.displayName}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#027DF7] to-[#01427C] text-white text-4xl font-black">
+                      {initialsOf(person.displayName)}
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#012140]/40 to-transparent pointer-events-none" />
                 </div>
                 <div className="absolute -bottom-2 sm:-bottom-2.5 inset-x-2 py-0.5 sm:py-1 rounded-full bg-[#027DF7] text-white text-[11.5px] sm:text-[11px] font-bold text-center shadow-md">

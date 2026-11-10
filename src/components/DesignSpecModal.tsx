@@ -291,7 +291,7 @@ export const DesignSpecModal: React.FC<DesignSpecModalProps> = ({ isOpen, onClos
 
                 <div className="p-4 rounded-2xl bg-[#F7FAFC] dark:bg-[#0A1A2F] border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-sm">
                   <span className="text-xs font-extrabold text-[#01427C] dark:text-[#38BDF8] block mb-2">
-                    دسکتاپ و مانیتورهای عریض (۱۰۲۴+ پیکسل)
+                    دسکتاپ و مانیتورهای عریض (+۱۰۲۴ پیکسل)
                   </span>
                   <ul className="text-xs text-[#64748B] dark:text-[#94A3B8] space-y-1.5">
                     <li>• نوبار کپسولی شناور کامل با بابل متحرک هاور</li>

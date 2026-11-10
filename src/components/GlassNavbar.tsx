@@ -64,7 +64,7 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
     {
       id: 'stats',
       label: language === 'fa' ? 'شاخص‌ها و آمار کلیدی' : 'Key Statistics',
-      description: language === 'fa' ? '۱۴+ سال، ۸ نشان ISO، ۳ برند زیرمجموعه' : '14+ Years, 8 ISO Badges, 3 Core Brands',
+      description: language === 'fa' ? '+۱۴ سال، ۸ نشان ISO، ۳ برند زیرمجموعه' : '14+ Years, 8 ISO Badges, 3 Core Brands',
       href: '#stats',
       icon: TrendingUp,
     },

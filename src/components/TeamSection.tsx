@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Users, ArrowLeft, ArrowRight, ArrowUpLeft, ArrowUpRight } from 'lucide-react';
-import { getTeamPeople } from '../data/teamData';
+import { Users, ArrowUpLeft, ArrowUpRight } from 'lucide-react';
+import { getTeamPeople, orgChart, initialsOf } from '../data/teamData';
 import { TeamPhotoCard } from './TeamPhotoCard';
 import { TeamMemberProfileModal } from './TeamMemberProfileModal';
 import { useLanguage } from '../context/LanguageContext';
@@ -12,52 +12,35 @@ interface TeamSectionProps {
   onGoToConsultation?: () => void;
 }
 
+type Person = ReturnType<typeof getTeamPeople>[0];
+
+/**
+ * Home-page team block, laid out like the org chart:
+ * council + CEO → three deputies → everyone else as compact chips.
+ */
 export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage, onGoToConsultation }) => {
   const { language, isRtl, t } = useLanguage();
+  const fa = language === 'fa';
   const team = getTeamPeople(language);
-  const [selectedPerson, setSelectedPerson] = useState<ReturnType<typeof getTeamPeople>[0] | null>(null);
+  const byId = (id: string) => team.find((p) => p.id === id)!;
+  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
 
-  useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
+  const leaders = [byId(orgChart.councilId), byId(orgChart.ceoId)];
+  const deputies = orgChart.deputies.map((d) => ({ title: fa ? d.titleFa : d.titleEn, person: byId(d.deputyId) }));
+  const rest = team.filter((p) => p.placement === 'manager' || p.placement === 'member');
 
-    const updateArrows = () => {
-      const first = carousel.firstElementChild?.getBoundingClientRect();
-      const last = carousel.lastElementChild?.getBoundingClientRect();
-      const viewport = carousel.getBoundingClientRect();
-      setCanScrollLeft(Boolean(first && last && Math.min(first.left, last.left) < viewport.left - 1));
-      setCanScrollRight(Boolean(first && last && Math.max(first.right, last.right) > viewport.right + 1));
-    };
-
-    updateArrows();
-    carousel.addEventListener('scroll', updateArrows, { passive: true });
-    window.addEventListener('resize', updateArrows);
-    return () => {
-      carousel.removeEventListener('scroll', updateArrows);
-      window.removeEventListener('resize', updateArrows);
-    };
-  }, [isRtl]);
-
-  const scrollTeam = (direction: -1 | 1) => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-    const card = carousel.firstElementChild as HTMLElement | null;
-    const gap = parseFloat(getComputedStyle(carousel).columnGap) || 0;
-    carousel.scrollBy({
-      left: direction * ((card?.getBoundingClientRect().width ?? carousel.clientWidth) + gap),
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
-    });
-  };
+  const reveal = (delay: number) => ({
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-60px' },
+    transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] as const },
+  });
 
   return (
-    <section id="team" className="relative py-16 md:py-24 bg-[#F7FAFC] dark:bg-[#060D17] overflow-hidden border-t border-b border-[#027DF7]/20 dark:border-[#027DF7]/35 transition-colors duration-300">
-      <div className={`absolute top-1/2 ${isRtl ? '-left-20' : '-right-20'} w-96 h-96 rounded-full bg-[#D5ECFE]/40 dark:bg-[#027DF7]/10 blur-3xl pointer-events-none -z-10`} />
+    <section id="team" className="relative py-16 md:py-24 bg-[#F7FAFC] dark:bg-[#060D17] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full relative z-10">
-        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
+        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D5ECFE]/60 dark:bg-[#027DF7]/20 border border-[#027DF7]/20 text-[#01427C] dark:text-[#38BDF8] text-xs font-bold mb-4">
             <Users className="w-4 h-4 text-[#027DF7]" />
             <span>{t.team.eyebrow}</span>
@@ -66,52 +49,72 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage, onGoTo
             {t.team.title}
           </h2>
           <p className="text-sm sm:text-base text-[#64748B] dark:text-slate-300 leading-relaxed">
-            {language === 'fa' ? 'با اعضای تیم سرآمد سرمایه ایلیا آشنا شوید.' : 'Meet the Saramad Capital Ilya team.'}
+            {fa ? 'شورای عالی، مدیریت ارشد و معاونت‌های هلدینگ ایلیا' : 'The Supreme Council, executive management and deputies of Ilya Holding'}
           </p>
         </div>
 
-        {/* Carousel */}
-        <div ref={carouselRef} className="team-carousel" dir={isRtl ? 'rtl' : 'ltr'} role="region" aria-label={t.team.title} tabIndex={0}>
-          {team.map((person, index) => (
-            <motion.div
-              key={person.id}
-              className="team-carousel__item"
-              dir={isRtl ? 'rtl' : 'ltr'}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: Math.min(index, 3) * 0.1 }}
-            >
+        {/* Tier 1 */}
+        <div className="team-home__leaders">
+          {leaders.map((person, i) => (
+            <motion.div key={person.id} className="team-home__card team-home__card--lead" {...reveal(i * 0.08)}>
               <TeamPhotoCard person={person} onClick={() => setSelectedPerson(person)} />
             </motion.div>
           ))}
         </div>
 
-        <div className="flex justify-center gap-3 mt-6 mb-8" dir="ltr">
-          <button type="button" onClick={() => scrollTeam(-1)} disabled={!canScrollLeft} aria-label={language === 'fa' ? 'نمایش اعضای سمت چپ' : 'Show team members to the left'} className="team-carousel__arrow">
-            <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-          </button>
-          <button type="button" onClick={() => scrollTeam(1)} disabled={!canScrollRight} aria-label={language === 'fa' ? 'نمایش اعضای سمت راست' : 'Show team members to the right'} className="team-carousel__arrow">
-            <ArrowRight className="w-5 h-5" aria-hidden="true" />
-          </button>
+        <div className="team-home__spine" aria-hidden="true" />
+
+        {/* Tier 2 */}
+        <div className="team-home__deputies">
+          {deputies.map(({ title, person }, i) => (
+            <motion.div key={person.id} className="team-home__deputy" {...reveal(0.15 + i * 0.08)}>
+              <span className="team-home__deputy-title">{title}</span>
+              <div className="team-home__card">
+                <TeamPhotoCard person={person} onClick={() => setSelectedPerson(person)} />
+              </div>
+            </motion.div>
+          ))}
         </div>
 
+        {/* Everyone else */}
+        <motion.div className="team-home__crew" {...reveal(0.25)}>
+          <div className="team-home__crew-title">{fa ? 'مدیران واحدها و اعضای تیم' : 'Unit managers & team members'}</div>
+          <ul className="team-home__chips">
+            {rest.map((person) => (
+              <li key={person.id}>
+                <button type="button" className="team-chip" onClick={() => setSelectedPerson(person)}>
+                  <span className="team-chip__avatar">
+                    {person.image ? (
+                      <img src={person.image} alt="" loading="lazy" decoding="async" />
+                    ) : (
+                      <span>{initialsOf(person.displayName)}</span>
+                    )}
+                  </span>
+                  <span className="team-chip__text">
+                    <strong>{person.displayName}</strong>
+                    <small>{person.displayRole}</small>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+
         {onGoToTeamPage && (
-          <div className="text-center">
+          <div className="text-center mt-10">
             <button
               type="button"
               id="view-all-team-btn"
               onClick={onGoToTeamPage}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-[#071325] hover:bg-[#D5ECFE]/60 dark:hover:bg-[#027DF7]/25 text-[#01427C] dark:text-[#E0F2FE] hover:text-[#027DF7] dark:hover:text-[#38BDF8] text-xs sm:text-sm font-bold border border-[#027DF7]/25 dark:border-[#027DF7]/45 shadow-sm transition-all duration-200 group"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#01427C] dark:bg-[#0284C7] text-white text-sm font-bold shadow-md shadow-[#027DF7]/25 transition-transform hover:-translate-y-0.5 group"
             >
-              <span>{language === 'fa' ? 'مشاهده صفحه تیم' : 'View team page'}</span>
-              <ArrowIcon className="w-4 h-4 text-[#027DF7] group-hover:-translate-y-0.5 transition-transform" />
+              <span>{fa ? 'مشاهده چارت سازمانی کامل' : 'View the full org chart'}</span>
+              <ArrowIcon className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
             </button>
           </div>
         )}
       </div>
 
-      {/* Professional Profile Modal */}
       <TeamMemberProfileModal
         person={selectedPerson}
         isOpen={Boolean(selectedPerson)}

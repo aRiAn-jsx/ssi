@@ -1,83 +1,158 @@
-.team-carousel {
+/* ---------- Home team block (org-chart style) ---------- */
+.team-home__leaders {
   display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  overscroll-behavior-x: contain;
-  padding-bottom: 8px;
+  justify-content: center;
+  gap: clamp(14px, 3vw, 32px);
 }
+.team-home__card { width: 100%; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.team-home__card:hover { transform: translateY(-4px); }
+.team-home__card--lead { width: clamp(150px, 22vw, 260px); }
 
-.team-carousel::-webkit-scrollbar {
-  display: none;
+.team-home__spine {
+  width: 2px;
+  height: 34px;
+  margin: 0 auto;
+  background: rgba(2, 125, 247, 0.3);
 }
+.dark .team-home__spine { background: rgba(56, 189, 248, 0.35); }
 
-/* Side-by-side by default on mobile */
-.team-carousel__item {
-  flex: 0 0 calc((100% - 12px) / 2);
+.team-home__deputies {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2.5vw, 32px);
+  max-width: 860px;
+  margin: 0 auto;
+  padding-top: 26px;
+}
+.team-home__deputies::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  inset-inline: calc(100% / 6);
+  height: 2px;
+  background: rgba(2, 125, 247, 0.3);
+}
+.dark .team-home__deputies::before { background: rgba(56, 189, 248, 0.35); }
+
+.team-home__deputy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   min-width: 0;
-  scroll-snap-align: start;
 }
+.team-home__deputy::before {
+  content: '';
+  position: absolute;
+  top: -26px;
+  left: 50%;
+  width: 2px;
+  height: 26px;
+  translate: -1px 0;
+  background: rgba(2, 125, 247, 0.3);
+}
+.dark .team-home__deputy::before { background: rgba(56, 189, 248, 0.35); }
+.team-home__deputy-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #027df7;
+  text-align: center;
+  line-height: 1.5;
+  min-height: 3em;
+  display: flex;
+  align-items: flex-end;
+}
+.dark .team-home__deputy-title { color: #38bdf8; }
 
-.team-carousel__arrow {
+/* everyone else */
+.team-home__crew {
+  margin-top: clamp(32px, 5vw, 56px);
+  padding: clamp(16px, 2.5vw, 28px);
+  border-radius: 28px;
+  background: #fff;
+  border: 1px solid rgba(1, 66, 124, 0.08);
+  box-shadow: 0 18px 40px -30px rgba(1, 66, 124, 0.45);
+}
+.dark .team-home__crew {
+  background: #0a1424;
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: none;
+}
+.team-home__crew-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #01427c;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.dark .team-home__crew-title { color: #e0f2fe; }
+
+.team-home__chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.team-chip {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 18px;
+  text-align: start;
+  cursor: pointer;
+  background: rgba(213, 236, 254, 0.28);
+  border: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.team-chip:hover,
+.team-chip:focus-visible {
+  background: rgba(213, 236, 254, 0.6);
+  border-color: rgba(2, 125, 247, 0.25);
+  transform: translateY(-2px);
+}
+.dark .team-chip { background: rgba(2, 125, 247, 0.07); }
+.dark .team-chip:hover,
+.dark .team-chip:focus-visible { background: rgba(2, 125, 247, 0.16); border-color: rgba(56, 189, 248, 0.3); }
+.team-chip__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid #d5ecfe;
-  border-radius: 50%;
-  background: #fff;
-  color: #01427c;
-  cursor: pointer;
-  transition: background-color .2s ease, color .2s ease, opacity .2s ease;
-}
-
-.team-carousel__arrow:hover:not(:disabled) {
-  background: #027df7;
+  background: linear-gradient(160deg, #027df7, #01427c);
   color: #fff;
+  font-weight: 900;
+  box-shadow: 0 0 0 2px #fff, 0 6px 14px -6px rgba(1, 66, 124, 0.6);
 }
-
-.team-carousel__arrow:focus-visible {
-  outline: 2px solid #027df7;
-  outline-offset: 3px;
+.dark .team-chip__avatar { box-shadow: 0 0 0 2px #0a1424, 0 6px 14px -6px rgba(0, 0, 0, 0.8); }
+.team-chip__avatar img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.team-chip__text { display: flex; flex-direction: column; min-width: 0; line-height: 1.45; }
+.team-chip__text strong { font-size: 14px; font-weight: 800; color: #01427c; }
+.team-chip__text small {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+.dark .team-chip__text strong { color: #f8fafc; }
+.dark .team-chip__text small { color: #94a3b8; }
 
-.team-carousel__arrow:disabled {
-  opacity: .35;
-  cursor: not-allowed;
-}
-
-@media (min-width: 480px) {
-  .team-carousel { gap: 20px; }
-  .team-carousel__item { flex-basis: calc((100% - 20px) / 2); }
-}
-
-@media (min-width: 768px) {
-  .team-carousel { gap: 28px; }
-  .team-carousel__item { flex-basis: calc((100% - 56px) / 3); }
-}
-
-@media (min-width: 1024px) {
-  .team-carousel { gap: 32px; }
-  .team-carousel__item { flex-basis: calc((100% - 96px) / 4); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .team-carousel { scroll-behavior: auto; }
-}
-
-/* Dark Mode Carousel Arrows */
-html.dark .team-carousel__arrow,
-.dark .team-carousel__arrow {
-  background: #0d2038;
-  border-color: rgba(56, 189, 248, 0.25);
-  color: #38bdf8;
-}
-
-html.dark .team-carousel__arrow:hover:not(:disabled),
-.dark .team-carousel__arrow:hover:not(:disabled) {
-  background: #027df7;
-  color: #ffffff;
+@media (max-width: 639px) {
+  .team-home__deputies { gap: 8px; }
+  .team-home__deputy-title { font-size: 11px; }
+  .team-home__deputy .team-photo-card__name { font-size: 0.85rem; }
+  .team-home__deputy .team-photo-card__role { font-size: 11px; }
+  .team-home__deputy .team-photo-card__content { inset-inline: 8px; bottom: 8px; }
+  .team-home__deputy .team-photo-card__socials { display: none; }
 }

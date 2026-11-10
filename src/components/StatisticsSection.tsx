@@ -74,10 +74,8 @@ export const StatisticsSection: React.FC = () => {
 
                   {/* Value with CountUp */}
                   <div className="flex items-baseline gap-1 text-2xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-1 sm:mb-2">
-                    {/* in Persian the + reads after the number (left of it) */}
-                    {item.prefix && !isRtl && <span className="text-xl sm:text-3xl font-extrabold text-[#38BDF8]">{item.prefix}</span>}
+                    {item.prefix && <span className="text-xl sm:text-3xl font-extrabold text-[#38BDF8]">{item.prefix}</span>}
                     <CountUpNumber value={item.value} isRtl={isRtl} />
-                    {item.prefix && isRtl && <span className="text-xl sm:text-3xl font-extrabold text-[#38BDF8]">{item.prefix}</span>}
                     <span className="text-sm sm:text-lg font-bold text-[#D5ECFE]">
                       {item.suffix}
                     </span>

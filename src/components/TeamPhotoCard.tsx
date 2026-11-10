@@ -1,5 +1,5 @@
 import React from 'react';
-import type { TeamPerson } from '../data/teamData';
+import { initialsOf, type TeamPerson } from '../data/teamData';
 import './TeamPhotoCard.css';
 
 type TeamPhotoCardProps = {
@@ -22,7 +22,13 @@ export function TeamPhotoCard({ person, onClick }: TeamPhotoCardProps) {
         }
       }}
     >
-      <img className="team-photo-card__image" src={person.image} alt={person.displayName} loading="lazy" />
+      {person.image ? (
+        <img className="team-photo-card__image" src={person.image} alt={person.displayName} loading="lazy" decoding="async" />
+      ) : (
+        <div className="team-photo-card__placeholder" aria-hidden="true">
+          <span>{initialsOf(person.displayName)}</span>
+        </div>
+      )}
       <div className="team-photo-card__shade" aria-hidden="true" />
       
       {/* Content: Name and Role */}
@@ -66,5 +72,18 @@ export function TeamPhotoCard({ person, onClick }: TeamPhotoCardProps) {
         </a>
       </div>
     </article>
+  );
+}
+
+/** An open seat in the team ("Coming soon") */
+export function TeamComingSoonCard({ fa }: { fa: boolean }) {
+  return (
+    <div className="team-photo-card team-photo-card--soon" aria-label={fa ? 'به‌زودی' : 'Coming soon'}>
+      <div className="team-photo-card__soon-inner">
+        <span className="team-photo-card__soon-plus" aria-hidden="true">+</span>
+        <strong>{fa ? 'به‌زودی' : 'Coming soon'}</strong>
+        <small>{fa ? 'عضو جدید تیم' : 'New team member'}</small>
+      </div>
+    </div>
   );
 }

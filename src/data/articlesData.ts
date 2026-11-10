@@ -62,7 +62,7 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     statsHighlight: {
       label: 'افزایش نرخ شارپ پورتفوی',
       value: '۲.۴x',
-      change: '۳۸٪+',
+      change: '+۳۸٪',
       note: 'در مقایسه با میانگین شاخص کل بازارهای رقیب',
     },
     sections: [
@@ -221,7 +221,7 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     statsHighlight: {
       label: 'بازدهی نقدی تقسیمی مستمر',
       value: '۳۴.۵٪',
-      change: '۶.۲٪+',
+      change: '+۶.۲٪',
       note: 'سود نقدی سالانه حاصل از اجاره‌داری واحدهای مدرن',
     },
     sections: [

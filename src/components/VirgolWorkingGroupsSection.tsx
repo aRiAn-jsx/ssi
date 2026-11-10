@@ -785,13 +785,13 @@ export const VirgolWorkingGroupsSection: React.FC<VirgolWorkingGroupsSectionProp
           </p>
           <div className="flex items-center gap-2 shrink-0">
             <a
-              href="https://virgol.ac"
+              href="https://virgool.ac"
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-2.5 rounded-full bg-[#01427C] dark:bg-[#0284C7] text-white text-sm font-bold flex items-center gap-2 transition-transform hover:-translate-y-0.5"
             >
               <ExternalLink className="w-4 h-4" />
-              virgol.ac
+              virgool.ac
             </a>
             <button
               type="button"
@@ -913,13 +913,13 @@ export const VirgolWorkingGroupsSection: React.FC<VirgolWorkingGroupsSectionProp
                     {fa ? 'مشاوره و ثبت‌نام' : 'Enroll & Consult'}
                   </button>
                   <a
-                    href="https://virgol.ac"
+                    href="https://virgool.ac"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto py-3 px-5 rounded-full text-[#01427C] dark:text-[#E0F2FE] border border-[#01427C]/20 dark:border-[rgba(255,255,255,0.15)] font-bold text-sm transition-colors hover:border-[#027DF7] flex items-center justify-center gap-2"
                   >
                     <ExternalLink className="w-4 h-4" />
-                    virgol.ac
+                    virgool.ac
                   </a>
                 </div>
               </div>

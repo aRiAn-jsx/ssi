@@ -826,6 +826,11 @@ html:not(.dark) .hero-title {
   transform: scaleX(-1);
 }
 
+/* About: the HQ map phone drifts gently */
+.about-phone-float {
+  animation: astronautFloat 8s ease-in-out infinite;
+}
+
 /* ---------- Hero → achievements seam ---------- */
 /* the hero eases into a "seam" colour, and the achievements section starts
    from that same colour and eases into its navy, so nothing jumps */
@@ -1157,4 +1162,11 @@ html:not(.dark) .hero-title {
   font-weight: 900;
   color: #fff;
   background: var(--accent);
+}
+
+/* Health Village logo has plum lettering: give it a light plate on dark tiles */
+.dark img[src$="health-village.webp"] {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 4px;
 }

@@ -45,8 +45,8 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
       : locale === 'fa'
       ? fixed.replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]).replace('.', '٫')
       : fixed;
-    // Persian: a leading "+" belongs after the number ("۱۶۵+"), which in RTL shows on its left
-    if (locale === 'fa' && prefix === '+') return `${num}+${suffix}`;
+    // Persian: "+" sits on the right of the number ("۲۸۰ +"); the span is LTR-isolated
+    if (locale === 'fa' && prefix === '+') return `${num} +${suffix}`;
     return `${prefix}${num}${suffix}`;
   };
 
@@ -74,6 +74,7 @@ export const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
       initial={{ opacity: 0, y: 6 }}
       animate={isInView ? { opacity: 1, y: 0 } : undefined}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      dir="ltr"
       className={`inline-block tabular-nums ${className}`}
     >
       {format(from)}
