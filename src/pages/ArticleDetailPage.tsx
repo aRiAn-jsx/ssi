@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { ArticleAiSummary } from '../components/ArticleAiSummary';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowLeft,
@@ -83,6 +84,44 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
   const contentRef = useRef<HTMLDivElement>(null);
 
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
+
+  // Article structured data for search engines (replaced on every article change)
+  useEffect(() => {
+    if (!article) return;
+    const id = 'article-jsonld';
+    document.getElementById(id)?.remove();
+    const el = document.createElement('script');
+    el.id = id;
+    el.type = 'application/ld+json';
+    el.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.title,
+      description: article.summary,
+      inLanguage: language === 'fa' ? 'fa' : 'en',
+      articleSection: article.category,
+      keywords: article.tags?.join(', '),
+      image: article.image,
+      author: {
+        '@type': 'Person',
+        name: article.author.name,
+        jobTitle: article.author.role,
+        description: article.author.bio,
+        image: article.author.avatar.startsWith('/') ? `https://ssiholding.co${article.author.avatar}` : article.author.avatar,
+        worksFor: { '@type': 'Organization', name: 'هلدینگ سرآمد سرمایه ایلیا', url: 'https://ssiholding.co/' },
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'هلدینگ سرآمد سرمایه ایلیا',
+        logo: { '@type': 'ImageObject', url: 'https://ssiholding.co/logo.webp' },
+      },
+      mainEntityOfPage: `https://ssiholding.co/articles/${encodeURIComponent(article.id)}`,
+    });
+    document.head.appendChild(el);
+    return () => {
+      document.getElementById(id)?.remove();
+    };
+  }, [article, language]);
   const BackArrowIcon = isRtl ? ArrowRight : ArrowLeft;
   const PrevArrowIcon = isRtl ? ChevronRight : ChevronLeft;
   const NextArrowIcon = isRtl ? ChevronLeft : ChevronRight;
@@ -431,6 +470,15 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
               </div>
             </div>
           </div>
+
+          {/* AI summary: opens the article text in the reader's own AI chat */}
+          <ArticleAiSummary
+            title={article.title}
+            summary={article.summary}
+            keyTakeaways={article.keyTakeaways}
+            url={`https://ssiholding.co/articles/${encodeURIComponent(article.id)}`}
+            lang={language}
+          />
         </header>
 
         {/* FEATURED COVER IMAGE WITH GLASS CORNERS */}
@@ -485,7 +533,7 @@ export const ArticleDetailPage: React.FC<ArticleDetailPageProps> = ({
                   {article.statsHighlight.value}
                 </span>
                 {article.statsHighlight.change && (
-                  <span className="px-2 py-1 rounded-md bg-[#10B981] text-white text-xs font-bold">
+                  <span className="px-2 py-1 rounded-md bg-[#047857] text-white text-xs font-bold">
                     {article.statsHighlight.change}
                   </span>
                 )}

@@ -89,7 +89,7 @@ export function updatePageSeo(
       config = {
         title: `${article.title} | ${lang === 'fa' ? 'هلدینگ سرآمد سرمایه ایلیا' : 'Ilya Saramad Capital'}`,
         description: article.summary,
-        url: `https://ssiholding.co/#article/${article.id}`,
+        url: `https://ssiholding.co/articles/${encodeURIComponent(article.id)}`,
         locale: lang === 'fa' ? 'fa_IR' : 'en_US',
         image: article.image,
       };
@@ -147,6 +147,20 @@ export function updatePageSeo(
   const canonicalLink = document.querySelector('link[rel="canonical"]');
   if (canonicalLink && config.url) {
     canonicalLink.setAttribute('href', config.url);
+  }
+
+  // Keywords: the article's own tags (article pages only)
+  let kw = document.querySelector('meta[name="keywords"]');
+  if (view === 'article' && articleId) {
+    const article = getArticleById(articleId, lang);
+    if (article?.tags?.length) {
+      if (!kw) {
+        kw = document.createElement('meta');
+        kw.setAttribute('name', 'keywords');
+        document.head.appendChild(kw);
+      }
+      kw.setAttribute('content', article.tags.join(', '));
+    }
   }
 
   const ogUrl = document.querySelector('meta[property="og:url"]');

@@ -33,10 +33,23 @@ import { BookOpen } from 'lucide-react';
 
 type View = 'home' | 'articles' | 'article' | 'consultation' | 'team';
 
-// Resolve the view from the URL hash so deep links render the right page on
-// first paint instead of flashing the home page and transitioning away.
-const viewFromHash = (): { view: View; articleId?: string } => {
-  const hash = typeof window === 'undefined' ? '' : window.location.hash.toLowerCase();
+type Route = { view: View; articleId?: string };
+
+// Articles get real paths (/articles/<id>) so search engines index each one;
+// the rest of the single-page site keeps its #section anchors.
+export const articlePath = (id: string) => `/articles/${encodeURIComponent(id)}`;
+
+// Resolve the route from the path first, then the hash, so deep links render
+// the right page on first paint instead of flashing the home page.
+const resolveRoute = (): Route => {
+  if (typeof window === 'undefined') return { view: 'home' };
+  const hash = window.location.hash.toLowerCase();
+  // section hashes win, so in-page links work from an article URL too
+  if (hash === '#articles') return { view: 'articles' };
+  if (hash === '#consultation') return { view: 'consultation' };
+  if (hash === '#team') return { view: 'team' };
+  const m = window.location.pathname.match(/^\/articles\/([^/]+)\/?$/i);
+  if (m) return { view: 'article', articleId: decodeURIComponent(m[1]) };
   if (hash.startsWith('#article/') || hash.startsWith('#articles/')) {
     return { view: 'article', articleId: hash.split('/')[1] || 'article-1' };
   }
@@ -48,8 +61,8 @@ const viewFromHash = (): { view: View; articleId?: string } => {
 
 export default function App() {
   const { language } = useLanguage();
-  const [currentView, setCurrentView] = useState<View>(() => viewFromHash().view);
-  const [activeArticleId, setActiveArticleId] = useState<string>(() => viewFromHash().articleId ?? 'article-1');
+  const [currentView, setCurrentView] = useState<View>(() => resolveRoute().view);
+  const [activeArticleId, setActiveArticleId] = useState<string>(() => resolveRoute().articleId ?? 'article-1');
   const [isDesignSpecOpen, setIsDesignSpecOpen] = useState(false);
   const [showPreloader, setShowPreloader] = useState(() => {
     try {
@@ -64,34 +77,22 @@ export default function App() {
     updatePageSeo(currentView, language, activeArticleId);
   }, [currentView, language, activeArticleId]);
 
-  // Sync with URL Hash on load and when hash changes
+  // Keep the view in sync with the URL (path, hash, back/forward)
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.toLowerCase();
-      
-      // Match #article/id or #articles/id or #article-id
-      if (hash.startsWith('#article/') || hash.startsWith('#articles/')) {
-        const parts = hash.split('/');
-        const articleId = parts[1] || 'article-1';
-        setActiveArticleId(articleId);
-        setCurrentView('article');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#articles') {
-        setCurrentView('articles');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#consultation') {
-        setCurrentView('consultation');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#team') {
-        setCurrentView('team');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '' || hash === '#home') {
-        setCurrentView('home');
+    const sync = () => {
+      const route = resolveRoute();
+      // leaving an article for a section anchor: drop the article path
+      if (route.view !== 'article' && window.location.pathname !== '/') {
+        window.history.replaceState(null, '', '/' + window.location.hash);
       }
+      setCurrentView(route.view);
+      if (route.articleId) setActiveArticleId(route.articleId);
+      if (route.view !== 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
+    sync();
+    window.addEventListener('hashchange', sync);
+    window.addEventListener('popstate', sync);
 
     const handleReplayPreloader = () => {
       setShowPreloader(true);
@@ -99,7 +100,8 @@ export default function App() {
     window.addEventListener('open-preloader', handleReplayPreloader);
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('hashchange', sync);
+      window.removeEventListener('popstate', sync);
       window.removeEventListener('open-preloader', handleReplayPreloader);
     };
   }, []);
@@ -108,34 +110,29 @@ export default function App() {
     view: 'home' | 'articles' | 'article' | 'consultation' | 'team',
     param?: string
   ) => {
-    setCurrentView(view);
     if (view === 'article') {
       const targetId = param || 'article-1';
-      setActiveArticleId(targetId);
-      window.location.hash = `article/${targetId}`;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', articlePath(targetId));
     } else if (view === 'articles') {
-      window.location.hash = 'articles';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', '/#articles');
     } else if (view === 'consultation') {
-      window.location.hash = 'consultation';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', '/#consultation');
     } else if (view === 'team') {
-      window.location.hash = 'team';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', '/#team');
     } else {
-      window.location.hash = param ? param : 'home';
+      window.history.pushState(null, '', '/' + (param ? `#${param}` : ''));
       if (param) {
         setTimeout(() => {
-          const el = document.getElementById(param);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
+          document.getElementById(param)?.scrollIntoView({ behavior: 'smooth' });
         }, 100);
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
+    const route = resolveRoute();
+    setCurrentView(route.view);
+    if (route.articleId) setActiveArticleId(route.articleId);
+    if (view === 'article') window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSelectArticle = (id: string) => {

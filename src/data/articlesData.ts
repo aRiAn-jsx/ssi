@@ -37,11 +37,10 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     category: 'اقتصاد کلان و سیاست‌های پولی',
     author: {
-      name: 'دکتر محمدرضا شریفی',
-      role: 'مدیر ارشد سرمایه‌گذاری (CIO)',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-      bio: 'دکترای اقتصاد مالی از دانشگاه تهران، با بیش از ۱۵ سال سابقه راهبری کمیته‌های تخصصی سرمایه‌گذاری در نهادهای مالی و صندوق‌های بازنشستگی کشور.',
-      education: 'دکتری اقتصاد مالی، دانشگاه تهران',
+      name: 'آرین جوان',
+      role: 'برنامه‌نویس فول‌استک · تحقیق و توسعه (R&D)',
+      avatar: '/team/arian-javan/arian-javan.jpg',
+      bio: 'برنامه‌نویس فول‌استک و عضو تیم تحقیق و توسعه هلدینگ سرآمد سرمایه ایلیا؛ توسعه سامانه‌ها و پلتفرم‌های دیجیتال، معماری فرانت‌اند و بک‌اند و سئو تکنیکال.',
     },
     date: '۲۲ شهریور ۱۴۰۵',
     readTime: '۸ دقیقه',
@@ -56,7 +55,7 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     quote: {
       text: 'تاب‌آوری در بازارهای مالی به معنای پرهیز از ریسک نیست؛ بلکه هنر درک همبستگی منفی میان دارایی‌ها و زمان‌بندی هوشمندانه چرخه نقدینگی است.',
-      author: 'دکتر محمدرضا شریفی',
+      author: 'آرین جوان',
       role: 'مدیر ارشد سرمایه‌گذاری هلدینگ',
     },
     statsHighlight: {
@@ -126,11 +125,10 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     category: 'سرمایه‌گذاری خطرپذیر و فین‌تک',
     author: {
-      name: 'مهندس آرش کریمی',
-      role: 'مدیر واحد سرمایه‌گذاری جسورانه ایلیا ونچرز',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-      bio: 'کارشناس ارشد مهندسی نرم‌افزار و هوش مصنوعی از دانشگاه صنعتی شریف، پیشگام در پیاده‌سازی سیستم‌های معاملات الگوریتمی و پردازش زبان طبیعی در بازارهای مالی.',
-      education: 'کارشناسی ارشد هوش مصنوعی، دانشگاه صنعتی شریف',
+      name: 'حسین علیزاده',
+      role: 'برنامه‌نویس بک‌اند و متخصص یادگیری ماشین · تحقیق و توسعه (R&D)',
+      avatar: '/team/2026/alizadeh.webp',
+      bio: 'برنامه‌نویس بک‌اند با Python و متخصص یادگیری ماشین و علم داده در تیم تحقیق و توسعه هلدینگ سرآمد سرمایه ایلیا؛ طراحی مدل‌های یادگیری ماشین و معماری پایگاه داده ساختاریافته.',
     },
     date: '۱۸ شهریور ۱۴۰۵',
     readTime: '۶ دقیقه',
@@ -144,7 +142,7 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     quote: {
       text: 'هوش مصنوعی جایگزین مدیران سرمایه‌گذاری نمی‌شود؛ بلکه مدیرانی که از هوش مصنوعی استفاده می‌کنند جایگزین کسانی خواهند شد که از آن غافل مانده‌اند.',
-      author: 'مهندس آرش کریمی',
+      author: 'حسین علیزاده',
       role: 'مدیر فناوری و فین‌تک سرآمد',
     },
     statsHighlight: {
@@ -197,11 +195,10 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     category: 'مدیریت دارایی و املاک تجاری',
     author: {
-      name: 'مهندس سارا یوسفی',
-      role: 'معاونت توسعه املاک و مستغلات سرآمد',
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
-      bio: 'کارشناس ارشد مدیریت ساخت و اقتصاد مسکن با ۱۰ سال سابقه هدایت پروژه‌های عظیم تجاری-اداری در کلان‌شهرهای مشهد و تهران.',
-      education: 'کارشناسی ارشد مدیریت ساخت، دانشگاه فردوسی مشهد',
+      name: 'آرین جوان',
+      role: 'برنامه‌نویس فول‌استک · تحقیق و توسعه (R&D)',
+      avatar: '/team/arian-javan/arian-javan.jpg',
+      bio: 'برنامه‌نویس فول‌استک و عضو تیم تحقیق و توسعه هلدینگ سرآمد سرمایه ایلیا؛ توسعه سامانه‌ها و پلتفرم‌های دیجیتال، معماری فرانت‌اند و بک‌اند و سئو تکنیکال.',
     },
     date: '۱۲ شهریور ۱۴۰۵',
     readTime: '۵ دقیقه',
@@ -215,7 +212,7 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     quote: {
       text: 'تبدیل دارایی‌های سنگین ملکی به واحدهای خرد بورسی، دموکراتیزه کردن سرمایه‌گذاری در مطمئن‌ترین کلاس دارایی کشور است.',
-      author: 'مهندس سارا یوسفی',
+      author: 'آرین جوان',
       role: 'معاونت املاک و مستغلات',
     },
     statsHighlight: {
@@ -253,11 +250,10 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     category: 'صنعت بیمه و مدیریت ریسک',
     author: {
-      name: 'دکتر پیمان نادری',
-      role: 'مشاور ریسک و حاکمیت شرکتی',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
-      bio: 'عضو انجمن اکچوئری‌های بین‌المللی و مشاور ارشد بیمه سامان در امور مدیریت ریسک اعتباری و حاکمیت شرکتی هلدینگ‌ها.',
-      education: 'دکتری ریاضیات مالی و اکچوئری',
+      name: 'آرین جوان',
+      role: 'برنامه‌نویس فول‌استک · تحقیق و توسعه (R&D)',
+      avatar: '/team/arian-javan/arian-javan.jpg',
+      bio: 'برنامه‌نویس فول‌استک و عضو تیم تحقیق و توسعه هلدینگ سرآمد سرمایه ایلیا؛ توسعه سامانه‌ها و پلتفرم‌های دیجیتال، معماری فرانت‌اند و بک‌اند و سئو تکنیکال.',
     },
     date: '۰۵ شهریور ۱۴۰۵',
     readTime: '۷ دقیقه',
@@ -271,7 +267,7 @@ export const ARTICLES_DATA_FA: ArticleItem[] = [
     ],
     quote: {
       text: 'قدرت یک هلدینگ مالی در روزهای بحرانی نمایان می‌شود؛ جایی که چتر بیمه‌ای سامان ریسک‌های سیستماتیک را بی‌اثر می‌کند.',
-      author: 'دکتر پیمان نادری',
+      author: 'آرین جوان',
       role: 'مشاور ریسک و حاکمیت شرکتی',
     },
     statsHighlight: {
@@ -306,11 +302,10 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     category: 'Macroeconomics & Monetary Policy',
     author: {
-      name: 'Dr. Mohammadreza Sharifi',
-      role: 'Chief Investment Officer (CIO)',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-      bio: 'Ph.D. in Financial Economics from University of Tehran with over 15 years leading institutional investment committees and sovereign pension funds.',
-      education: 'Ph.D. in Financial Economics',
+      name: 'Arian Javan',
+      role: 'Full-Stack Developer · R&D',
+      avatar: '/team/arian-javan/arian-javan.jpg',
+      bio: 'Full-stack developer on the R&D team of Ilya Saramad Capital Holding; builds the group’s systems and digital platforms, frontend and backend architecture, and technical SEO.',
     },
     date: 'Sep 12, 2026',
     readTime: '8 min read',
@@ -325,7 +320,7 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     quote: {
       text: 'Resilience in volatile capital markets does not mean risk avoidance; it is the art of negative correlation mapping and disciplined liquidity timing.',
-      author: 'Dr. Mohammadreza Sharifi',
+      author: 'Arian Javan',
       role: 'Chief Investment Officer',
     },
     statsHighlight: {
@@ -386,11 +381,10 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     category: 'Venture Capital & FinTech',
     author: {
-      name: 'Eng. Arash Karimi',
-      role: 'Director of Ilya Ventures',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-      bio: 'M.Sc. in Artificial Intelligence from Sharif University of Technology, pioneering algorithmic market-making and real-time financial NLP pipelines.',
-      education: 'M.Sc. in Artificial Intelligence',
+      name: 'Hossein Alizadeh',
+      role: 'Backend Developer & Machine Learning Specialist · R&D',
+      avatar: '/team/2026/alizadeh.webp',
+      bio: 'Backend developer in Python and machine learning / data science specialist on the R&D team of Ilya Saramad Capital Holding; designs ML models and structured database architecture.',
     },
     date: 'Sep 08, 2026',
     readTime: '6 min read',
@@ -404,7 +398,7 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     quote: {
       text: 'AI will not replace investment managers; rather, investment managers who leverage AI will replace those who do not.',
-      author: 'Eng. Arash Karimi',
+      author: 'Hossein Alizadeh',
       role: 'VP of Technology & FinTech',
     },
     statsHighlight: {
@@ -435,11 +429,10 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     category: 'Asset Management & Commercial Real Estate',
     author: {
-      name: 'Eng. Sara Yousefi',
-      role: 'VP of Real Estate Development',
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
-      bio: 'Real estate economist and construction director managing major Grade-A corporate towers across Iran.',
-      education: 'M.Sc. in Construction Management',
+      name: 'Arian Javan',
+      role: 'Full-Stack Developer · R&D',
+      avatar: '/team/arian-javan/arian-javan.jpg',
+      bio: 'Full-stack developer on the R&D team of Ilya Saramad Capital Holding; builds the group’s systems and digital platforms, frontend and backend architecture, and technical SEO.',
     },
     date: 'Sep 02, 2026',
     readTime: '5 min read',
@@ -453,7 +446,7 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     quote: {
       text: 'Securitizing prime commercial real estate into fractional exchange units democratizes access to Iran’s most reliable asset class.',
-      author: 'Eng. Sara Yousefi',
+      author: 'Arian Javan',
       role: 'VP of Real Estate',
     },
     statsHighlight: {
@@ -476,11 +469,10 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     category: 'Insurance Industry & Risk Governance',
     author: {
-      name: 'Dr. Peyman Naderi',
-      role: 'Senior Governance & Risk Advisor',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
-      bio: 'Fellow of Actuarial Society and Senior Risk Consultant at Saman Insurance.',
-      education: 'Ph.D. in Actuarial Mathematics',
+      name: 'Arian Javan',
+      role: 'Full-Stack Developer · R&D',
+      avatar: '/team/arian-javan/arian-javan.jpg',
+      bio: 'Full-stack developer on the R&D team of Ilya Saramad Capital Holding; builds the group’s systems and digital platforms, frontend and backend architecture, and technical SEO.',
     },
     date: 'Aug 26, 2026',
     readTime: '7 min read',
@@ -494,7 +486,7 @@ export const ARTICLES_DATA_EN: ArticleItem[] = [
     ],
     quote: {
       text: 'A financial holding’s true strength is proven in systemic stress periods, where Saman’s insurance umbrella neutralizes volatility.',
-      author: 'Dr. Peyman Naderi',
+      author: 'Arian Javan',
       role: 'Senior Risk Advisor',
     },
     statsHighlight: {
