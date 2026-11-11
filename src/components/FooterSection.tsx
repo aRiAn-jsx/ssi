@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUp, ArrowUpLeft, ArrowUpRight, Mail, Phone, MapPin, ShieldCheck, CheckCircle2, Clock, Sparkles } from 'lucide-react';
+import { ArrowUp, ArrowUpLeft, ArrowUpRight, Mail, Phone, MapPin, ShieldCheck, CheckCircle2, Clock } from 'lucide-react';
 import { getHoldingInfo } from '../data/mockData';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -255,15 +255,6 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigateView }) 
           </div>
 
           <div className="flex items-center gap-2.5">
-            <button
-              type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent('open-preloader'))}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full liquid-glass-card bg-[#027DF7]/20 hover:bg-[#027DF7]/35 text-[#D5ECFE] hover:text-white border border-[#027DF7]/40 transition-all cursor-pointer font-bold"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#38BDF8]" />
-              <span>{language === 'fa' ? 'طرح‌های لودینگ سایت' : 'Preloader Styles'}</span>
-            </button>
-
             <button
               type="button"
               onClick={scrollToTop}

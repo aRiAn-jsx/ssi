@@ -493,17 +493,6 @@ export const GlassNavbar: React.FC<GlassNavbarProps> = ({
                   </button>
                 )}
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSidebarToolbarOpen(false);
-                    window.dispatchEvent(new CustomEvent('open-preloader'));
-                  }}
-                  className="w-full py-2.5 px-4 rounded-xl bg-[#027DF7]/15 hover:bg-[#027DF7]/25 border border-[#027DF7]/30 text-[#01427C] dark:text-[#E0F2FE] text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4 text-[#027DF7] dark:text-[#38BDF8]" />
-                  <span>{language === 'fa' ? 'پیش‌نمایش طرح‌های لودینگ سایت' : 'Preview Preloader Styles'}</span>
-                </button>
 
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-[#091527] border border-[#027DF7]/15 dark:border-[#027DF7]/30 text-xs text-[#64748B] dark:text-slate-300 space-y-1.5">
                   <div className="flex items-center gap-2 text-[#01427C] dark:text-white font-bold">
