@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpLeft, ArrowUpRight, ShieldCheck, Users, LayoutGrid, Network } from 'lucide-react';
-import { getTeamPeople, orgChart } from '../data/teamData';
+import { getTeamPeople, orgChart, deputyRole } from '../data/teamData';
 import { TeamPhotoCard, TeamComingSoonCard } from '../components/TeamPhotoCard';
 import { TeamOrgChart } from '../components/TeamOrgChart';
 import { TeamMemberProfileModal } from '../components/TeamMemberProfileModal';
@@ -21,35 +21,43 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onBackToHome, onGoToConsulta
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
   const members = getTeamPeople(language);
 
-  const byId = (id: string) => members.find((m) => m.id === id)!;
+  const byId = (id?: string) => members.find((m) => m.id === id);
+  const filled = <T,>(list: (T | undefined)[]) => list.filter(Boolean) as T[];
   const tiers = [
     {
-      key: 'leadership',
-      fa: 'شورای عالی و مدیریت ارشد',
-      en: 'Supreme Council & Executive Management',
-      people: members.filter((m) => m.placement === 'council' || m.placement === 'ceo'),
-      soon: 0,
+      key: 'ceo',
+      fa: 'مدیرعامل',
+      en: 'Chief Executive Officer',
+      people: filled([byId(orgChart.ceoId)]),
+      soon: [] as string[],
+    },
+    {
+      key: 'board',
+      fa: 'هیات مدیره',
+      en: 'Board of Directors',
+      people: filled(orgChart.boardIds.map(byId)),
+      soon: [] as string[],
     },
     {
       key: 'deputies',
       fa: 'معاونت‌ها',
       en: 'Deputies',
-      people: orgChart.deputies.map((d) => byId(d.deputyId)),
-      soon: 0,
+      people: filled(orgChart.deputies.map((d) => byId(d.deputyId))),
+      soon: orgChart.deputies.filter((d) => !d.deputyId).map((d) => deputyRole(d, language === 'fa')),
     },
     {
       key: 'managers',
-      fa: 'مدیران واحدها',
-      en: 'Unit Managers',
+      fa: 'مسئولان واحدها',
+      en: 'Unit Leads',
       people: members.filter((m) => m.placement === 'manager'),
-      soon: 0,
+      soon: [] as string[],
     },
     {
       key: 'team',
-      fa: 'کارشناسان و اعضای تیم',
-      en: 'Specialists & Team Members',
+      fa: 'کارشناسان',
+      en: 'Specialists',
       people: members.filter((m) => m.placement === 'member'),
-      soon: orgChart.deputies.reduce((n, d) => n + d.units.reduce((u, x) => u + (x.comingSoon ?? 0), 0), 0),
+      soon: [] as string[],
     },
   ];
 
@@ -152,9 +160,9 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onBackToHome, onGoToConsulta
                       <TeamPhotoCard person={person} onClick={() => setSelectedPerson(person)} />
                     </motion.div>
                   ))}
-                  {Array.from({ length: tier.soon }, (_, i) => (
+                  {tier.soon.map((label, i) => (
                     <div key={`soon-${i}`} className="team-classic__card-wrapper">
-                      <TeamComingSoonCard fa={language === 'fa'} />
+                      <TeamComingSoonCard fa={language === 'fa'} label={label} />
                     </div>
                   ))}
                 </div>

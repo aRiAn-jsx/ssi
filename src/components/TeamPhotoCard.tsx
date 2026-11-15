@@ -75,14 +75,13 @@ export function TeamPhotoCard({ person, onClick }: TeamPhotoCardProps) {
   );
 }
 
-/** An open seat in the team ("Coming soon") */
-export function TeamComingSoonCard({ fa }: { fa: boolean }) {
+/** An open seat in the team (dashed outline only) */
+export function TeamComingSoonCard({ fa, label }: { fa: boolean; label?: string }) {
   return (
-    <div className="team-photo-card team-photo-card--soon" aria-label={fa ? 'به‌زودی' : 'Coming soon'}>
+    <div className="team-photo-card team-photo-card--soon" aria-label={label ?? (fa ? 'جایگاه خالی' : 'Open seat')}>
       <div className="team-photo-card__soon-inner">
         <span className="team-photo-card__soon-plus" aria-hidden="true">+</span>
-        <strong>{fa ? 'به‌زودی' : 'Coming soon'}</strong>
-        <small>{fa ? 'عضو جدید تیم' : 'New team member'}</small>
+        {label && <strong>{label}</strong>}
       </div>
     </div>
   );

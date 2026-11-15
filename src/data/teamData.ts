@@ -6,7 +6,7 @@ export interface TeamPerson {
   nameEn: string;
   /** empty → an initials placeholder is shown */
   image?: string;
-  placement: 'council' | 'ceo' | 'deputy' | 'manager' | 'member';
+  placement: 'board' | 'ceo' | 'deputy' | 'manager' | 'member';
   role: string;
   roleEn: string;
   bioFa?: string;
@@ -26,11 +26,11 @@ export const teamPeople: TeamPerson[] = [
     id: 'sabeghi',
     name: 'دکتر صابقی مقدم',
     nameEn: 'Dr. Sabeghi Moghaddam',
-    placement: 'council',
-    role: 'شورای عالی',
-    roleEn: 'Supreme Council',
-    bioFa: 'عضو شورای عالی هلدینگ؛ سیاست‌گذاری کلان، نظارت راهبردی و تصویب جهت‌گیری‌های بلندمدت مجموعه.',
-    bioEn: 'Member of the Supreme Council: high-level policy, strategic oversight and approval of the group’s long-term direction.',
+    placement: 'board',
+    role: 'مشاور عالی',
+    roleEn: 'Senior Advisor',
+    bioFa: 'عضو هیات مدیره و مشاور عالی هلدینگ؛ سیاست‌گذاری کلان، نظارت راهبردی و مشاوره به مدیرعامل در تصمیم‌های بلندمدت مجموعه.',
+    bioEn: 'Board member and senior advisor of the holding: high-level policy, strategic oversight and advice to the CEO on the group’s long-term decisions.',
   },
   {
     id: 'khorsand',
@@ -38,12 +38,14 @@ export const teamPeople: TeamPerson[] = [
     nameEn: 'Dr. Majid Khorsand',
     image: '/team/2026/khorsand.webp',
     placement: 'deputy',
-    role: 'معاون طرح، برنامه و بودجه',
-    roleEn: 'Deputy of Planning, Programs & Budget',
-    bioFa: 'راهبری طرح‌ها و برنامه‌های هلدینگ، تدوین و کنترل بودجه و پایش تحقق اهداف سالانه.',
-    bioEn: 'Leads the holding’s plans and programs, budget preparation and control, and tracking of annual targets.',
+    role: 'معاون برنامه‌ریزی و توسعه راهبردی',
+    roleEn: 'Deputy of Planning & Strategic Development',
+    bioFa: 'دارای مدرک دکتری (PhD)؛ راهبری برنامه‌ریزی راهبردی، برنامه و بودجه و مطالعات و تحلیل هلدینگ.',
+    bioEn: 'Holds a PhD; leads the holding’s strategic planning, programs and budget, and studies and analysis.',
     telegram: 'https://t.me/saramad_ilya',
     instagram: 'https://instagram.com/saramad_holding',
+    experienceFa: 'دکتری (PhD)',
+    experienceEn: 'PhD',
   },
   {
     id: 'choupanzadeh',
@@ -51,8 +53,8 @@ export const teamPeople: TeamPerson[] = [
     nameEn: 'Omid Choupanzadeh',
     image: '/team/2026/choupanzadeh.webp',
     placement: 'member',
-    role: 'تیم تولید محتوا',
-    roleEn: 'Content Production Team',
+    role: 'کارشناس تولید محتوا',
+    roleEn: 'Content Production Specialist',
     bioFa: 'عضو تیم تولید محتوای هلدینگ.',
     bioEn: 'Member of the holding’s content production team.',
     telegram: 'https://t.me/saramad_ilya',
@@ -63,11 +65,11 @@ export const teamPeople: TeamPerson[] = [
     name: 'متین پهلوان',
     nameEn: 'Matin Pahlevan',
     image: '/team/2026/pahlevan.webp',
-    placement: 'member',
-    role: 'آموزش',
-    roleEn: 'Training',
-    bioFa: 'مسئول آموزش در معاونت اداری، پشتیبانی و مالی هلدینگ.',
-    bioEn: 'Responsible for training within the Administration, Support & Finance deputy.',
+    placement: 'deputy',
+    role: 'معاون فروش، بازاریابی و توسعه بازار',
+    roleEn: 'Deputy of Sales, Marketing & Market Development',
+    bioFa: 'معاون فروش، بازاریابی و توسعه بازار هلدینگ؛ راهبری فروش، بازاریابی، توسعه بازار و ارتباط با مشتریان.',
+    bioEn: 'Deputy of Sales, Marketing & Market Development: leads sales, marketing, market development and customer relations.',
     telegram: 'https://t.me/saramad_ilya',
     instagram: 'https://instagram.com/saramad_holding',
   },
@@ -92,10 +94,9 @@ export const teamPeople: TeamPerson[] = [
     id: 'rad',
     name: 'هادی قلی‌نیاراد',
     nameEn: 'Hadi Gholiniarad',
-    image: '/team/هادی راد.png',
     placement: 'deputy',
-    role: 'معاون اداری، پشتیبانی و مالی',
-    roleEn: 'Deputy of Administration, Support & Finance',
+    role: 'معاون اداری، مالی و پشتیبانی',
+    roleEn: 'Deputy of Administration, Finance & Support',
     bioFa: 'هدایت مشاوره‌ای در تدوین مدل‌های مالی، مهندسی سرمایه‌گذاری، مدیریت ریسک‌های سیستماتیک و ارتقای بازدهی اقتصادی ساختارهای هلدینگ.',
     bioEn: 'Advisory guidance in financial modeling, investment structuring, risk management, and economic asset optimization.',
     telegram: 'https://t.me/saramad_ilya',
@@ -128,8 +129,8 @@ export const teamPeople: TeamPerson[] = [
     nameEn: 'Sajjad Azad',
     image: '/team/2026/sajjad-azad.webp',
     placement: 'manager',
-    role: 'مدیر تولید محتوا',
-    roleEn: 'Content Production Manager',
+    role: 'مسئول تولید محتوا',
+    roleEn: 'Head of Content Production',
     bioFa: 'نگارش فیلم‌نامه، طراحی سناریوهای خلاقانه چندرسانه‌ای، تدوین استراتژی جامع رسانه‌ای، رهبری کمپین‌های تبلیغاتی، داستان‌سرایی برند و مدیریت تولید محتوای هلدینگ.',
     bioEn: 'Screenwriting and creative script development, directing omnichannel media strategy, multimedia production, brand narrative, and corporate communications.',
     telegram: 'https://t.me/saramad_ilya',
@@ -143,10 +144,9 @@ export const teamPeople: TeamPerson[] = [
     id: 'hamidi',
     name: 'حمید حمیدی',
     nameEn: 'Hamid Hamidi',
-    image: '/team/حمید حمیدی.png',
-    placement: 'manager',
-    role: 'مسئول دفتر',
-    roleEn: 'Office Manager',
+    placement: 'deputy',
+    role: 'معاون اداری، مالی و پشتیبانی',
+    roleEn: 'Deputy of Administration, Finance & Support',
     bioFa: 'یکپارچه‌سازی فرآیندهای اداری، هماهنگی دپارتمان‌های تابعه، استانداردهای تعالی سازمانی و ارتقای بهره‌وری زنجیره لجستیک هلدینگ.',
     bioEn: 'Operations and administrative workflow harmonization, corporate logistics standards, and operational excellence across subsidiaries.',
     telegram: 'https://t.me/saramad_ilya',
@@ -163,7 +163,7 @@ export const teamPeople: TeamPerson[] = [
     image: '/team/ارین.png',
     profileUrl: '/team/arian-javan/',
     placement: 'member',
-    role: 'تحقیق و توسعه (R&D) · برنامه‌نویس فول‌استک',
+    role: 'تحقیق و طراحی (R&D) · برنامه‌نویس فول‌استک',
     roleEn: 'R&D · Full-Stack Developer',
     bioFa: 'توسعه جامع فول‌استک سامانه‌ها، پیاده‌سازی معماری‌های مقیاس‌پذیر فرانت‌اند و بک‌اند، بهینه‌سازی پرفورمنس نرم‌افزار و مهندسی پلتفرم‌های دیجیتال هلدینگ.',
     bioEn: 'Full-stack engineering of scalable software systems, high-performance frontend and backend architectures, modern UI/UX, and robust digital platforms.',
@@ -180,7 +180,7 @@ export const teamPeople: TeamPerson[] = [
     nameEn: 'Hossein Alizadeh',
     image: '/team/2026/alizadeh.webp',
     placement: 'member',
-    role: 'تحقیق و توسعه (R&D) · برنامه‌نویس بک‌اند و متخصص یادگیری ماشین',
+    role: 'تحقیق و طراحی (R&D) · برنامه‌نویس بک‌اند و متخصص یادگیری ماشین',
     roleEn: 'R&D · Backend Developer & Machine Learning Specialist',
     bioFa: 'برنامه‌نویسی بک‌اند با Python، طراحی و پیاده‌سازی مدل‌های یادگیری ماشین، تحلیل داده و علم داده، و معماری پایگاه‌های داده ساختاریافته و مقیاس‌پذیر برای سامانه‌های هلدینگ.',
     bioEn: 'Backend development in Python, designing and building machine learning models, data analysis and data science, and architecting structured, scalable databases for the holding’s systems.',
@@ -194,9 +194,9 @@ export const teamPeople: TeamPerson[] = [
     name: 'امین رمضانی',
     nameEn: 'Amin Ramezani',
     image: '/team/2026/ramezani.webp',
-    placement: 'member',
-    role: 'کارشناس دفتر',
-    roleEn: 'Office Specialist',
+    placement: 'manager',
+    role: 'مسئول اداری',
+    roleEn: 'Head of Administration',
     bioFa: 'مدیریت پرونده‌های سازمانی، دبیرخانه مرکزی، تعامل با سهامداران و سازمان‌ها و پایش فرآیندهای انطباق مستندات هلدینگ.',
     bioEn: 'Corporate record coordination, executive documentation management, stakeholder coordination, and administrative compliance.',
     telegram: 'https://t.me/saramad_ilya',
@@ -212,7 +212,7 @@ export const teamPeople: TeamPerson[] = [
     nameEn: 'Amirreza Vaziri',
     image: '/team/وزیری.png',
     placement: 'member',
-    role: 'پشتیبانی',
+    role: 'کارشناس پشتیبانی',
     roleEn: 'Support Specialist',
     bioFa: 'پاسخگویی به درخواست‌های مشتریان و ذینفعان، حل مسائل فنی سامانه‌ها، پایش رضایت کاربران و ارائه خدمات پایدار پشتیبانی.',
     bioEn: 'Direct client relationship management, resolution of customer queries, SLA uptime monitoring, and reliable user support.',
@@ -225,27 +225,50 @@ export const teamPeople: TeamPerson[] = [
   },
 ];
 
-/** Organisational chart (ids refer to teamPeople) */
+/** Organisational chart (ids refer to teamPeople). A missing id is a vacant seat. */
+export interface OrgSeat {
+  id: string;
+  titleFa: string;
+  titleEn: string;
+  personId?: string;
+}
 export interface OrgUnit {
   id: string;
   titleFa: string;
   titleEn: string;
+  /** "مسئول" of the unit */
   leadId?: string;
+  /** "کارشناس"s; empty → one vacant specialist seat */
   memberIds: string[];
-  /** open seats shown as "Coming soon" cards */
-  comingSoon?: number;
 }
 export interface OrgDeputy {
   id: string;
   titleFa: string;
   titleEn: string;
-  deputyId: string;
+  deputyId?: string;
+  /** shown in facing pairs either side of the deputy's stem */
   units: OrgUnit[];
 }
 
-export const orgChart: { councilId: string; ceoId: string; deputies: OrgDeputy[] } = {
-  councilId: 'sabeghi',
+/** "معاونت X" → "معاون X": shown on a deputy seat that has no named person */
+export const deputyRole = (d: { titleFa: string; titleEn: string }, fa: boolean) =>
+  fa ? d.titleFa.replace(/^معاونت/, 'معاون') : `Deputy of ${d.titleEn}`;
+
+/** A unit is drawn only once somebody sits in it */
+export const isStaffed = (u: OrgUnit) => Boolean(u.leadId) || u.memberIds.length > 0;
+
+const vacant = (id: string, titleFa: string, titleEn: string): OrgUnit => ({ id, titleFa, titleEn, memberIds: [] });
+
+export const orgChart: { ceoId: string; boardIds: string[]; staff: OrgSeat[]; deputies: OrgDeputy[] } = {
   ceoId: 'tahourian',
+  boardIds: ['sabeghi'],
+  // board members (مشاور عالی, رئیس دفتر) sit in the board panel, so they're not repeated here
+  staff: [
+    { id: 'advisors', titleFa: 'مشاورین', titleEn: 'Advisors' },
+    { id: 'audit', titleFa: 'حسابرسی داخلی', titleEn: 'Internal Audit' },
+    { id: 'pr', titleFa: 'روابط عمومی و ارتباطات', titleEn: 'Public Relations & Communications' },
+    { id: 'legal', titleFa: 'حقوقی و امور قراردادها', titleEn: 'Legal & Contracts' },
+  ],
   deputies: [
     {
       id: 'tech',
@@ -253,24 +276,43 @@ export const orgChart: { councilId: string; ceoId: string; deputies: OrgDeputy[]
       titleEn: 'Technical & Operations',
       deputyId: 'rasouli',
       units: [
-        { id: 'content', titleFa: 'تولید محتوا', titleEn: 'Content Production', leadId: 'sajjad-azad', memberIds: ['choupanzadeh'], comingSoon: 1 },
-        { id: 'rnd', titleFa: 'تحقیق و توسعه (R&D)', titleEn: 'Research & Development', memberIds: ['javan', 'alizadeh'], comingSoon: 1 },
+        { id: 'content', titleFa: 'تولید محتوا', titleEn: 'Content Production', leadId: 'sajjad-azad', memberIds: ['choupanzadeh'] },
+        { id: 'rnd', titleFa: 'تحقیق و طراحی (R&D)', titleEn: 'Research & Design (R&D)', memberIds: ['javan', 'alizadeh'] },
+      ],
+    },
+    {
+      id: 'admin',
+      titleFa: 'معاونت اداری، مالی و پشتیبانی',
+      titleEn: 'Administration, Finance & Support',
+      deputyId: 'hamidi',
+      units: [
+        { id: 'administration', titleFa: 'اداری', titleEn: 'Administration', leadId: 'ramezani', memberIds: [] },
+        vacant('finance', 'مالی', 'Finance'),
+        { id: 'support', titleFa: 'پشتیبانی', titleEn: 'Support', memberIds: ['vaziri'] },
+        vacant('training', 'آموزش', 'Training'),
+      ],
+    },
+    {
+      id: 'sales',
+      titleFa: 'معاونت فروش، بازاریابی و توسعه بازار',
+      titleEn: 'Sales, Marketing & Market Development',
+      deputyId: 'pahlevan',
+      units: [
+        vacant('sales', 'فروش', 'Sales'),
+        vacant('market-dev', 'توسعه بازار', 'Market Development'),
+        vacant('marketing', 'بازاریابی', 'Marketing'),
+        vacant('crm', 'ارتباط با مشتریان', 'Customer Relations'),
       ],
     },
     {
       id: 'planning',
-      titleFa: 'معاونت طرح، برنامه و بودجه',
-      titleEn: 'Planning, Programs & Budget',
+      titleFa: 'معاونت برنامه‌ریزی و توسعه راهبردی',
+      titleEn: 'Planning & Strategic Development',
       deputyId: 'khorsand',
-      units: [],
-    },
-    {
-      id: 'admin',
-      titleFa: 'معاونت اداری، پشتیبانی و مالی',
-      titleEn: 'Administration, Support & Finance',
-      deputyId: 'rad',
       units: [
-        { id: 'office', titleFa: 'دفتر، آموزش و پشتیبانی', titleEn: 'Office, Training & Support', leadId: 'hamidi', memberIds: ['ramezani', 'pahlevan', 'vaziri'] },
+        vacant('strategy', 'برنامه‌ریزی راهبردی', 'Strategic Planning'),
+        vacant('budget', 'برنامه و بودجه', 'Programs & Budget'),
+        vacant('studies', 'مطالعات و تحلیل', 'Studies & Analysis'),
       ],
     },
   ],
@@ -278,10 +320,11 @@ export const orgChart: { councilId: string; ceoId: string; deputies: OrgDeputy[]
 
 // display order, top of the chart down
 const ORDER = [
-  'sabeghi', 'tahourian',
-  'rasouli', 'khorsand', 'rad',
-  'sajjad-azad', 'hamidi',
-  'choupanzadeh', 'javan', 'alizadeh', 'ramezani', 'pahlevan', 'vaziri',
+  'tahourian',
+  'sabeghi', 'hamidi',
+  'rasouli', 'rad', 'pahlevan', 'khorsand',
+  'sajjad-azad', 'vaziri',
+  'choupanzadeh', 'javan', 'alizadeh', 'ramezani',
 ];
 
 /** two-letter monogram for people without a photo */

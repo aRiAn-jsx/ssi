@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Users, ArrowUpLeft, ArrowUpRight } from 'lucide-react';
-import { getTeamPeople, orgChart, initialsOf } from '../data/teamData';
-import { TeamPhotoCard } from './TeamPhotoCard';
+import { getTeamPeople, orgChart, initialsOf, deputyRole } from '../data/teamData';
+import { TeamPhotoCard, TeamComingSoonCard } from './TeamPhotoCard';
 import { TeamMemberProfileModal } from './TeamMemberProfileModal';
 import { useLanguage } from '../context/LanguageContext';
 import './TeamSection.css';
@@ -16,18 +16,24 @@ type Person = ReturnType<typeof getTeamPeople>[0];
 
 /**
  * Home-page team block, laid out like the org chart:
- * council + CEO → three deputies → everyone else as compact chips.
+ * CEO → board → four deputies → everyone else as compact chips.
  */
 export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage, onGoToConsultation }) => {
   const { language, isRtl, t } = useLanguage();
   const fa = language === 'fa';
   const team = getTeamPeople(language);
-  const byId = (id: string) => team.find((p) => p.id === id)!;
+  const byId = (id: string) => team.find((p) => p.id === id);
   const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
   const ArrowIcon = isRtl ? ArrowUpLeft : ArrowUpRight;
 
-  const leaders = [byId(orgChart.councilId), byId(orgChart.ceoId)];
-  const deputies = orgChart.deputies.map((d) => ({ title: fa ? d.titleFa : d.titleEn, person: byId(d.deputyId) }));
+  const ceo = byId(orgChart.ceoId);
+  const board = orgChart.boardIds.map(byId).filter(Boolean);
+  const deputies = orgChart.deputies.map((d) => ({
+    key: d.id,
+    title: fa ? d.titleFa : d.titleEn,
+    role: deputyRole(d, fa),
+    person: d.deputyId ? byId(d.deputyId) : undefined,
+  }));
   const rest = team.filter((p) => p.placement === 'manager' || p.placement === 'member');
 
   const reveal = (delay: number) => ({
@@ -53,24 +59,42 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage, onGoTo
           </p>
         </div>
 
-        {/* Tier 1 */}
-        <div className="team-home__leaders">
-          {leaders.map((person, i) => (
-            <motion.div key={person.id} className="team-home__card team-home__card--lead" {...reveal(i * 0.08)}>
-              <TeamPhotoCard person={person} onClick={() => setSelectedPerson(person)} />
+        {/* CEO */}
+        {ceo && (
+          <div className="team-home__leaders">
+            <motion.div className="team-home__card team-home__card--lead" {...reveal(0)}>
+              <TeamPhotoCard person={ceo} onClick={() => setSelectedPerson(ceo)} />
             </motion.div>
-          ))}
+          </div>
+        )}
+
+        <div className="team-home__spine" aria-hidden="true" />
+
+        {/* Board */}
+        <div className="team-home__board">
+          <h3 className="team-home__board-title">{fa ? 'هیات مدیره' : 'Board of Directors'}</h3>
+          <div className="team-home__leaders">
+            {board.map((person, i) => (
+              <motion.div key={person!.id} className="team-home__card team-home__card--board" {...reveal(0.06 + i * 0.06)}>
+                <TeamPhotoCard person={person!} onClick={() => setSelectedPerson(person!)} />
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         <div className="team-home__spine" aria-hidden="true" />
 
-        {/* Tier 2 */}
+        {/* Deputies */}
         <div className="team-home__deputies">
-          {deputies.map(({ title, person }, i) => (
-            <motion.div key={person.id} className="team-home__deputy" {...reveal(0.15 + i * 0.08)}>
+          {deputies.map(({ key, title, role, person }, i) => (
+            <motion.div key={key} className="team-home__deputy" {...reveal(0.15 + i * 0.06)}>
               <span className="team-home__deputy-title">{title}</span>
               <div className="team-home__card">
-                <TeamPhotoCard person={person} onClick={() => setSelectedPerson(person)} />
+                {person ? (
+                  <TeamPhotoCard person={person} onClick={() => setSelectedPerson(person)} />
+                ) : (
+                  <TeamComingSoonCard fa={fa} label={role} />
+                )}
               </div>
             </motion.div>
           ))}
