@@ -70,19 +70,23 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ onGoToTeamPage, onGoTo
 
         <div className="team-home__spine" aria-hidden="true" />
 
-        {/* Board */}
-        <div className="team-home__board">
-          <h3 className="team-home__board-title">{fa ? 'هیات مدیره' : 'Board of Directors'}</h3>
-          <div className="team-home__leaders">
-            {board.map((person, i) => (
-              <motion.div key={person!.id} className="team-home__card team-home__card--board" {...reveal(0.06 + i * 0.06)}>
-                <TeamPhotoCard person={person!} onClick={() => setSelectedPerson(person!)} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        {board.length > 0 && (
+          <>
+            {/* Board */}
+            <div className="team-home__board">
+              <h3 className="team-home__board-title">{fa ? 'هیات مدیره' : 'Board of Directors'}</h3>
+              <div className="team-home__leaders">
+                {board.map((person, i) => (
+                  <motion.div key={person!.id} className="team-home__card team-home__card--board" {...reveal(0.06 + i * 0.06)}>
+                    <TeamPhotoCard person={person!} onClick={() => setSelectedPerson(person!)} />
+                  </motion.div>
+                ))}
+              </div>
+            </div>
 
-        <div className="team-home__spine" aria-hidden="true" />
+            <div className="team-home__spine" aria-hidden="true" />
+          </>
+        )}
 
         {/* Deputies */}
         <div className="team-home__deputies">

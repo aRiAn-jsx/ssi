@@ -261,7 +261,8 @@ const vacant = (id: string, titleFa: string, titleEn: string): OrgUnit => ({ id,
 
 export const orgChart: { ceoId: string; boardIds: string[]; staff: OrgSeat[]; deputies: OrgDeputy[] } = {
   ceoId: 'tahourian',
-  boardIds: ['sabeghi'],
+  // Dr. Sabeghi is hidden for now; restore 'sabeghi' here to show him again
+  boardIds: [/* 'sabeghi' */],
   // board members (مشاور عالی, رئیس دفتر) sit in the board panel, so they're not repeated here
   staff: [
     { id: 'advisors', titleFa: 'مشاورین', titleEn: 'Advisors' },

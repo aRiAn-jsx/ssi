@@ -140,6 +140,7 @@ export const TeamOrgChart: React.FC<TeamOrgChartProps> = ({ onSelect }) => {
       <div className="org-line" aria-hidden="true" />
 
       {/* Board */}
+      {orgChart.boardIds.length > 0 && (
       <section className="org-board" aria-label={fa ? 'هیات مدیره' : 'Board of Directors'}>
         <h3 className="org-board__title">
           <Users className="w-5 h-5" />
@@ -151,6 +152,7 @@ export const TeamOrgChart: React.FC<TeamOrgChartProps> = ({ onSelect }) => {
           ))}
         </div>
       </section>
+      )}
 
       {/* Staff positions that are filled, in facing pairs along the spine (the spine runs on) */}
       {staff.length > 0 ? (

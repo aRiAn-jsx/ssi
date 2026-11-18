@@ -142,7 +142,7 @@ export const TeamPage: React.FC<TeamPageProps> = ({ onBackToHome, onGoToConsulta
             transition={{ duration: 0.3 }}
             className="team-classic"
           >
-            {tiers.map((tier, ti) => (
+            {tiers.filter((tier) => tier.people.length > 0 || tier.soon.length > 0).map((tier, ti) => (
               <div key={tier.key} className="team-classic__tier">
                 <div className="team-classic__tier-badge">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#027DF7] dark:bg-[#38BDF8]" />
